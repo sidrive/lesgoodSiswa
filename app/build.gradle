@@ -95,6 +95,7 @@ dependencies {
     compile 'com.theartofdev.edmodo:android-image-cropper:2.3.0'
     compile 'pub.devrel:easypermissions:0.3.0'
     compile 'com.android.support:multidex:1.0.1'
+    compile 'jp.wasabeef:richeditor-android:1.2.2'
 }
 
 apply plugin: 'com.google.gms.google-services'

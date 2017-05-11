@@ -46,6 +46,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private void onUserItemClicked(Category item) {
+        fragment.showItemClicked(item);
     }
 
     @Override

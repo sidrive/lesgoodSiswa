@@ -2,7 +2,6 @@ package com.lesgood.app.data.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
@@ -20,9 +19,6 @@ public class User implements Serializable {
     String phone;
     @Nullable
     String email;
-    @VisibleForTesting
-    @Nullable
-    String password;
     @Nullable
     String provider;
     @Nullable
@@ -35,6 +31,18 @@ public class User implements Serializable {
     long birthday;
     @Nullable
     boolean verified;
+    @Nullable
+    double latitude;
+    @Nullable
+    double longitude;
+    @Nullable
+    String fullAddress;
+    @Nullable
+    int totalSkill;
+    @Nullable
+    float review;
+    @Nullable
+    int startFrom;
 
     public static User newInstance(FirebaseUser firebaseUser, UserInfo provider) {
         User user = new User(firebaseUser.getUid());
@@ -145,5 +153,59 @@ public class User implements Serializable {
 
     public void setVerified(@Nullable boolean verified) {
         this.verified = verified;
+    }
+
+    @Nullable
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(@Nullable double latitude) {
+        this.latitude = latitude;
+    }
+
+    @Nullable
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(@Nullable double longitude) {
+        this.longitude = longitude;
+    }
+
+    @Nullable
+    public String getFullAddress() {
+        return fullAddress;
+    }
+
+    public void setFullAddress(@Nullable String fullAddress) {
+        this.fullAddress = fullAddress;
+    }
+
+    @Nullable
+    public int getTotalSkill() {
+        return totalSkill;
+    }
+
+    public void setTotalSkill(@Nullable int totalSkill) {
+        this.totalSkill = totalSkill;
+    }
+
+    @Nullable
+    public float getReview() {
+        return review;
+    }
+
+    public void setReview(@Nullable float review) {
+        this.review = review;
+    }
+
+    @Nullable
+    public int getStartFrom() {
+        return startFrom;
+    }
+
+    public void setStartFrom(@Nullable int startFrom) {
+        this.startFrom = startFrom;
     }
 }

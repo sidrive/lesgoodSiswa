@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 
 
 public class DefaultConfig {
+    public static final String KEY_USER_PREF = "LesgoodUserPrefs";
     private static final String KEY_USER_ID = "user_id";
     private static final String KEY_NEW_JOB_RETRY_COUNT = "new_post_retry_count";
     private static final String KEY_API_URL = "api_url";
@@ -29,6 +30,29 @@ public class DefaultConfig {
     private static final String KEY_API_SECRET = "secret_key";
     private static final String KEY_USER_KEY = "user_key";
     private static final String KEY_PASS_KEY = "pass_key";
+    public static final String KEY_USER_LAT = "user_lat_ley";
+    public static final String KEY_USER_LNG = "user_lng_key";
+
+    public static final int SUCCESS_RESULT = 0;
+
+    public static final int FAILURE_RESULT = 1;
+
+    public static final String PACKAGE_NAME =
+            "com.lesgood.app";
+
+    public static final String RECEIVER = PACKAGE_NAME + ".RECEIVER";
+
+    public static final String RESULT_DATA_KEY = PACKAGE_NAME + ".RESULT_DATA_KEY";
+
+    public static final String LOCATION_DATA_EXTRA = PACKAGE_NAME + ".LOCATION_DATA_EXTRA";
+
+    public static final String LOCALITY_DATA_EXTRA = PACKAGE_NAME + ".LACALITY_DATA_EXTRA";
+
+    public static final String POSTAL_CODE_DATA_EXTRA = PACKAGE_NAME + ".POSTAL_CODE_DATA_EXTRA";
+
+    public static final String ADMIN_AREA_DATA_EXTRA = PACKAGE_NAME + ".ADMIN_AREA_DATA_EXTRA";
+
+    public static final String COUNTRY_CODE_DATA_EXTRA = PACKAGE_NAME + ".COUNTRY_CODE_DATA_EXTRA";
 
 
     private final SharedPreferences mSharedPreferences;
@@ -91,5 +115,7 @@ public class DefaultConfig {
     public void setPassKet(String url) {
         mSharedPreferences.edit().putString(KEY_PASS_KEY, url).apply();
     }
+
+
 
 }

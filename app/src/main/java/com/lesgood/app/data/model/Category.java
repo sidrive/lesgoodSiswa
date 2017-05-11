@@ -13,6 +13,8 @@ public class Category {
     @Nullable
     String name;
     @NonNull
+    String level;
+    @NonNull
     int icon;
 
     public Category(){
@@ -20,7 +22,7 @@ public class Category {
     }
 
     public Category(String id, String name, int icon){
-        this.id = id;
+        this.id =id;
         this.name = name;
         this.icon = icon;
     }
@@ -41,6 +43,15 @@ public class Category {
 
     public void setName(@Nullable String name) {
         this.name = name;
+    }
+
+    @NonNull
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(@NonNull String level) {
+        this.level = level;
     }
 
     @NonNull

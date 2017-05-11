@@ -45,6 +45,10 @@ android {
             versionName '1.0.0'
         }
     }
+
+    lintOptions {
+        disable 'RestrictedApi'
+    }
 }
 
 dependencies {
@@ -96,6 +100,7 @@ dependencies {
     compile 'pub.devrel:easypermissions:0.3.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'jp.wasabeef:richeditor-android:1.2.2'
+    compile 'com.github.alamkanak:android-week-view:1.2.6'
 }
 
 apply plugin: 'com.google.gms.google-services'

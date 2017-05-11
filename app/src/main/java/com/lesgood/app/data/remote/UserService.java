@@ -2,11 +2,13 @@ package com.lesgood.app.data.remote;
 
 import android.app.Application;
 
+import com.alamkanak.weekview.WeekViewEvent;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lesgood.app.data.model.EmailConfirmation;
 import com.lesgood.app.data.model.OTPdata;
+import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.User;
 
 
@@ -37,10 +39,6 @@ public class UserService {
         return databaseRef.child("users").child(userUid);
     }
 
-    public DatabaseReference getUsers(){
-        return databaseRef.child("users");
-    }
-
 
     public Task<Void> updateUser(User user) {
         return databaseRef.child("users").child(user.getUid()).setValue(user);
@@ -50,31 +48,82 @@ public class UserService {
 
     }
 
+    //users
+
     public void updateUserToken(String uid, String token){
-        databaseRef.child("user-fcm-token").child(uid).setValue(token);
+        databaseRef.child("users").child(uid).child("userTokens").child(token).setValue(true);
     }
 
     public void sendEmailConfirmation(EmailConfirmation emailConfirmation){
         databaseRef.child("confirmationEmailRequest").push().setValue(emailConfirmation);
     }
 
-    public DatabaseReference checkVerification(String uid){
-        return databaseRef.child("borrower").child(uid);
-    }
-
-    public void updateOTP(OTPdata otp){
-        databaseRef.child("OTP").child(otp.getKey()).setValue(otp);
-    }
-
-    public DatabaseReference verifyOTP(String key){
-        return databaseRef.child("OTP").child(key);
-    }
-
-    public DatabaseReference getBorrowerCampaign(){
-        return databaseRef.child("campaigns");
-    }
-
     public void verifyUser(String uid, boolean status){
         databaseRef.child("users").child(uid).child("verified").setValue(status);
     }
+
+    // userabout
+
+    public DatabaseReference getUserAbout(String uid){
+        return databaseRef.child("users-about").child(uid);
+    }
+
+
+    public void updateAbout(String uid, String content){
+        databaseRef.child("users-about").child(uid).setValue(content);
+    }
+
+    //userabout
+
+
+    //userskills
+
+    public DatabaseReference getUserSkills(String uid){
+        return databaseRef.child("user-skills").child(uid);
+    }
+
+    public void updateTotalSkill(String uid, int total){
+        databaseRef.child("users").child(uid).child("totalSkill").setValue(total);
+    }
+
+    public Task<Void> updateSkill(String uid, Skill skill){
+        return databaseRef.child("user-skills").child(uid).child(skill.getCode()).setValue(skill);
+    }
+
+    public Task<Void> removeSkill(String uid, Skill skill){
+        return databaseRef.child("user-skills").child(uid).child(skill.getCode()).removeValue();
+    }
+
+    //userskill
+
+
+    //userschedule
+
+    public DatabaseReference getUserSchedule(String uid){
+        return databaseRef.child("user-shedules").child(uid);
+    }
+
+    public void updateSchedule(String uid, WeekViewEvent weekViewEvent){
+        databaseRef.child("user-schedules").child(uid).child(Long.toString(weekViewEvent.getId())).setValue(weekViewEvent);
+    }
+
+    //userschedule
+
+    //Userlocation
+    public DatabaseReference getUserLocation(String uid){
+        return databaseRef.child("user-location").child(uid);
+    }
+
+
+    //update price
+    public  void updateUserPrice(String uid, int price){
+        databaseRef.child("users").child(uid).child("startFrom").setValue(price);
+    }
+
+    //update price
+
+    public DatabaseReference getGurus(String code){
+        return databaseRef.child("gurus").child(code);
+    }
+
 }

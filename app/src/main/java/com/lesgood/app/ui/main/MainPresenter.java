@@ -27,4 +27,8 @@ public class MainPresenter implements BasePresenter {
     public void unsubscribe() {
 
     }
+
+    public void updateFCMToken(String uid, String token){
+        userService.updateUserToken(uid, token);
+    }
 }

@@ -8,6 +8,18 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <permission
+        android:name="com.example.googlemaps.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.googlemaps.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.location.gps" />
+
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
@@ -45,6 +57,63 @@
         <activity
             android:name=".ui.setting.SettingActivity"
             android:label="Pengaturan"></activity>
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:label="Pengaturan"></activity>
+
+
+        <activity
+            android:name=".ui.list.ListActivity"
+            android:label="Pengaturan"></activity>
+
+
+        <activity
+            android:name=".ui.order_detail.OrderDetailActivity"
+            android:label="Pengaturan"></activity>
+
+
+        <activity
+            android:name=".ui.detail_teacher.DetailTeacherActivity"
+            android:label="Pengaturan"></activity>
+
+        <activity
+            android:name=".ui.skill.SkillActivity"
+            android:label="Pengaturan"></activity>
+
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_appointment_reminders_primary_32dp" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+
+        <service
+            android:name=".data.remote.LocationService"/>
+
+        <service
+            android:name=".data.remote.FetchAddressIntentService"
+            android:exported="false"/>
+
+        <service android:name=".data.remote.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
+        <!-- [START firebase_iid_service] -->
+        <service android:name=".data.remote.FirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

@@ -8,6 +8,10 @@
     <string name="rationale_camera">Membutuhkan ijin untuk mengakses kamera</string>
     <string name="error_field_required">Harus diisi</string>
 
+    <string name="ERROR_no_location_data_provided">No location data provided</string>
+    <string name="ERROR_service_not_available">Service not available</string>
+    <string name="ERROR_invalid_lat_long_used">Invalid lat long used</string>
+    <string name="ERROR_no_address_found">No address found</string>
 
     <string-array name="list_gender">
         <item>Laki laki</item>
@@ -25,13 +29,25 @@
 
     <string-array name="list_parent_category">
         <item>Materi Sekolah</item>
-        <item>Music</item>
+        <item>Musik</item>
         <item>Bahasa Asing</item>
         <item>Bela Diri</item>
         <item>Komputerisasi</item>
         <item>Keterampilan</item>
         <item>Mengaji</item>
         <item>Olahraga</item>
+    </string-array>
+
+
+    <string-array name="list_parent_category_id">
+        <item>BM</item>
+        <item>MS</item>
+        <item>BA</item>
+        <item>BD</item>
+        <item>KM</item>
+        <item>KT</item>
+        <item>MG</item>
+        <item>OL</item>
     </string-array>
 
     <string-array name="list_class_course">

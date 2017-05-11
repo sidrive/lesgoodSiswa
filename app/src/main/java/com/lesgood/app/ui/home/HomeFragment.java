@@ -23,6 +23,7 @@ import com.lesgood.app.base.BaseFragment;
 import com.lesgood.app.data.model.Category;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.main.MainActivity;
+import com.lesgood.app.ui.search.SearchActivity;
 import com.lesgood.app.ui.setting.SettingActivity;
 import com.lesgood.app.util.GridSpacingItemDecoration;
 
@@ -126,13 +127,14 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void initCateogies(){
-        showAddItem(new Category("1", "Materi Sekolah", R.drawable.courses));
-        showAddItem(new Category("2", "Musik", R.drawable.music));
-        showAddItem(new Category("3", "Bahasa Asing", R.drawable.google_translate_copyrighted));
-        showAddItem(new Category("4", "Bela Diri", R.drawable.boxing));
-        showAddItem(new Category("5", "Komputerisasi", R.drawable.workstation));
-        showAddItem(new Category("6", "Mengaji", R.drawable.koran));
-        showAddItem(new Category("7", "Olahraga", R.drawable.basketball));
+        showAddItem(new Category("BM", "Materi Sekolah", R.drawable.courses));
+        showAddItem(new Category("MS", "Musik", R.drawable.music));
+        showAddItem(new Category("BA", "Bahasa Asing", R.drawable.google_translate_copyrighted));
+        showAddItem(new Category("BD", "Bela Diri", R.drawable.boxing));
+        showAddItem(new Category("KM", "Komputerisasi", R.drawable.workstation));
+        showAddItem(new Category("MG", "Mengaji", R.drawable.koran));
+        showAddItem(new Category("KT", "Keterampilan", R.drawable.connectdevelop));
+        showAddItem(new Category("OL", "Olahraga", R.drawable.basketball));
     }
 
     private void showItems(){
@@ -145,6 +147,10 @@ public class HomeFragment extends BaseFragment {
 
     public void showAddItem(Category item){
         adapter.onItemAdded(item);
+    }
+
+    public void showItemClicked(Category item){
+        SearchActivity.startWithData(activity, item.getId());
     }
 
     private int dpToPx(int dp) {

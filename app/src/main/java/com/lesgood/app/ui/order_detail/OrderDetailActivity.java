@@ -119,7 +119,7 @@ public class OrderDetailActivity extends BaseActivity {
     public void init(){
         txtOrderId.setText("#"+order.getOid());
         txtStatus.setText(order.getStatus().toUpperCase());
-        txtDate.setText(DateFormatter.getDate(order.getMeettime(), "EEE, dd MMM yyyy, HH:mm"));
+        txtDate.setText(DateFormatter.getDate(order.getPertemuan().get(0).getStartTime(), "EEE, dd MMM yyyy, HH:mm"));
 
         String angka = Integer.toString(order.getAmount());
         NumberFormat rupiahFormat = NumberFormat.getInstance(Locale.GERMANY);

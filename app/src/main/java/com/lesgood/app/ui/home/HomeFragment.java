@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +17,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.base.BaseFragment;
@@ -27,6 +37,8 @@ import com.lesgood.app.ui.search.SearchActivity;
 import com.lesgood.app.ui.setting.SettingActivity;
 import com.lesgood.app.util.GridSpacingItemDecoration;
 
+import java.util.HashMap;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -36,10 +48,13 @@ import butterknife.ButterKnife;
  * Created by Agus on 4/27/17.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     @Bind(R.id.rv_items)
     RecyclerView rvItems;
+
+    @Bind(R.id.slider)
+    SliderLayout sliderLayout;
 
     @Inject
     HomePresenter presenter;
@@ -105,8 +120,61 @@ public class HomeFragment extends BaseFragment {
         showItems();
 
         initCateogies();
-
+        initSlider();
         return view;
+    }
+
+    public void initSlider(){
+        HashMap<String,String> url_maps = new HashMap<String, String>();
+        url_maps.put("Lesgood", "http://lesgood.com");
+
+        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+        file_maps.put("Lesgood",R.drawable.promotion);
+
+        for(String name : file_maps.keySet()){
+            TextSliderView textSliderView = new TextSliderView(activity);
+            // initialize a SliderLayout
+            textSliderView
+                    .description(name)
+                    .image(file_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+            sliderLayout.addSlider(textSliderView);
+        }
+        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        sliderLayout.setCustomAnimation(new DescriptionAnimation());
+        sliderLayout.setDuration(4000);
+        sliderLayout.addOnPageChangeListener(this);
+
+    }
+
+
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+        Toast.makeText(activity,slider.getBundle().get("extra") + "",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.d("Slider Demo", "Page Changed: " + position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     @Override
@@ -138,7 +206,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void showItems(){
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(activity, 2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(activity, 4);
         rvItems.setLayoutManager(mLayoutManager);
         rvItems.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         rvItems.setItemAnimator(new DefaultItemAnimator());

@@ -49,8 +49,8 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
         String rupiah = rupiahFormat.format(Double.parseDouble(angka));
 
         txtStatus.setText(order.getStatus());
-        txtDay.setText(DateFormatter.getDate(order.getMeettime(), "dd"));
-        txtMonth.setText(DateFormatter.getDate(order.getMeettime(), "MMM"));
+        txtDay.setText(DateFormatter.getDate(order.getPertemuan().get(0).getStartTime(), "dd"));
+        txtMonth.setText(DateFormatter.getDate(order.getPertemuan().get(0).getStartTime(), "MMM"));
     }
 }
 

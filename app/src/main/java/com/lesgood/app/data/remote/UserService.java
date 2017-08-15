@@ -8,6 +8,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lesgood.app.data.model.EmailConfirmation;
 import com.lesgood.app.data.model.OTPdata;
+import com.lesgood.app.data.model.Pengalaman;
+import com.lesgood.app.data.model.Prestasi;
 import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.User;
 
@@ -82,6 +84,10 @@ public class UserService {
         return databaseRef.child("user-skills").child(uid);
     }
 
+    public DatabaseReference getUserSkill(String uid, String code){
+        return databaseRef.child("user-skills").child(uid).child(code);
+    }
+
     public void updateTotalSkill(String uid, int total){
         databaseRef.child("users").child(uid).child("totalSkill").setValue(total);
     }
@@ -109,6 +115,39 @@ public class UserService {
 
     //userschedule
 
+    //userprestasi
+
+    public DatabaseReference getUserPrestasi(String uid){
+        return databaseRef.child("user-prestasi").child(uid);
+    }
+
+    public Task<Void> updatePrestasi(String uid, Prestasi prestasi){
+        return databaseRef.child("user-prestasi").child(uid).child(prestasi.getId()).setValue(prestasi);
+    }
+
+    public Task<Void> removePrestasi(String uid, Prestasi prestasi){
+        return databaseRef.child("user-prestasi").child(uid).child(prestasi.getId()).removeValue();
+    }
+
+    //userprestasi
+
+    //userpengalaman
+
+    public DatabaseReference getUserPengalaman(String uid){
+        return databaseRef.child("user-pengalaman").child(uid);
+    }
+
+    public Task<Void> updatePengalaman(String uid, Pengalaman pengalaman){
+        return databaseRef.child("user-pengalaman").child(uid).child(pengalaman.getId()).setValue(pengalaman);
+    }
+
+    public Task<Void> removePengalaman(String uid, Pengalaman pengalaman){
+        return databaseRef.child("user-pengalaman").child(uid).child(pengalaman.getId()).removeValue();
+    }
+
+    //userprestasi
+
+
     //Userlocation
     public DatabaseReference getUserLocation(String uid){
         return databaseRef.child("user-location").child(uid);
@@ -120,6 +159,16 @@ public class UserService {
         databaseRef.child("users").child(uid).child("startFrom").setValue(price);
     }
 
+    //update price
+
+    public DatabaseReference getUserPayment(String uid){
+        return databaseRef.child("partner-payment").child(uid);
+    }
+
+
+    public void updateStatus(String uid, boolean status){
+        databaseRef.child("users").child(uid).child("active").setValue(status);
+    }
     //update price
 
     public DatabaseReference getGurus(String code){

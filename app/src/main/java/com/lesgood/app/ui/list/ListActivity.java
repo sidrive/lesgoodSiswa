@@ -16,11 +16,14 @@ import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.detail_teacher.DetailTeacherActivity;
 import com.lesgood.app.ui.search.SearchActivity;
 import com.lesgood.app.ui.search.SearchActivityModule;
+
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -50,18 +53,19 @@ public class ListActivity extends BaseActivity {
     @Bind(R.id.rv_items)
     RecyclerView rvItems;
 
-    String code;
-
     @Inject
     ListPresenter presenter;
 
     @Inject
     ListAdapter adapter;
 
-    public static void startWithData(BaseActivity activity, String code){
+    String code, pelajaran;
+
+    public static void startWithData(BaseActivity activity, String code, String pelajaran){
         Intent intent = new Intent(activity, ListActivity.class);
         if (code != null){
             intent.putExtra("code", code);
+            intent.putExtra("pelajaran", pelajaran);
         }
         activity.startActivity(intent);
     }
@@ -78,6 +82,8 @@ public class ListActivity extends BaseActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             code = extras.getString("code");
+            pelajaran = extras.getString("pelajaran");
+
 
             if (code != null) {
                 Log.d("search", "code = "+code);
@@ -156,6 +162,11 @@ public class ListActivity extends BaseActivity {
     }
 
     public void showItemClicked(Guru user){
-        DetailTeacherActivity.startWithData(this, user);
+
+        Random rand = new Random();
+        String oid = System.currentTimeMillis()+""+Integer.toString(rand.nextInt(99999));
+        Order order = new Order(oid, code, pelajaran);
+
+        DetailTeacherActivity.startWithData(this, user, order);
     }
 }

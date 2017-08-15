@@ -19,11 +19,13 @@ import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Category;
+import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.list.ListActivity;
 import com.lesgood.app.ui.skill.SkillActivityModule;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -302,7 +304,8 @@ public class SearchActivity extends BaseActivity {
 
         }else{
             String code = skillID+levelID;
-            ListActivity.startWithData(this, code);
+            String pelajaran = txtSkill.getText().toString()+" "+txtLevel.getText().toString();
+            ListActivity.startWithData(this, code, pelajaran);
             finish();
         }
     }

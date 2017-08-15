@@ -82,6 +82,27 @@
             android:label="Pengaturan"></activity>
 
         <activity
+            android:name=".ui.reviews.ReviewsActivity"
+            android:label="Penilaian"></activity>
+
+        <activity
+            android:name=".ui.pengalaman.PengalamanActivity"
+            android:label="Pengalaman"></activity>
+
+        <activity
+            android:name=".ui.prestasi.PrestasiActivity"
+            android:label="Prestasi"></activity>
+
+
+        <activity
+            android:name=".ui.book.BookActivity"
+            android:label="Pesan Pengajar"></activity>
+
+        <activity
+            android:name=".ui.book_2.BookActivity"
+            android:label="Pesan Pengajar"></activity>
+
+        <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
 
@@ -114,6 +135,9 @@
             </intent-filter>
         </service>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
     </application>
 
 </manifest>

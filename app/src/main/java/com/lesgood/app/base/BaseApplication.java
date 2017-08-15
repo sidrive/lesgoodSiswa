@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.google.firebase.FirebaseApp;
 import com.lesgood.app.base.config.DefaultConfig;
+import com.lesgood.app.data.book.BookComponent;
+import com.lesgood.app.data.book.BookModule;
 import com.lesgood.app.data.detail_teacher.DetailTeacherComponent;
 import com.lesgood.app.data.detail_teacher.DetailTeacherModule;
 import com.lesgood.app.data.firebase.FirebaseModule;
@@ -21,6 +23,7 @@ import com.lesgood.app.data.order_detail.OrderDetailComponent;
 import com.lesgood.app.data.order_detail.OrderDetailModule;
 import com.lesgood.app.data.user.UserComponent;
 import com.lesgood.app.data.user.UserModule;
+import com.lesgood.app.ui.book_2.BookActivityModule;
 import com.lesgood.app.ui.main.MainActivity;
 
 /**
@@ -34,6 +37,7 @@ public class BaseApplication extends MultiDexApplication {
     private DefaultConfig defaultConfig;
     private OrderDetailComponent orderDetailComponent;
     private DetailTeacherComponent detailTeacherComponent;
+    private BookComponent bookComponent;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -117,4 +121,18 @@ public class BaseApplication extends MultiDexApplication {
     public void releaseDetailTeacherComponent(){
         detailTeacherComponent = null;
     }
+
+    public BookComponent createBookComponent(Order order){
+        bookComponent = detailTeacherComponent.plus(new BookModule(order));
+        return bookComponent;
+    }
+
+    public BookComponent getBookComponent(){
+        return bookComponent;
+    }
+
+    public void releaseBookComponent(){
+        bookComponent = null;
+    }
+
 }

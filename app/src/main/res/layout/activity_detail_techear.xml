@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="?actionBarSize">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -63,8 +65,17 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:typeface="Roboto-Regular.ttf"
-                        android:text="Rp.0/per Jam"
+                        android:text="Mulai dari Rp.0/per Jam"
                         android:id="@+id/txt_price"
+                        android:textColor="@color/colorWhite"
+                        android:layout_marginTop="10dp"/>
+
+                    <com.lesgood.app.util.TypefacedTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:typeface="Roboto-Regular.ttf"
+                        android:id="@+id/txt_pendidikan"
+                        android:text="Pendidikan"
                         android:textColor="@color/colorWhite"
                         android:layout_marginTop="10dp"/>
                 </LinearLayout>
@@ -85,6 +96,54 @@
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:clickable="true"
+                        android:background="@drawable/soft_color_selector"
+                        android:id="@+id/lin_review"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+                        <com.lesgood.app.util.TypefacedTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Penilaian"
+                            android:gravity="center_vertical"
+                            android:drawablePadding="5dp"
+                            android:id="@+id/txt_review"
+                            android:drawableLeft="@drawable/star"
+                            app:typeface="Roboto-Regular.ttf"/>
+                        <com.lesgood.app.util.TypefacedTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0"
+                            android:gravity="center_vertical"
+                            android:drawablePadding="5dp"
+                            android:id="@+id/txt_rating"
+                            app:typeface="Roboto-Regular.ttf"/>
+
+                        <RatingBar
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/ratingBar"
+                            android:isIndicator="true"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/angle_right"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -102,8 +161,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="Hallo : Yuk belajar bahasa, sosial dan budaya
-bareng aku! Dijamin seru, nggak bosenin .."
+                            android:text="Belum diset"
                             android:maxLines="2"
                             android:id="@+id/txt_about"
                             app:typeface="Roboto-Regular.ttf"/>
@@ -162,13 +220,101 @@ bareng aku! Dijamin seru, nggak bosenin .."
                         android:padding="10dp"
                         android:clickable="true"
                         android:background="@drawable/soft_color_selector"
+                        android:id="@+id/lin_prestasi"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <com.lesgood.app.util.TypefacedTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Prestasi"
+                            android:gravity="center_vertical"
+                            android:drawablePadding="5dp"
+                            android:id="@+id/txt_prestasi"
+                            android:drawableRight="@drawable/angle_right"
+                            android:drawableLeft="@drawable/diploma_1"
+                            app:typeface="Roboto-Regular.ttf"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:clickable="true"
+                        android:background="@drawable/soft_color_selector"
+                        android:id="@+id/lin_pengalaman"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <com.lesgood.app.util.TypefacedTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Pengalaman"
+                            android:gravity="center_vertical"
+                            android:drawablePadding="5dp"
+                            android:id="@+id/txt_pengalaman"
+                            android:drawableRight="@drawable/angle_right"
+                            android:drawableLeft="@drawable/for_experienced"
+                            app:typeface="Roboto-Regular.ttf"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:clickable="true"
+                        android:background="@drawable/soft_color_selector"
+                        android:id="@+id/lin_verified"
+                        android:gravity="center"
+                        android:orientation="vertical">
+                        <com.lesgood.app.util.TypefacedTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Status : Belum Terverifikasi"
+                            android:id="@+id/txt_verified"
+                            android:gravity="center_vertical"
+                            android:drawablePadding="5dp"
+                            android:drawableRight="@drawable/angle_right"
+                            android:drawableLeft="@drawable/id_verified"
+                            app:typeface="Roboto-Regular.ttf"/>
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:clickable="true"
+                        android:background="@drawable/soft_color_selector"
                         android:id="@+id/lin_location"
                         android:gravity="center"
                         android:orientation="vertical">
                         <com.lesgood.app.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Set Location"
+                            android:text="Location"
                             android:id="@+id/txt_location"
                             android:gravity="center_vertical"
                             android:drawablePadding="5dp"
@@ -184,4 +330,15 @@ bareng aku! Dijamin seru, nggak bosenin .."
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <include layout="@layout/toolbar_basic"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:id="@+id/btn_book"
+        android:textColor="@color/colorWhite"
+        android:background="@drawable/gradient_bg"
+        android:text="Pesan Pengajar"/>
+
+</android.support.design.widget.CoordinatorLayout>

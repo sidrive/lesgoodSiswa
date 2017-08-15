@@ -3,6 +3,7 @@ package com.lesgood.app.data.remote;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.lesgood.app.data.model.Order;
 
 /**
  * Created by Agus on 2/27/17.
@@ -29,5 +30,9 @@ public class OrderService {
 
     public Task<Void> declineOrder(String oid){
         return databaseRef.child("orders").child(oid).child("status").setValue("cancel");
+    }
+
+    public Task<Void> saveOrder(Order order){
+        return databaseRef.child("orders").child(order.getOid()).setValue(order);
     }
 }

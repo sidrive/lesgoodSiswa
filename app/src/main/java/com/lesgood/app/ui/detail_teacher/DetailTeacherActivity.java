@@ -22,8 +22,14 @@ import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.User;
+import com.lesgood.app.ui.book_2.BookActivity;
+import com.lesgood.app.ui.brief.BriefActivity;
 import com.lesgood.app.ui.edit_profile.EditProfileActivity;
+import com.lesgood.app.ui.pengalaman.PengalamanActivity;
+import com.lesgood.app.ui.prestasi.PrestasiActivity;
+import com.lesgood.app.ui.reviews.ReviewsActivity;
 import com.lesgood.app.ui.skill.SkillActivity;
 import com.lesgood.app.util.Utils;
 
@@ -67,6 +73,12 @@ public class DetailTeacherActivity extends BaseActivity {
     @Bind(R.id.txt_price)
     TextView txtPrice;
 
+    @Bind(R.id.txt_verified)
+    TextView txtVerified;
+
+    @Bind(R.id.txt_pendidikan)
+    TextView txtPendidikan;
+
     @Inject
     DetailTeacherPresenter presenter;
 
@@ -74,9 +86,12 @@ public class DetailTeacherActivity extends BaseActivity {
     Guru user;
 
     String userAbout = "";
-    public static void startWithData(BaseActivity activity, Guru user){
+
+    public static void startWithData(BaseActivity activity, Guru user, Order order){
         BaseApplication.get(activity).createDetailTeacherComponent(user);
+        BaseApplication.get(activity).createBookComponent(order);
         Intent intent = new Intent(activity, DetailTeacherActivity.class);
+
         activity.startActivity(intent);
     }
 
@@ -93,6 +108,7 @@ public class DetailTeacherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_techear);
         ButterKnife.bind(this);
+
 
         setTitle("Profil");
         init();
@@ -166,6 +182,14 @@ public class DetailTeacherActivity extends BaseActivity {
         if (user.getStartFrom() > 0){
             initPrice(user.getStartFrom());
         }
+
+        if (user.getPendidikan() != null){
+            txtPendidikan.setText(user.getPendidikan());
+        }
+
+        if (user.isVerified()){
+            txtVerified.setText("Status : Terverifikasi");
+        }
     }
 
     public void initAbout(String content){
@@ -176,12 +200,15 @@ public class DetailTeacherActivity extends BaseActivity {
 
     public void initPrice(int price){
         this.user.setStartFrom(price);
-        txtPrice.setText(Utils.getRupiah(price)+" /100 menit");
+        txtPrice.setText("Mulai dari "+Utils.getRupiah(price)+" /100 menit");
     }
 
 
     @OnClick(R.id.btn_edit_about)
     void showEditAbout(){
+        Intent intent = new Intent(this, BriefActivity.class);
+        intent.putExtra("brief", userAbout);
+        startActivityForResult(intent, REQUEST_CODE_ADD_BRIEF);
     }
 
     @OnClick(R.id.lin_skill)
@@ -193,4 +220,25 @@ public class DetailTeacherActivity extends BaseActivity {
     void showSetLocation(){
 
     }
+
+    @OnClick(R.id.lin_prestasi)
+    void showPrestasi(){
+        startActivity(new Intent(this, PrestasiActivity.class));
+    }
+
+    @OnClick(R.id.lin_review)
+    void showReviews(){
+        startActivity(new Intent(this, ReviewsActivity.class));
+    }
+
+    @OnClick(R.id.lin_pengalaman)
+    void showPengalaman(){
+        startActivity(new Intent(this, PengalamanActivity.class));
+    }
+
+    @OnClick(R.id.btn_book)
+    void showBook(){
+        startActivity(new Intent(this, BookActivity.class));
+    }
+
 }

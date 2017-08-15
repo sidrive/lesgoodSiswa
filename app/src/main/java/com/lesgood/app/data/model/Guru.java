@@ -14,38 +14,46 @@ import java.io.Serializable;
 
 public class Guru implements Serializable {
     @NonNull
-    String uid;
+    public String uid;
     @Nullable
-    String phone;
+    public String phone;
     @Nullable
-    String email;
+    public String email;
     @Nullable
-    String provider;
+    public String provider;
     @Nullable
-    String photo_url;
+    public String photo_url;
     @Nullable
-    String full_name;
+    public String full_name;
     @Nullable
-    String gender;
+    public String gender;
     @Nullable
-    long birthday;
+    public long birthday;
     @Nullable
-    boolean verified;
+    public boolean verified;
     @Nullable
-    double latitude;
+    public double latitude;
     @Nullable
-    double longitude;
+    public double longitude;
     @Nullable
-    String fullAddress;
+    public String fullAddress;
     @Nullable
-    int totalSkill;
+    public int totalSkill;
     @Nullable
-    float review;
+    public float review;
     @Nullable
-    int startFrom;
+    public int startFrom;
+    @Nullable
+    public String religion;
+    @Nullable
+    public String pendidikan;
+    @Nullable
+    public String prodi;
+    @Nullable
+    public boolean active;
 
-    public static Guru newInstance(FirebaseUser firebaseUser, UserInfo provider) {
-        Guru user = new Guru(firebaseUser.getUid());
+    public static User newInstance(FirebaseUser firebaseUser, UserInfo provider) {
+        User user = new User(firebaseUser.getUid());
         user.setProvider(provider.getProviderId());
         // TODO : refactoring
         if (provider.getProviderId().equals("password")) {
@@ -207,5 +215,41 @@ public class Guru implements Serializable {
 
     public void setStartFrom(@Nullable int startFrom) {
         this.startFrom = startFrom;
+    }
+
+    @Nullable
+    public String getReligion() {
+        return religion;
+    }
+
+    public void setReligion(@Nullable String religion) {
+        this.religion = religion;
+    }
+
+    @Nullable
+    public String getPendidikan() {
+        return pendidikan;
+    }
+
+    public void setPendidikan(@Nullable String pendidikan) {
+        this.pendidikan = pendidikan;
+    }
+
+    @Nullable
+    public String getProdi() {
+        return prodi;
+    }
+
+    public void setProdi(@Nullable String prodi) {
+        this.prodi = prodi;
+    }
+
+    public void setActive(@Nullable boolean active) {
+        this.active = active;
+    }
+
+    @Nullable
+    public boolean isActive() {
+        return active;
     }
 }

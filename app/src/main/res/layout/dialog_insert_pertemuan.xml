@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/gradient_bg">
+
+
+        <com.lesgood.app.util.TypefacedTextView
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            app:typeface="Roboto-Regular.ttf"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:id="@+id/txt_desc"
+            android:textColor="@color/colorWhite"
+            android:text="Masukan waktu pertemuan"
+            android:drawablePadding="5dp"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin"
+        >
+
+        <com.lesgood.app.util.TypefacedTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tanggal"
+            android:textSize="18sp"
+            app:typeface="Roboto-Regular.ttf"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_tanggal"
+            android:drawableLeft="@drawable/calendar"
+            android:text="TAnggal"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/activity_margin">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <com.lesgood.app.util.TypefacedTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Waktu mulai"
+                    android:textSize="18sp"
+                    app:typeface="Roboto-Regular.ttf"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_start_time"
+                    android:drawableLeft="@drawable/time"
+                    android:text="Dari"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <com.lesgood.app.util.TypefacedTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Waktu selesai"
+                    android:textSize="18sp"
+                    app:typeface="Roboto-Regular.ttf"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/btn_end_time"
+                    android:enabled="false"
+                    android:drawableLeft="@drawable/time"
+                    android:text="Sampai"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lin_action"
+            android:layout_marginBottom="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_weight="1"
+                android:text="Cancel"
+                android:id="@+id/btn_negatif"
+                android:visibility="visible"
+                android:textAllCaps="true"
+                android:textColor="@color/colorRed"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_weight="1"
+                android:text="Save"
+                android:textAllCaps="true"
+                android:id="@+id/btn_positif"
+                android:textColor="@color/colorPrimary"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

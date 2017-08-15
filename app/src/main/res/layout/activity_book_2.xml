@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="?actionBarSize">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+            <com.lesgood.app.util.TypefacedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_mengajar"
+                app:typeface="Roboto-Light.ttf"
+                android:text="Pengajar Fisikas Kelas XI"/>
+
+            <com.lesgood.app.util.TypefacedTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_guru"
+                android:textSize="18sp"
+                app:typeface="Roboto-Regular.ttf"
+                android:text="Agus Setiawan"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_margin">
+
+                <com.lesgood.app.util.TypefacedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:typeface="Roboto-Light.ttf"
+                    android:text="Tenukan lokasi anda"/>
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:scaleType="centerCrop"
+                    android:src="@color/colorGrey400"
+                    android:id="@+id/img_map"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_margin">
+
+                <com.lesgood.app.util.TypefacedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:typeface="Roboto-Light.ttf"
+                    android:text="Detal Lokasi dan permintaan khusus"/>
+
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:id="@+id/input_detail"
+                    android:lines="3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_margin">
+
+                <com.lesgood.app.util.TypefacedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:typeface="Roboto-Light.ttf"
+                    android:text="Mulai Pertemuan"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/btn_date"
+                        android:text="Tanggal"
+                        />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:id="@+id/btn_time"
+                        android:text="Jam"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_margin">
+
+                <com.lesgood.app.util.TypefacedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:typeface="Roboto-Light.ttf"
+                    android:text="Jumlah Murid"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_half_margin"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:layout_width="30dp"
+                        android:gravity="center"
+                        android:id="@+id/input_siswa"
+                        android:inputType="number"
+                        android:maxLength="1"
+                        android:selectAllOnFocus="true"
+                        android:layout_height="wrap_content"
+                        android:text="0"/>
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:gravity="left"
+                        android:editable="false"
+                        android:id="@+id/input_tarif_siswa"
+                        android:layout_height="wrap_content"
+                        android:text="Rp.Tarif"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_margin">
+
+                <com.lesgood.app.util.TypefacedTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:typeface="Roboto-Light.ttf"
+                    android:text="Jumlah Pertemuan"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_half_margin"
+                    android:orientation="horizontal">
+                    <EditText
+                        android:layout_width="30dp"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:id="@+id/input_pertemuan"
+                        android:layout_height="wrap_content"
+                        android:text="0"/>
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:gravity="left"
+                        android:selectAllOnFocus="true"
+                        android:id="@+id/input_tarif_pertemuan"
+                        android:editable="false"
+                        android:layout_height="wrap_content"
+                        android:text="Rp.Tarif"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_horizontal_margin">
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:id="@+id/radio_paket"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:id="@+id/radio_paket_1"
+                        android:text="Pake 20 kali
+diskon 5%
+- Sebelum diskon Rp.200.000
+- Sesudah diskon Rp.160.000"/>
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:id="@+id/radio_paket_2"
+                        android:layout_marginTop="@dimen/activity_margin"
+                        android:text="Pake 30 kali
+diskon 10%
+- Sebelum diskon Rp.4500.000
+- Sesudah diskon Rp.320.000"/>
+                </RadioGroup>
+            </LinearLayout>
+        </LinearLayout>
+        
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pesan Pengajar"
+        android:id="@+id/btn_book"
+        android:layout_gravity="bottom"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/rel_map"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:background="@color/colorWhite">
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:map="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".base.ui.add_location.AddLocationActivity" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/img_marker"
+            android:layout_centerInParent="true"
+            android:paddingBottom="32dp"
+            android:src="@drawable/ic_place_yellow_900_24dp"/>
+
+    </RelativeLayout>
+
+    <include layout="@layout/toolbar_basic"/>
+    <include layout="@layout/view_progress"/>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:layout_marginTop="?actionBarSize">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="@dimen/activity_margin">
+            <com.lesgood.app.util.TypefacedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:typeface="Roboto-Light.ttf"
+                android:text="Pengajar Fisika Kelas XI"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="80dp"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:src="@color/colorGrey400"
+                android:layout_height="80dp" />
+
+            <com.lesgood.app.util.TypefacedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:layout_marginTop="@dimen/activity_margin"
+                app:typeface="Roboto-Regular.ttf"
+                android:text="Agus Setiawan"/>
+
+            <com.lesgood.app.util.TypefacedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                app:typeface="Roboto-Light.ttf"
+                android:text="Universitas Gadjah Mada"/>
+            <com.lesgood.app.util.TypefacedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                app:typeface="Roboto-Regular.ttf"
+                android:textSize="16dp"
+                android:text="Siap Mengajar!"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                android:text="Detail Mengajar"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_margin"
+                android:background="@color/colorGrey400"></View>
+
+            <com.lesgood.app.util.TypefacedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                app:typeface="Roboto-Light.ttf"
+                android:textSize="18sp"
+                android:text="Silahkan laukan pembayaran"/>
+            <com.lesgood.app.util.TypefacedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                app:typeface="Roboto-Regular.ttf"
+                android:textSize="22dp"
+                android:text="Rp.2.500.000"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="Bayar"/>
+
+</android.support.design.widget.CoordinatorLayout>

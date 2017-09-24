@@ -5,9 +5,9 @@ android {
     signingConfigs {
         release {
             keyAlias 'lesgood'
-            keyPassword 'Doremi456'
-            storeFile file('/Users/Agus/Documents/Lesgood/keystores/lesgood-relase-keystore.jks')
-            storePassword 'Doremi456'
+            keyPassword 'doremi456'
+            storeFile file('/Users/Agus/Documents/Lesgood/keystores/lesgood-release-key.jks')
+            storePassword 'doremi456'
         }
     }
     compileSdkVersion 25
@@ -18,16 +18,16 @@ android {
         targetSdkVersion 25
         multiDexEnabled true
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable true
             signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            zipAlignEnabled true
+            debuggable false
         }
     }
     configurations.all {
@@ -42,7 +42,27 @@ android {
             signingConfig signingConfigs.release
             targetSdkVersion 25
             versionCode 1
+            versionName '1.0.1'
+
+            buildConfigField "String", "BASE_URL", "\"http://sandbox.duitku.com/webapi/api/\""
+            buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
+            buildConfigField "String", "PAYMENT_URL", "\"https://lesgood.herokuapp.com/\""
+            buildConfigField "String", "MERCHANT_CODE", "\"D2588\""
+            buildConfigField "String", "MERCHANT_KEY", "\"84f1dfc4d8b71b13ef1248296099cb4e\""
+        }
+
+        debugConfig{
+            minSdkVersion 17
+            applicationId 'com.lesgood.app'
+            targetSdkVersion 25
+            versionCode 1
             versionName '1.0.0'
+
+            buildConfigField "String", "BASE_URL", "\"http://sandbox.duitku.com/webapi/api/\""
+            buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
+            buildConfigField "String", "PAYMENT_URL", "\"https://lesgood.herokuapp.com/\""
+            buildConfigField "String", "MERCHANT_CODE", "\"D2588\""
+            buildConfigField "String", "MERCHANT_KEY", "\"84f1dfc4d8b71b13ef1248296099cb4e\""
         }
     }
 

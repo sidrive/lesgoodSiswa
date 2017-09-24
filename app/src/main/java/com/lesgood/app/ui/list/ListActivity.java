@@ -59,7 +59,7 @@ public class ListActivity extends BaseActivity {
     @Inject
     ListAdapter adapter;
 
-    String code, pelajaran;
+    public String code, pelajaran;
 
     public static void startWithData(BaseActivity activity, String code, String pelajaran){
         Intent intent = new Intent(activity, ListActivity.class);

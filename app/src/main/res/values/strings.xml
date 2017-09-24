@@ -163,5 +163,6 @@
         <item>Membentuk Badan</item>
         <item>Yoga</item>
     </string-array>
+    <string name="rationale_location">Membutuhkan ijin mengakses lokasi</string>
 
 </resources>

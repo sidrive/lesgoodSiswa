@@ -14,6 +14,7 @@ import com.google.firebase.storage.StorageReference;
 import com.lesgood.app.R;
 import com.lesgood.app.data.model.Category;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.FirebaseImageService;
 import com.lesgood.app.data.remote.UserService;
@@ -50,12 +51,15 @@ public class ListViewHolder extends RecyclerView.ViewHolder{
     FirebaseImageService firebaseImageService;
     Guru user;
 
-    public ListViewHolder(View itemView, UserService userService, FirebaseImageService firebaseImageService) {
+    ListActivity activity;
+
+    public ListViewHolder(View itemView, UserService userService, FirebaseImageService firebaseImageService, ListActivity activity) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.itemView = itemView;
         this.userService = userService;
         this.firebaseImageService = firebaseImageService;
+        this.activity = activity;
     }
 
     public void bind(String item) {
@@ -64,7 +68,8 @@ public class ListViewHolder extends RecyclerView.ViewHolder{
 
     }
 
-    public void getGuru(String uid){
+    public void getGuru(final String uid){
+        getGuruTarif(uid);
         userService.getUser(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -74,8 +79,34 @@ public class ListViewHolder extends RecyclerView.ViewHolder{
 
                     txtName.setText(userf.getFull_name());
                     txtSkill.setText(user.getTotalSkill()+" Kemampuan Mengajar");
-                    txtPrice.setText(Utils.getRupiah(userf.getStartFrom()));
 
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getGuruTarif(String uid){
+
+
+        userService.getUserSkill(uid, activity.code).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Skill skill = dataSnapshot.getValue(Skill.class);
+                if (skill != null){
+
+                    int tarif = skill.getPrice1();
+                    double fee = 0;
+
+                    fee = tarif * 0.5;
+
+                    int finaltarif = (int) ((tarif + fee) + 0.5d);
+                    txtPrice.setText(Utils.getRupiah(finaltarif));
                 }
             }
 

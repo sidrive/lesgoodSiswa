@@ -66,6 +66,10 @@ public class Order {
     String guruPhone;
     @Nullable
     String guruName;
+    @Nullable
+    String reference;
+    @Nullable
+    String paymentUrl;
 
     public Order(){
 
@@ -342,5 +346,23 @@ public class Order {
 
     public void setCustomerEmail(@Nullable String customerEmail) {
         this.customerEmail = customerEmail;
+    }
+
+    @Nullable
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(@Nullable String reference) {
+        this.reference = reference;
+    }
+
+    @Nullable
+    public String getPaymentUrl() {
+        return paymentUrl;
+    }
+
+    public void setPaymentUrl(@Nullable String paymentUrl) {
+        this.paymentUrl = paymentUrl;
     }
 }

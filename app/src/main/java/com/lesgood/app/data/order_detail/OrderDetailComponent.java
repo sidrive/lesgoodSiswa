@@ -2,6 +2,8 @@ package com.lesgood.app.data.order_detail;
 
 
 import com.lesgood.app.base.annotation.UserScope;
+import com.lesgood.app.ui.complete_order.CompleteOrderActivityComponent;
+import com.lesgood.app.ui.complete_order.CompleteOrderActivityModule;
 import com.lesgood.app.ui.order_detail.OrderDetailActivityComponent;
 import com.lesgood.app.ui.order_detail.OrderDetailActivityModule;
 
@@ -19,4 +21,5 @@ import dagger.Subcomponent;
 )
 public interface OrderDetailComponent {
     OrderDetailActivityComponent plus(OrderDetailActivityModule activityModule);
+    CompleteOrderActivityComponent plus(CompleteOrderActivityModule activityModule);
 }

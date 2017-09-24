@@ -38,7 +38,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_teacher, parent, false);
-        return new ListViewHolder(itemView, userService, firebaseImageService);
+        return new ListViewHolder(itemView, userService, firebaseImageService, activity);
     }
 
     @Override

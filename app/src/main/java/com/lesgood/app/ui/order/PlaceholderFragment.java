@@ -82,14 +82,10 @@ public class PlaceholderFragment extends BaseFragment {
 
         int sectionNumber = getArguments().getInt(ARG_SECTION_NUMBER);
         if (sectionNumber == 1){
-            presenter.getOrders("current");
-        }
-
-        if (sectionNumber == 2){
             presenter.getOrders("waiting");
         }
 
-        if (sectionNumber == 3){
+        if (sectionNumber == 2){
             presenter.getOrders("complete");
         }
     }

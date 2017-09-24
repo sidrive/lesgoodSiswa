@@ -29,10 +29,13 @@ public class OrderService {
     }
 
     public Task<Void> declineOrder(String oid){
-        return databaseRef.child("orders").child(oid).child("status").setValue("cancel");
+        return databaseRef.child("orders").child(oid).child("status").setValue("cancel_murid");
     }
 
     public Task<Void> saveOrder(Order order){
+        return databaseRef.child("orders").child(order.getOid()).setValue(order);
+    }
+    public Task<Void> order(Order order){
         return databaseRef.child("orders").child(order.getOid()).setValue(order);
     }
 }

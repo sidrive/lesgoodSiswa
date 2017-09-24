@@ -31,13 +31,13 @@ import com.lesgood.app.ui.main.MainActivity;
  */
 
 public class BaseApplication extends MultiDexApplication {
-    private AppComponent appComponent;
-    private UserComponent userComponent;
-    private MainComponent mainComponent;
-    private DefaultConfig defaultConfig;
-    private OrderDetailComponent orderDetailComponent;
-    private DetailTeacherComponent detailTeacherComponent;
-    private BookComponent bookComponent;
+    public static AppComponent appComponent;
+    public static UserComponent userComponent;
+    public static MainComponent mainComponent;
+    public static DefaultConfig defaultConfig;
+    public static OrderDetailComponent orderDetailComponent;
+    public static DetailTeacherComponent detailTeacherComponent;
+    public static BookComponent bookComponent;
 
     @Override
     protected void attachBaseContext(Context base) {

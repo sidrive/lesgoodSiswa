@@ -17,7 +17,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
         multiDexEnabled true
-        versionCode 1
+        versionCode 3
         versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -41,7 +41,7 @@ android {
             applicationId 'com.lesgood.app'
             signingConfig signingConfigs.release
             targetSdkVersion 25
-            versionCode 1
+            versionCode 3
             versionName '1.0.1'
 
             buildConfigField "String", "BASE_URL", "\"http://sandbox.duitku.com/webapi/api/\""
@@ -55,7 +55,7 @@ android {
             minSdkVersion 17
             applicationId 'com.lesgood.app'
             targetSdkVersion 25
-            versionCode 1
+            versionCode 3
             versionName '1.0.0'
 
             buildConfigField "String", "BASE_URL", "\"http://sandbox.duitku.com/webapi/api/\""

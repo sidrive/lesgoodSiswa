@@ -42,7 +42,7 @@ public class BaseApplication extends MultiDexApplication {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
-        FirebaseApp.initializeApp(base);
+        //FirebaseApp.initializeApp(base);
         defaultConfig = new DefaultConfig(base);
         MultiDex.install(getBaseContext());
     }
@@ -64,6 +64,7 @@ public class BaseApplication extends MultiDexApplication {
                 .firebaseModule(new FirebaseModule())
                 .networkModule(new NetworkModule(defaultConfig.getApiUrl()))
                 .build();
+        FirebaseApp.initializeApp(getBaseContext());
     }
 
     public AppComponent getAppComponent() {

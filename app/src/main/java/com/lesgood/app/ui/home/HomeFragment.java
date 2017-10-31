@@ -1,13 +1,10 @@
 package com.lesgood.app.ui.home;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
@@ -17,9 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -34,7 +28,6 @@ import com.lesgood.app.data.model.Category;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.ui.search.SearchActivity;
-import com.lesgood.app.ui.setting.SettingActivity;
 import com.lesgood.app.util.GridSpacingItemDecoration;
 
 import java.util.HashMap;
@@ -195,18 +188,18 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     }
 
     public void initCateogies(){
-        showAddItem(new Category("BM", "Materi Sekolah", R.drawable.courses));
-        showAddItem(new Category("MS", "Musik", R.drawable.music));
-        showAddItem(new Category("BA", "Bahasa Asing", R.drawable.google_translate_copyrighted));
-        showAddItem(new Category("BD", "Bela Diri", R.drawable.boxing));
-        showAddItem(new Category("KM", "Komputerisasi", R.drawable.workstation));
-        showAddItem(new Category("MG", "Mengaji", R.drawable.koran));
-        showAddItem(new Category("KT", "Keterampilan", R.drawable.connectdevelop));
-        showAddItem(new Category("OL", "Olahraga", R.drawable.basketball));
+        showAddItem(new Category("BM", "Materi Sekolah", R.drawable.materi_sekolah));
+        showAddItem(new Category("MS", "Musik", R.drawable.musik));
+        showAddItem(new Category("BA", "Bahasa Asing", R.drawable.bahasa_inggris));
+        showAddItem(new Category("BD", "Bela Diri", R.drawable.beladiri));
+        showAddItem(new Category("KM", "Komputerisasi", R.drawable.komputer));
+        showAddItem(new Category("MG", "Mengaji", R.drawable.mengaji));
+        showAddItem(new Category("KT", "Keterampilan", R.drawable.ketrapilan));
+        showAddItem(new Category("OL", "Olahraga", R.drawable.olah_raga));
     }
 
     private void showItems(){
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(activity, 4);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(activity, 3);
         rvItems.setLayoutManager(mLayoutManager);
         rvItems.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         rvItems.setItemAnimator(new DefaultItemAnimator());

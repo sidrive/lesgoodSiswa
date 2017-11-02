@@ -296,7 +296,7 @@ public class SearchActivity extends BaseActivity {
         }
 
         if (levelID == null){
-            Toast.makeText(this, "Pilih Tingakat", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Pilih Tingkat", Toast.LENGTH_SHORT).show();
             cancel = true;
         }
 

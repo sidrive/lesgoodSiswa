@@ -51,7 +51,7 @@ android {
             buildConfigField "String", "MERCHANT_KEY", "\"84f1dfc4d8b71b13ef1248296099cb4e\""
         }
 
-        debugConfig{
+        debugConfig {
             minSdkVersion 17
             applicationId 'com.lesgood.app'
             targetSdkVersion 25
@@ -72,6 +72,7 @@ android {
 }
 
 dependencies {
+    compile 'com.google.firebase:firebase-auth:10.2.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.supportV7
     compile rootProject.ext.supportDesign

@@ -200,7 +200,12 @@ public class DetailTeacherActivity extends BaseActivity {
 
     public void initPrice(int price){
         this.user.setStartFrom(price);
-        txtPrice.setText("Mulai dari "+Utils.getRupiah(price)+" /100 menit");
+        double fee = 0;
+
+        fee = price * 0.3;
+
+        int finaltarif = (int) ((price + fee) + 0.5d);
+        txtPrice.setText("Mulai dari "+Utils.getRupiah(finaltarif)+" /100 menit");
     }
 
 

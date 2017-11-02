@@ -375,7 +375,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
             tarif = skill.getPrice5();
         }
 
-        fee = tarif * 0.5;
+        fee = tarif * 0.3;
 
         this.cleanTarif = tarif;
         this.fee = fee;
@@ -492,7 +492,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
 
         if (siswa < 1 || siswa > 5) {
             cancel = true;
-            Toast.makeText(this, "Minumal siswa 1 dan maksimal 5", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Minimal siswa 1 dan maksimal 5", Toast.LENGTH_SHORT).show();
         }
 
         if (TextUtils.isEmpty(detilLokasi)) {
@@ -543,7 +543,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
             order.setDetailLocation(detilLokasi);
             order.setTotalPertemuan(totalPertemuan);
             order.setTotal(total);
-            order.setStatus("pending_guru");
+            order.setStatus("Menunggu Konfirmasi Guru");
             order.setDiscount(discount);
             order.setCustomerPhone(user.getPhone());
             order.setCustomerName(user.getFull_name());

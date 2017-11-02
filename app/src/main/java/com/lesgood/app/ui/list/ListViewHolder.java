@@ -103,9 +103,10 @@ public class ListViewHolder extends RecyclerView.ViewHolder{
                     int tarif = skill.getPrice1();
                     double fee = 0;
 
-                    fee = tarif * 0.5;
+                    fee = tarif * 0.3;
 
                     int finaltarif = (int) ((tarif + fee) + 0.5d);
+
                     txtPrice.setText(Utils.getRupiah(finaltarif));
                 }
             }

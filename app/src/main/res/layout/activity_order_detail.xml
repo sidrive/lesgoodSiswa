@@ -199,12 +199,12 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/activity_half_margin">
                     <com.lesgood.app.util.TypefacedTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Gross"
-                        app:typeface="Roboto-Regular.ttf"
-                        android:textSize="16sp"/>
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:text="Total"
+                      android:textSize="16sp"
+                      app:typeface="Roboto-Regular.ttf"/>
 
                     <com.lesgood.app.util.TypefacedTextView
                         android:layout_width="match_parent"
@@ -245,12 +245,12 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/activity_half_margin">
                     <com.lesgood.app.util.TypefacedTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Total"
-                        app:typeface="Roboto-Regular.ttf"
-                        android:textSize="16sp"/>
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_weight="1"
+                      android:text="Jumlah Yang Harus Dibayar"
+                      android:textSize="16sp"
+                      app:typeface="Roboto-Regular.ttf"/>
 
                     <com.lesgood.app.util.TypefacedTextView
                         android:layout_width="match_parent"

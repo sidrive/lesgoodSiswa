@@ -154,8 +154,15 @@ public class OrderDetailActivity extends BaseActivity {
 
 
     public void init(){
+        txtCustomerName.setText(order.getCustomerName().toUpperCase());
         txtOrderId.setText("#"+order.getOid());
-        txtStatus.setText(order.getStatus().toUpperCase());
+        String statusOrder =  order.getStatus();
+        if(statusOrder.equalsIgnoreCase("pending_guru")){
+        txtStatus.setText("Menunggu Konfirmasi Guru");
+        }else{
+        txtStatus.setText("Menunggu Pembayaran");
+        }
+        //txtStatus.setText(order.getStatus().toUpperCase());
         txtDate.setText(DateFormatter.getDate(order.getPertemuanTime(), "EEE, dd MMM yyyy, HH:mm"));
         txtProduct.setText(order.getTitle());
         txtSiswa.setText(String.valueOf(order.getTotalSiswa()));

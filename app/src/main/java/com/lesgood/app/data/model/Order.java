@@ -88,7 +88,7 @@ public class Order {
         this.title = title;
         this.status = status;
         this.amount = amount;
-        this.fee = amount * 0.5;
+        this.fee = amount * 0.3;
         this.total = amount+fee;
         this.pertemuan = pertemuan;
         this.ordertime = ordertime;

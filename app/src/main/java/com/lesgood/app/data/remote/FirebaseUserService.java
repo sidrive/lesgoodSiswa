@@ -65,10 +65,7 @@ public class FirebaseUserService {
                 .build();
 
         googleApiClient = new GoogleApiClient.Builder(activity)
-                .enableAutoManage(activity, new GoogleApiClient.OnConnectionFailedListener() {
-                    @Override
-                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-                    }
+                .enableAutoManage(activity, connectionResult -> {
                 })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
@@ -106,12 +103,9 @@ public class FirebaseUserService {
 
                     FirebaseAuth.getInstance().signOut();
                     if(googleApiClient.isConnected()) {
-                        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallback<Status>() {
-                            @Override
-                            public void onResult(@NonNull Status status) {
-                                if (status.isSuccess()) {
-                                    Log.d("googlesignout", "user logout");
-                                }
+                        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(status -> {
+                            if (status.isSuccess()) {
+                                Log.d("googlesignout", "user logout");
                             }
                         });
                     }

@@ -84,21 +84,14 @@ public class PrestasiPresenter implements BasePresenter {
     }
 
     public void deletePrestasi(final Prestasi prestasi){
-        userService.removePrestasi(user.getUid(), prestasi).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                activity.showLoading(false);
-                activity.showRemovedItem(prestasi);
-            }
+        userService.removePrestasi(user.getUid(), prestasi).addOnCompleteListener(task -> {
+            activity.showLoading(false);
+            activity.showRemovedItem(prestasi);
         });
     }
 
     public void updatePrestasi(Prestasi prestasi){
-        userService.updatePrestasi(user.getUid(), prestasi).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                activity.showLoading(false);
-            }
-        });
+        userService.updatePrestasi(user.getUid(), prestasi).addOnCompleteListener(
+            task -> activity.showLoading(false));
     }
 }

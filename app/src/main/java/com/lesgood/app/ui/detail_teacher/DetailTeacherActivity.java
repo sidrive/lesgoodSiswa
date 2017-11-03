@@ -108,8 +108,6 @@ public class DetailTeacherActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_techear);
         ButterKnife.bind(this);
-
-
         setTitle("Profil");
         init();
 

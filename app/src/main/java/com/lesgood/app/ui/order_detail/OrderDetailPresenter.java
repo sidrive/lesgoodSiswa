@@ -38,30 +38,13 @@ public class OrderDetailPresenter implements BasePresenter {
     }
 
     public void acceptOrder(final Order order){
-        orderService.approveOrder(order.getOid()).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                activity.successAction(order);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                activity.successAction(order);
-            }
-        });
+        orderService.approveOrder(order.getOid()).addOnCompleteListener(
+            task -> activity.successAction(order)).addOnFailureListener(e -> activity.successAction(order));
     }
 
     public void declineOrder(final Order order){
-        orderService.declineOrder(order.getOid()).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
+        orderService.declineOrder(order.getOid()).addOnFailureListener(e -> {
 
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                activity.successAction(order);
-            }
-        });
+        }).addOnCompleteListener(task -> activity.successAction(order));
     }
 }

@@ -223,13 +223,10 @@ public class SearchActivity extends BaseActivity {
     private void showDialogSelectCategory() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Pilih Kategori");
-        alert.setSingleChoiceItems(categories, categoryVal, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                handleSelectCategory(which);
-                dialog.dismiss();
+        alert.setSingleChoiceItems(categories, categoryVal, (dialog, which) -> {
+            handleSelectCategory(which);
+            dialog.dismiss();
 
-            }
         });
         alert.show();
     }
@@ -245,13 +242,10 @@ public class SearchActivity extends BaseActivity {
     private void showDialogSelectSubCategory() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Pilih Materi");
-        alert.setSingleChoiceItems(subcategories, subcategoryVal, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                handleSelectSubCategory(which);
-                dialog.dismiss();
+        alert.setSingleChoiceItems(subcategories, subcategoryVal, (dialog, which) -> {
+            handleSelectSubCategory(which);
+            dialog.dismiss();
 
-            }
         });
         alert.show();
     }
@@ -268,13 +262,10 @@ public class SearchActivity extends BaseActivity {
     private void showDialogSelectLevel() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Pilih Tingkat");
-        alert.setSingleChoiceItems(levels, levelVal, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                handleSelectLevel(which);
-                dialog.dismiss();
+        alert.setSingleChoiceItems(levels, levelVal, (dialog, which) -> {
+            handleSelectLevel(which);
+            dialog.dismiss();
 
-            }
         });
         alert.show();
     }

@@ -37,12 +37,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ((CategoryViewHolder)holder).bind(items.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onUserItemClicked(items.get(position));
-            }
-        });
+        holder.itemView.setOnClickListener(v -> onUserItemClicked(items.get(position)));
     }
 
     private void onUserItemClicked(Category item) {

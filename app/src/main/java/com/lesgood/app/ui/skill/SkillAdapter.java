@@ -36,12 +36,7 @@ public class SkillAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ((SkillViewHolder)holder).bind(items.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClicked(items.get(position));
-            }
-        });
+        holder.itemView.setOnClickListener(v -> onItemClicked(items.get(position)));
 
     }
 

@@ -44,12 +44,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ((ListViewHolder)holder).bind(items.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onUserItemClicked(((ListViewHolder) holder).user);
-            }
-        });
+        holder.itemView.setOnClickListener(v -> onUserItemClicked(((ListViewHolder) holder).user));
     }
 
     private void onUserItemClicked(Guru item) {

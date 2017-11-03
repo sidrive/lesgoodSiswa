@@ -72,36 +72,31 @@ public class MainActivity extends BaseActivity {
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            = item -> {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = HomeFragment.newInstance();
 
-            Fragment fragment = HomeFragment.newInstance();
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        fragment = HomeFragment.newInstance();
+                        break;
+                    case R.id.navigation_order:
+                        fragment = OrderFragment.newInstance();
+                        break;
+                    case R.id.navigation_profile:
+                        fragment = ProfileFragment.newInstance();
+                        break;
+                }
 
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    fragment = HomeFragment.newInstance();
-                    break;
-                case R.id.navigation_order:
-                    fragment = OrderFragment.newInstance();
-                    break;
-                case R.id.navigation_profile:
-                    fragment = ProfileFragment.newInstance();
-                    break;
-            }
+                if (fragment != null) {
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.content_frame, fragment);
+                    ft.commit();
+                    return true;
+                }
 
-            if (fragment != null) {
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.content_frame, fragment);
-                ft.commit();
-                return true;
-            }
-
-            return false;
-        }
-
-    };
+                return false;
+            };
 
 
     public static void startWithUser(BaseActivity activity, final User user) {

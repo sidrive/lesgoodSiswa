@@ -270,12 +270,9 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
 
         mMap.setMyLocationEnabled(true);
 
-        mMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-            @Override
-            public boolean onMyLocationButtonClick() {
-                LatLng latLng = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
-                return false;
-            }
+        mMap.setOnMyLocationButtonClickListener(() -> {
+            LatLng latLng = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
+            return false;
         });
     }
 
@@ -588,12 +585,10 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
                 .setTitle(title)
                 .setMessage(desc)
                 .setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                        dialog.dismiss();
-                        startActivity(intent);
-                    }
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // continue with delete
+                    dialog.dismiss();
+                    startActivity(intent);
                 })
                 .setIcon(icon)
                 .show();

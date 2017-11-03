@@ -38,35 +38,32 @@ public class SkillAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ((SkillViewHolder)holder).bind(items.get(position), position);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RadioButton cb = ((SkillViewHolder) holder).radioButton;
-                int clickedPos = ((Integer)cb.getTag()).intValue();
+        holder.itemView.setOnClickListener(v -> {
+            RadioButton cb = ((SkillViewHolder) holder).radioButton;
+            int clickedPos = ((Integer)cb.getTag()).intValue();
 
-                if (cb.isChecked()) cb.setChecked(false);
-                else cb.setChecked(true);
+            if (cb.isChecked()) cb.setChecked(false);
+            else cb.setChecked(true);
 
-                if(cb.isChecked())
+            if(cb.isChecked())
+            {
+
+                if(lastChecked != null)
                 {
-
-                    if(lastChecked != null)
-                    {
-                        lastChecked.setChecked(false);
-                        items.get(lastCheckedPos).setSelected(false);
-                    }
-
-                    lastChecked = cb;
-                    lastCheckedPos = clickedPos;
+                    lastChecked.setChecked(false);
+                    items.get(lastCheckedPos).setSelected(false);
                 }
-                else
 
-                    lastChecked = null;
-
-                items.get(clickedPos).setSelected(cb.isSelected());
-
-                onItemClicked(items.get(position));
+                lastChecked = cb;
+                lastCheckedPos = clickedPos;
             }
+            else
+
+                lastChecked = null;
+
+            items.get(clickedPos).setSelected(cb.isSelected());
+
+            onItemClicked(items.get(position));
         });
 
     }

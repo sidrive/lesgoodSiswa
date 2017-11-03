@@ -34,16 +34,13 @@ public class SplashPresenter implements BasePresenter {
 
     @Override
     public void subscribe() {
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+        authListener = firebaseAuth -> {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
 
-                if(user == null) {
-                    activity.showLoginActivity();
-                } else {
-                    processLogin(user);
-                }
+            if(user == null) {
+                activity.showLoginActivity();
+            } else {
+                processLogin(user);
             }
         };
 

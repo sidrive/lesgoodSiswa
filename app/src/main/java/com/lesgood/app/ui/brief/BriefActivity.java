@@ -195,11 +195,9 @@ public class BriefActivity extends BaseActivity {
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(desc)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                        dialog.dismiss();
-                    }
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // continue with delete
+                    dialog.dismiss();
                 })
                 .setIcon(icon)
                 .show();
@@ -264,45 +262,37 @@ public class BriefActivity extends BaseActivity {
         final Button btnSave = (Button) dialog.findViewById(R.id.btn_positif);
         Button btnCancel = (Button) dialog.findViewById(R.id.btn_negatif);
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                inputURL.setError(null);
-                inputAlias.setError(null);
+        btnSave.setOnClickListener(v -> {
+            inputURL.setError(null);
+            inputAlias.setError(null);
 
-                String url = inputURL.getText().toString();
-                String alias = inputAlias.getText().toString();
+            String url = inputURL.getText().toString();
+            String alias = inputAlias.getText().toString();
 
-                boolean cancel = false;
-                View focusView = null;
+            boolean cancel = false;
+            View focusView = null;
 
-                if (TextUtils.isEmpty(url)){
-                    inputURL.setError(errRequired);
-                    cancel = true;
-                    focusView = inputURL;
-                }
-
-                if (TextUtils.isEmpty(alias)){
-                    inputAlias.setError(errRequired);
-                    cancel = true;
-                    focusView = inputAlias;
-                }
-
-                if (cancel){
-                    focusView.requestFocus();
-                }else{
-                    editor.insertLink(url, alias);
-                }
-
+            if (TextUtils.isEmpty(url)){
+                inputURL.setError(errRequired);
+                cancel = true;
+                focusView = inputURL;
             }
+
+            if (TextUtils.isEmpty(alias)){
+                inputAlias.setError(errRequired);
+                cancel = true;
+                focusView = inputAlias;
+            }
+
+            if (cancel){
+                focusView.requestFocus();
+            }else{
+                editor.insertLink(url, alias);
+            }
+
         });
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
 
         dialog.show();
     }

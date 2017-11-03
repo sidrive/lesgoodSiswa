@@ -35,20 +35,10 @@ public class PertemuanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ((PertemuanViewHolder)holder).bind(items.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClicked(items.get(position));
-            }
-        });
+        holder.itemView.setOnClickListener(v -> onItemClicked(items.get(position)));
 
-        ((PertemuanViewHolder) holder).imgRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemRemoved(items.get(position));
-
-            }
-        });
+        ((PertemuanViewHolder) holder).imgRemove.setOnClickListener(
+            v -> onItemRemoved(items.get(position)));
     }
 
     private void onItemClicked(Jadwal item) {

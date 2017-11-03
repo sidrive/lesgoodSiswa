@@ -326,17 +326,14 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
     private void showDialogGender() {
         final AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Jenis Kelamin");
-        alert.setSingleChoiceItems(charGenders, genderVal, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String whichIs = charGenders[which].toString();
+        alert.setSingleChoiceItems(charGenders, genderVal, (dialog, which) -> {
+            String whichIs = charGenders[which].toString();
 
-                inputGender.setText(whichIs);
-                genderVal = which;
+            inputGender.setText(whichIs);
+            genderVal = which;
 
-                dialog.dismiss();
+            dialog.dismiss();
 
-            }
         });
         alert.show();
     }

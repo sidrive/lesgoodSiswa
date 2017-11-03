@@ -230,12 +230,8 @@ public class LocationService extends Service implements
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, new com.google.android.gms.location.LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        listener.onLocationChanged(location);
-                    }
-                });
+                mGoogleApiClient, mLocationRequest,
+            location -> listener.onLocationChanged(location));
     }
 
     @Override

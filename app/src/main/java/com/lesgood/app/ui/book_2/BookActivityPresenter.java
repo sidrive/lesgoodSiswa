@@ -67,17 +67,9 @@ public class BookActivityPresenter implements BasePresenter {
     }
 
     public void saveOrder(Order order){
-        orderService.saveOrder(order).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                activity.successOrdering();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                activity.showLoading(false);
-                Toast.makeText(activity, "Gagal memproses pesanan", Toast.LENGTH_SHORT).show();
-            }
+        orderService.saveOrder(order).addOnCompleteListener(task -> activity.successOrdering()).addOnFailureListener(e -> {
+            activity.showLoading(false);
+            Toast.makeText(activity, "Gagal memproses pesanan", Toast.LENGTH_SHORT).show();
         });
     }
 }

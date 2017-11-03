@@ -85,21 +85,14 @@ public class PengalamanPresenter implements BasePresenter {
     }
 
     public void deletePrestasi(final Pengalaman pengalaman){
-        userService.removePengalaman(user.getUid(), pengalaman).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                activity.showLoading(false);
-                activity.showRemovedItem(pengalaman);
-            }
+        userService.removePengalaman(user.getUid(), pengalaman).addOnCompleteListener(task -> {
+            activity.showLoading(false);
+            activity.showRemovedItem(pengalaman);
         });
     }
 
     public void updatePrestasi(Pengalaman pengalaman){
-        userService.updatePengalaman(user.getUid(), pengalaman).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                activity.showLoading(false);
-            }
-        });
+        userService.updatePengalaman(user.getUid(), pengalaman).addOnCompleteListener(
+            task -> activity.showLoading(false));
     }
 }

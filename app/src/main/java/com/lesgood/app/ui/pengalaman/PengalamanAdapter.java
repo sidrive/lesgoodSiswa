@@ -34,20 +34,10 @@ public class PengalamanAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ((PengalamanViewHolder)holder).bind(items.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemClicked(items.get(position));
-            }
-        });
+        holder.itemView.setOnClickListener(v -> onItemClicked(items.get(position)));
 
-        ((PengalamanViewHolder) holder).imgRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.showDeleteItem(items.get(position));
-
-            }
-        });
+        ((PengalamanViewHolder) holder).imgRemove.setOnClickListener(
+            v -> activity.showDeleteItem(items.get(position)));
     }
 
     private void onItemClicked(Pengalaman item) {

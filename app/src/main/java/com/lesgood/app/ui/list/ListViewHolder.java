@@ -70,6 +70,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder{
 
     public void getGuru(final String uid){
         getGuruTarif(uid);
+
         userService.getUser(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

@@ -83,11 +83,6 @@ public class CompleteOrderPresenter implements BasePresenter {
 
 
     public void updateOrder(Order order, final TransactionResponse response){
-        orderService.order(order).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                activity.showPayment(response);
-            }
-        });
+        orderService.order(order).addOnCompleteListener(task -> activity.showPayment(response));
     }
 }

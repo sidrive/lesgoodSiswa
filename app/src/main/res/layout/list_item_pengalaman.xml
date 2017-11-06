@@ -13,10 +13,10 @@
         android:gravity="center_vertical"
         android:id="@+id/txt_name"/>
 
-    <ImageView
+    <!--<ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/img_remove"
         android:padding="@dimen/activity_margin"
-        android:src="@drawable/delete_sign"/>
+        android:src="@drawable/delete_sign"/>-->
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.lesgood.app.ui.skill;
 
 
 import com.lesgood.app.base.annotation.ActivityScope;
+import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.UserService;
 
@@ -22,12 +23,12 @@ public class SkillActivityModule {
     @ActivityScope
     @Provides
     SkillActivity provideSkillActivity(){
-        return activity;
+        return activity = activity;
     }
 
     @ActivityScope
     @Provides
-    SkillPresenter provideSkillPresenter(UserService userService, User user){
+    SkillPresenter provideSkillPresenter(UserService userService, Guru user){
         return new SkillPresenter(activity, userService, user);
     }
 

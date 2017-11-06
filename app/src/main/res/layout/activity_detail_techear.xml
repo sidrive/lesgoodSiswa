@@ -54,12 +54,13 @@
                         android:layout_marginTop="10dp"/>
 
                     <RatingBar
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/ratingBar"
-                        android:visibility="gone"
-                        android:clickable="false"
-                        android:layout_marginTop="10dp"/>
+                      android:id="@+id/rtg_bar"
+                      style="@style/ratingBar"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="10dp"
+                      android:clickable="false"
+                      android:visibility="gone"/>
 
                     <com.lesgood.app.util.TypefacedTextView
                         android:layout_width="wrap_content"
@@ -128,10 +129,11 @@
                             app:typeface="Roboto-Regular.ttf"/>
 
                         <RatingBar
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            style="@style/ratingBar"
-                            android:isIndicator="true"/>
+                          android:id="@+id/rating_bar"
+                          style="@style/ratingBar"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:isIndicator="true"/>
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -331,6 +333,8 @@
     </ScrollView>
 
     <include layout="@layout/toolbar_basic"/>
+
+    <include layout="@layout/view_progress"/>
 
     <Button
         android:layout_width="match_parent"

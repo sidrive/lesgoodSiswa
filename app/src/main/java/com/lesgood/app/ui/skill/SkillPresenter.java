@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lesgood.app.base.BasePresenter;
+import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.UserService;
@@ -25,9 +26,9 @@ public class SkillPresenter implements BasePresenter {
     UserService userService;
     DatabaseReference databaseRef;
     ChildEventListener childEventListener;
-    User user;
+    Guru user;
 
-    public SkillPresenter(SkillActivity activity, UserService userService, User user){
+    public SkillPresenter(SkillActivity activity, UserService userService, Guru user){
         this.activity = activity;
         this.userService = userService;
         this.user = user;

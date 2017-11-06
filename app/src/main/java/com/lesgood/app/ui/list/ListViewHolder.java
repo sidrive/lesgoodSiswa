@@ -1,11 +1,15 @@
 package com.lesgood.app.ui.list;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +34,8 @@ import static com.bumptech.glide.load.engine.DiskCacheStrategy.NONE;
  * Created by Agus on 3/6/17.
  */
 
-public class ListViewHolder extends RecyclerView.ViewHolder{
+public class ListViewHolder extends RecyclerView.ViewHolder {
+
     @Bind(R.id.txt_name)
     TextView txtName;
 
@@ -53,7 +58,8 @@ public class ListViewHolder extends RecyclerView.ViewHolder{
 
     ListActivity activity;
 
-    public ListViewHolder(View itemView, UserService userService, FirebaseImageService firebaseImageService, ListActivity activity) {
+    public ListViewHolder(View itemView, UserService userService,
+        FirebaseImageService firebaseImageService, ListActivity activity) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.itemView = itemView;
@@ -68,18 +74,18 @@ public class ListViewHolder extends RecyclerView.ViewHolder{
 
     }
 
-    public void getGuru(final String uid){
+    public void getGuru(final String uid) {
         getGuruTarif(uid);
 
         userService.getUser(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Guru userf = dataSnapshot.getValue(Guru.class);
-                if (userf != null){
+                if (userf != null) {
                     user = userf;
 
                     txtName.setText(userf.getFull_name());
-                    txtSkill.setText(user.getTotalSkill()+" Kemampuan Mengajar");
+                    txtSkill.setText(user.getTotalSkill() + " Kemampuan Mengajar");
 
 
                 }
@@ -92,43 +98,42 @@ public class ListViewHolder extends RecyclerView.ViewHolder{
         });
     }
 
-    public void getGuruTarif(String uid){
+    public void getGuruTarif(String uid) {
 
+        userService.getUserSkill(uid, activity.code)
+            .addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Skill skill = dataSnapshot.getValue(Skill.class);
+                    if (skill != null) {
 
-        userService.getUserSkill(uid, activity.code).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Skill skill = dataSnapshot.getValue(Skill.class);
-                if (skill != null){
+                        int tarif = skill.getPrice1();
+                        double fee = 0;
 
-                    int tarif = skill.getPrice1();
-                    double fee = 0;
+                        fee = tarif * 0.3;
 
-                    fee = tarif * 0.3;
+                        int finaltarif = (int) ((tarif + fee) + 0.5d);
 
-                    int finaltarif = (int) ((tarif + fee) + 0.5d);
-
-                    txtPrice.setText(Utils.getRupiah(finaltarif));
+                        txtPrice.setText(Utils.getRupiah(finaltarif));
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
 
-            }
-        });
+                }
+            });
     }
 
-    public void getAvatar(String uid){
+    public void getAvatar(String uid) {
         StorageReference coverRef = firebaseImageService.getImageRefThumb(uid);
         Glide.with(itemView.getContext())
-                .using(new FirebaseImageLoader())
-                .load(coverRef)
-                .placeholder(R.drawable.bg_wave_primary)
-                .dontAnimate()
-                .diskCacheStrategy(NONE)
-                .skipMemoryCache(true)
-                .into(imgAvatar);
+            .using(new FirebaseImageLoader())
+            .load(coverRef)
+            .placeholder(R.drawable.bg_wave_primary)
+            .dontAnimate()
+            .diskCacheStrategy(NONE)
+            .skipMemoryCache(true)
+            .into(imgAvatar);
     }
-
 }

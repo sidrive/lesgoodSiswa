@@ -153,10 +153,9 @@ public class PrestasiActivity extends BaseActivity {
         rvItems.setLayoutManager(linearLayoutManager);
     }
 
-    public void showDeleteItem(Prestasi Prestasi){
+    /*public void showDeleteItem(Prestasi Prestasi){
         showLoading(true);
         presenter.deletePrestasi(Prestasi);
     }
-
-
+*/
 }

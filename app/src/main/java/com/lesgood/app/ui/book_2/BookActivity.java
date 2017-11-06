@@ -540,7 +540,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
             order.setDetailLocation(detilLokasi);
             order.setTotalPertemuan(totalPertemuan);
             order.setTotal(total);
-            order.setStatus("Menunggu Konfirmasi Guru");
+            order.setStatus("pending_guru");
             order.setDiscount(discount);
             order.setCustomerPhone(user.getPhone());
             order.setCustomerName(user.getFull_name());

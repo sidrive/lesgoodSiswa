@@ -103,6 +103,7 @@ public class BookActivity extends BaseActivity implements DialogAddPertemuan.OnD
         setContentView(R.layout.activity_book);
         ButterKnife.bind(this);
 
+        //showLoading(true);
         toolbar.setTitle("Pesan Pengajar");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

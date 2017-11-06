@@ -1,5 +1,6 @@
 package com.lesgood.app.ui.detail_teacher;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,8 +13,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -51,6 +55,15 @@ public class DetailTeacherActivity extends BaseActivity {
     private static String TAG = "ProfileFragment";
     private static int REQUEST_CODE_ADD_BRIEF = 1054;
     private static int REQUEST_CODE_SKIL = 1059;
+
+    @Bind(R.id.view_progress)
+    LinearLayout viewProgress;
+
+    @Bind(R.id.rating_bar)
+    RatingBar rating;
+
+    @Bind(R.id.txt_rating)
+    TextView totalrating;
 
     @Bind(R.id.txt_name)
     TextView txtName;
@@ -139,8 +152,14 @@ public class DetailTeacherActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("ResourceType")
     private void init(){
         txtName.setText(user.getFull_name());
+
+        float ratings = user.getReview() / 2;
+        totalrating.setText(String.valueOf(ratings));
+        rating.setRating(ratings);
+
         if (user.getPhoto_url() != null) {
             if (!user.getPhoto_url().equalsIgnoreCase("NOT")){
                 Glide.with(this)
@@ -215,14 +234,24 @@ public class DetailTeacherActivity extends BaseActivity {
     }
 
     @OnClick(R.id.lin_skill)
-    void showSkills(){
+    /*void showSkills(){
         startActivityForResult(new Intent(this, SkillActivity.class), REQUEST_CODE_SKIL);
+    }*/
+    void showSkills(){
+        startActivity(new Intent(this, SkillActivity.class));
     }
 
     @OnClick(R.id.lin_location)
     void showSetLocation(){
 
     }
+   void Loading(boolean show){
+    if(show){
+      viewProgress.setVisibility(View.VISIBLE);
+    }else{
+      viewProgress.setVisibility(View.GONE);
+    }
+  }
 
     @OnClick(R.id.lin_prestasi)
     void showPrestasi(){
@@ -241,6 +270,8 @@ public class DetailTeacherActivity extends BaseActivity {
 
     @OnClick(R.id.btn_book)
     void showBook(){
+
+        Loading(true);
         startActivity(new Intent(this, BookActivity.class));
     }
 

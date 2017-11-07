@@ -104,7 +104,7 @@ public class SearchActivity extends BaseActivity {
             seletedID = extras.getString("id");
         }
 
-        toolbar.setTitle("Cari Pegnajar");
+        toolbar.setTitle("Cari Pengajar");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

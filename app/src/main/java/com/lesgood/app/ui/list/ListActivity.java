@@ -1,7 +1,6 @@
 package com.lesgood.app.ui.list;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,16 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
+import android.widget.Toast;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
-import com.lesgood.app.data.model.Skill;
-import com.lesgood.app.data.model.User;
+import com.lesgood.app.data.remote.UserService;
 import com.lesgood.app.ui.detail_teacher.DetailTeacherActivity;
-import com.lesgood.app.ui.search.SearchActivity;
-import com.lesgood.app.ui.search.SearchActivityModule;
 
 import java.util.Random;
 
@@ -59,6 +56,9 @@ public class ListActivity extends BaseActivity {
     @Inject
     ListAdapter adapter;
 
+    UserService userService;
+    Guru user;
+
     public String code, pelajaran;
 
     public static void startWithData(BaseActivity activity, String code, String pelajaran){
@@ -87,7 +87,9 @@ public class ListActivity extends BaseActivity {
 
             if (code != null) {
                 Log.d("search", "code = "+code);
-                presenter.getGurus(code);
+
+                        presenter.getGurus(code);
+
             }
 
         }
@@ -143,8 +145,20 @@ public class ListActivity extends BaseActivity {
         presenter.unsubscribe();
     }
 
+    public String showStatus(String item) {
+
+    return item;
+
+    }
+
+
     public void showAddedItem(String item) {
-        adapter.onItemAdded(item);
+        String stat = showStatus(item);
+        if (stat != null ){
+             adapter.onItemAdded(item);
+      }else{
+        Toast.makeText(this, stat+"Data Tidak Ada", Toast.LENGTH_SHORT).show();
+      }
     }
 
     public void showChangedItem(String item) {

@@ -1,11 +1,13 @@
 package com.lesgood.app.ui.list;
 
+import android.widget.Toast;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lesgood.app.base.BasePresenter;
+import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.UserService;
 
@@ -36,14 +38,18 @@ public class ListPresenter implements BasePresenter {
     public void unsubscribe() {
         if (childEventListener != null) databaseRef.removeEventListener(childEventListener);
     }
+    
 
     public void getGurus(String code){
+
         childEventListener = userService.getGurus(code).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
-                    activity.showAddedItem(uid);
+                        getUserStatus(uid);
+                        //activity.showAddedItem(uid);
+
                 }
             }
 
@@ -74,4 +80,54 @@ public class ListPresenter implements BasePresenter {
             }
         });
     }
+
+    private void getUserStatus(String code) {
+        //activity.showAddedItem(code);
+        String pelajaran = "BINGPM";
+        String code2 = "hQg3kf6isfXDNsD3JuphFt79ffg2";
+        childEventListener = userService.getStatus(code).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                if (dataSnapshot.getValue() != null){
+                    String status = (String) dataSnapshot.getValue();
+                    if (status.equals("true")){
+                        activity.showAddedItem(code);
+                    }/*else {
+                        Toast.makeText(activity, "Something Wrong", Toast.LENGTH_SHORT).show();
+                    }*/
+
+               }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.getValue() != null){
+                    String uid = dataSnapshot.getKey();
+                    activity.showChangedItem(uid);
+                }
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() != null){
+                    String uid = dataSnapshot.getKey();
+                    activity.showRemovedItem(uid);
+                }
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+
 }

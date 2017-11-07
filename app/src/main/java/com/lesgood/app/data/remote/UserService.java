@@ -7,7 +7,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.lesgood.app.data.model.EmailConfirmation;
-import com.lesgood.app.data.model.OTPdata;
 import com.lesgood.app.data.model.Pengalaman;
 import com.lesgood.app.data.model.Prestasi;
 import com.lesgood.app.data.model.Skill;
@@ -86,6 +85,10 @@ public class UserService {
 
     public DatabaseReference getUserSkill(String uid, String code){
         return databaseRef.child("user-skills").child(uid).child(code);
+    }
+
+    public DatabaseReference getStatus(String uid){
+        return databaseRef.child("user-status").child(uid);
     }
 
     public void updateTotalSkill(String uid, int total){
@@ -174,5 +177,11 @@ public class UserService {
     public DatabaseReference getGurus(String code){
         return databaseRef.child("gurus").child(code);
     }
+
+    public DatabaseReference getUserStatus(String uid){
+        return databaseRef.child("users").child(uid);
+    }
+
+
 
 }

@@ -230,7 +230,7 @@ public class DetailTeacherActivity extends BaseActivity {
     void showEditAbout(){
         Intent intent = new Intent(this, BriefActivity.class);
         intent.putExtra("brief", userAbout);
-        startActivityForResult(intent, REQUEST_CODE_ADD_BRIEF);
+       /* startActivityForResult(intent, REQUEST_CODE_ADD_BRIEF);*/
     }
 
     @OnClick(R.id.lin_skill)

@@ -57,6 +57,7 @@ public class ListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void onItemAdded(String item) {
+
         items.add(item);
         notifyItemChanged(items.size()-1);
     }

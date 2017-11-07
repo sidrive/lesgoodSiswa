@@ -82,9 +82,7 @@ public class ListPresenter implements BasePresenter {
     }
 
     private void getUserStatus(String code) {
-        //activity.showAddedItem(code);
-        String pelajaran = "BINGPM";
-        String code2 = "hQg3kf6isfXDNsD3JuphFt79ffg2";
+
         childEventListener = userService.getStatus(code).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

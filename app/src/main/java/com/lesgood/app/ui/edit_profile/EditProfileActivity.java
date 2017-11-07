@@ -24,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
@@ -66,7 +68,8 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
     public static final int REQUST_CODE_GALLERY = 1001;
     private static final int RC_CAMERA_PERM = 205;
     public static Uri mCapturedImageURI;
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
     @BindString(R.string.error_field_required)
     String strErrRequired;
 
@@ -147,15 +150,13 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         ButterKnife.bind(this);
-
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         setTitle("Ubah Data Profil");
-
         charGenders = getResources().getStringArray(R.array.list_gender);
-
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             register = extras.getBoolean("register");
@@ -251,10 +252,11 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
 
     private void init(){
 
-        if (user.getFull_name() != null) inputName.setText(user.getFull_name());
+        if (user.getFull_name() != null) inputName.setText(user.getFull_name());else inputName.setText(mUser.getDisplayName());
+
         if (user.getBirthday() != 0) initBirthDay(user.getBirthday());
         if (user.getGender() != null) initGender(user.getGender());
-        if (user.getEmail() != null) inputEmail.setText(user.getEmail());
+        if (user.getEmail() != null) inputEmail.setText(user.getEmail());else inputEmail.setText(mUser.getEmail());
         if (user.getPhone() != null) inputPhone.setText(user.getPhone());
         if (user.getPhoto_url() != null){
             if (!user.getPhoto_url().equals("NOT")) {
@@ -264,6 +266,8 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
                         .dontAnimate()
                         .into(imgAvatar);
             }
+        }else {
+            Glide.with(this).load(mUser.getPhotoUrl()).placeholder(R.color.colorSoft).dontAnimate().into(imgAvatar);
         }
     }
 

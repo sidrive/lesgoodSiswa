@@ -185,9 +185,7 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
         }
 
         if (id == R.id.menu_done){
-            showLoading(true);
             validate();
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -474,6 +472,7 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
             if (imgOriginal != null) {
                 presenter.uploadAvatar(user, imgSmall, imgOriginal);
             }else{
+                showLoading(true);
                 presenter.updateProfile(user);
             }
 

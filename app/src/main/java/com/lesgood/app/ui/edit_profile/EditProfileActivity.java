@@ -330,10 +330,8 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
         alert.setTitle("Jenis Kelamin");
         alert.setSingleChoiceItems(charGenders, genderVal, (dialog, which) -> {
             String whichIs = charGenders[which].toString();
-
             inputGender.setText(whichIs);
             genderVal = which;
-
             dialog.dismiss();
 
         });
@@ -417,6 +415,7 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
         }else{
             Toast.makeText(this, "Data Tersimpan", Toast.LENGTH_SHORT).show();
             BaseApplication.get(this).createUserComponent(user);
+            finish();
         }
     }
 

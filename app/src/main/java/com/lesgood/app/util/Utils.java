@@ -1,7 +1,9 @@
 package com.lesgood.app.util;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
+import android.widget.Toast;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
@@ -50,5 +52,8 @@ public class Utils {
             e.printStackTrace();
         }
         return "";
+    }
+    public static void showToas(Context context, String msg){
+        Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
     }
 }

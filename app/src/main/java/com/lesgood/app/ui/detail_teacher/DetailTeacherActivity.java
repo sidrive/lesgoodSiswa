@@ -211,13 +211,12 @@ public class DetailTeacherActivity extends BaseActivity {
 
     public void initAbout(String content){
         this.userAbout = content;
-        Log.e("initAbout", "DetailTeacherActivity" + content);
         txtAbout.setText(Html.fromHtml(content));
     }
 
 
     public void initPrice(int price){
-        Log.e("initPrice", "DetailTeacherActivity" + price);
+
         this.user.setStartFrom(price);
         double fee = 0;
 

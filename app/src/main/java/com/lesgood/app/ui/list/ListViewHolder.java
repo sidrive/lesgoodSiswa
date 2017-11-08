@@ -76,24 +76,20 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 
     public void getGuru(final String uid) {
         getGuruTarif(uid);
-
         userService.getUser(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Guru userf = dataSnapshot.getValue(Guru.class);
                 if (userf != null) {
                     user = userf;
-
                     txtName.setText(userf.getFull_name());
-                    txtSkill.setText(user.getTotalSkill() + " Kemampuan Mengajar");
-
-
+                    txtSkill.setText(userf.getTotalSkill() + " Kemampuan Mengajar");
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.e("onCancelled", "ListViewHolder" + databaseError.getDetails());
             }
         });
     }
@@ -106,7 +102,6 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Skill skill = dataSnapshot.getValue(Skill.class);
                     if (skill != null) {
-
                         int tarif = skill.getPrice1();
                         double fee = 0;
 
@@ -120,7 +115,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
+                    Log.e("onCancelled", "ListViewHolder" + databaseError.getDetails());
                 }
             });
     }

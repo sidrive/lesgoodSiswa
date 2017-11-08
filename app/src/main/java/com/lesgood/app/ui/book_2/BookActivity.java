@@ -152,7 +152,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
     double discount = 0;
 
     Calendar calendar = Calendar.getInstance();
-
+    SupportMapFragment mapFragment;
     private static final int RC_LOCATION_PERM = 205;
 
 
@@ -165,18 +165,17 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_2);
         ButterKnife.bind(this);
-
-        locationPerm();
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         toolbar.setTitle("Pesan Pengajar");
+        //locationPerm();
+
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+
 
         init();
 
@@ -256,24 +255,18 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
         LatLng indonesia = new LatLng(-7.803249, 110.3398253);
-
         initMap(indonesia);
-
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(indonesia, 16));
         mMap.setOnCameraIdleListener(this);
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-
         mMap.setMyLocationEnabled(true);
-
-        mMap.setOnMyLocationButtonClickListener(() -> {
+        /*mMap.setOnMyLocationButtonClickListener(() -> {
             LatLng latLng = new LatLng(mMap.getMyLocation().getLatitude(), mMap.getMyLocation().getLongitude());
             return false;
-        });
+        });*/
     }
 
     private void handleNewLatLng(LatLng pos) {
@@ -297,7 +290,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
     public void initPaket() {
         double paketTarif1 = 20 * tarif;
         double paketTarif1after = paketTarif1 - (paketTarif1 * 0.05);
-
         double paketTarif2 = 30 * tarif;
         double paketTarif2after = paketTarif2 - (paketTarif1 * 0.05);
 
@@ -599,7 +591,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
         String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
         if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
             // Have permission, do the thing!
-            onMapMyLocation();
+            //onMapMyLocation();
         } else {
             // Ask for one permission
             EasyPermissions.requestPermissions(this, getString(R.string.rationale_camera),
@@ -618,7 +610,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback, Go
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mMap.setMyLocationEnabled(true);
+        //mMap.setMyLocationEnabled(true);
     }
 
 

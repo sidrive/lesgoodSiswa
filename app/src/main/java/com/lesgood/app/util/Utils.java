@@ -3,7 +3,10 @@ package com.lesgood.app.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import android.widget.ImageView;
 import android.widget.Toast;
+import com.bumptech.glide.Glide;
+import com.lesgood.app.R;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
@@ -55,5 +58,15 @@ public class Utils {
     }
     public static void showToas(Context context, String msg){
         Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
+    }
+    public static void setAvatar(Context context, String imgUrl, ImageView img){
+        if (imgUrl !=null){
+            if (!imgUrl.equalsIgnoreCase("NOT")){
+                Glide.with(context).load(imgUrl).placeholder(R.color.colorSoft).dontAnimate().into(img);
+            }
+        }
+        else {
+            Glide.with(context).load(R.drawable.ic_account_circle).placeholder(R.color.colorSoft).dontAnimate().into(img);
+        }
     }
 }

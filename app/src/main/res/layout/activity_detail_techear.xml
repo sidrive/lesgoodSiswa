@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
-        android:layout_marginTop="?actionBarSize">
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -332,7 +332,7 @@
         </LinearLayout>
     </ScrollView>
 
-    <include layout="@layout/toolbar_basic"/>
+    <!--<include layout="@layout/toolbar_basic"/>-->
 
     <include layout="@layout/view_progress"/>
 

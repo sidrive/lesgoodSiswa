@@ -26,6 +26,7 @@ import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.ui.setting.SettingActivity;
 
 
+import com.lesgood.app.util.Utils;
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -112,7 +113,6 @@ public class ProfileFragment extends BaseFragment {
         //change R.layout.yourlayoutfilename for each of your fragments
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         ButterKnife.bind(this, view);
-
         getActivity().setTitle("Profil");
 
         return view;
@@ -131,7 +131,8 @@ public class ProfileFragment extends BaseFragment {
 
     private void init(){
         txtName.setText(user.getFull_name());
-        if (user.getPhoto_url() != null) {
+        Utils.setAvatar(getContext(),user.getPhoto_url(),imgBgAvatar);
+        /*if (user.getPhoto_url() != null) {
             if (!user.getPhoto_url().equalsIgnoreCase("NOT")){
                 Glide.with(this)
                         .load(user.getPhoto_url()).listener(new RequestListener<String, GlideDrawable>() {
@@ -157,7 +158,7 @@ public class ProfileFragment extends BaseFragment {
                         .dontAnimate()
                         .into(imgAvatar);
             }
-        }
+        }*/
     }
 
     @OnClick(R.id.btn_edit_profile)

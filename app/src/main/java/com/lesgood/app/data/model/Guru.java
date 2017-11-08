@@ -51,6 +51,21 @@ public class Guru implements Serializable {
     public String prodi;
     @Nullable
     public boolean active;
+    @Nullable
+    public String instagram;
+    @Nullable
+    public String facebook;
+    @Nullable
+    public long createdAt;
+    @Nullable
+    public long updateAt;
+    @Nullable
+    public String location;
+    @Nullable
+    public String about;
+    @Nullable
+    public boolean acceptTOS;
+
 
     public static User newInstance(FirebaseUser firebaseUser, UserInfo provider) {
         User user = new User(firebaseUser.getUid());
@@ -73,13 +88,47 @@ public class Guru implements Serializable {
         this.uid = uid;
     }
 
-    public Guru(String uid, String phone, String email, String provider, String photo_url, String full_name) {
+   /* public Guru(String uid, String phone, String email, String provider, String photo_url, String full_name) {
         this.uid = uid;
         this.phone = phone;
         this.email = email;
         this.provider = provider;
         this.photo_url = photo_url;
         this.full_name = full_name;
+    }*/
+
+    public Guru(@NonNull String uid, String phone, String email, String provider,
+        String photo_url, String full_name, String gender, long birthday, boolean verified,
+        double latitude, double longitude, String fullAddress, int totalSkill, float review,
+        int startFrom, String religion, String pendidikan, String prodi, boolean active,
+        String instagram, String facebook, long createdAt, long updateAt, String location,
+        String about, boolean acceptTOS) {
+        this.uid = uid;
+        this.phone = phone;
+        this.email = email;
+        this.provider = provider;
+        this.photo_url = photo_url;
+        this.full_name = full_name;
+        this.gender = gender;
+        this.birthday = birthday;
+        this.verified = verified;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.fullAddress = fullAddress;
+        this.totalSkill = totalSkill;
+        this.review = review;
+        this.startFrom = startFrom;
+        this.religion = religion;
+        this.pendidikan = pendidikan;
+        this.prodi = prodi;
+        this.active = active;
+        this.instagram = instagram;
+        this.facebook = facebook;
+        this.createdAt = createdAt;
+        this.updateAt = updateAt;
+        this.location = location;
+        this.about = about;
+        this.acceptTOS = acceptTOS;
     }
 
     @NonNull
@@ -251,5 +300,100 @@ public class Guru implements Serializable {
     @Nullable
     public boolean isActive() {
         return active;
+    }
+
+    @Nullable
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(@Nullable String instagram) {
+        this.instagram = instagram;
+    }
+
+    @Nullable
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(@Nullable String facebook) {
+        this.facebook = facebook;
+    }
+
+    @Nullable
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(@Nullable long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Nullable
+    public long getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(@Nullable long updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    @Nullable
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(@Nullable String location) {
+        this.location = location;
+    }
+
+    @Nullable
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(@Nullable String about) {
+        this.about = about;
+    }
+
+    @Nullable
+    public boolean isAcceptTOS() {
+        return acceptTOS;
+    }
+
+    public void setAcceptTOS(@Nullable boolean acceptTOS) {
+        this.acceptTOS = acceptTOS;
+    }
+
+    @Override
+    public String toString() {
+        return "Guru{" +
+            "uid='" + uid + '\'' +
+            ", phone='" + phone + '\'' +
+            ", email='" + email + '\'' +
+            ", provider='" + provider + '\'' +
+            ", photo_url='" + photo_url + '\'' +
+            ", full_name='" + full_name + '\'' +
+            ", gender='" + gender + '\'' +
+            ", birthday=" + birthday +
+            ", verified=" + verified +
+            ", latitude=" + latitude +
+            ", longitude=" + longitude +
+            ", fullAddress='" + fullAddress + '\'' +
+            ", totalSkill=" + totalSkill +
+            ", review=" + review +
+            ", startFrom=" + startFrom +
+            ", religion='" + religion + '\'' +
+            ", pendidikan='" + pendidikan + '\'' +
+            ", prodi='" + prodi + '\'' +
+            ", active=" + active +
+            ", instagram='" + instagram + '\'' +
+            ", facebook='" + facebook + '\'' +
+            ", createdAt=" + createdAt +
+            ", updateAt=" + updateAt +
+            ", location='" + location + '\'' +
+            ", about='" + about + '\'' +
+            ", acceptTOS=" + acceptTOS +
+            '}';
     }
 }

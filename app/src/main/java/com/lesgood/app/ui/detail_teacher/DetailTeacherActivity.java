@@ -123,7 +123,7 @@ public class DetailTeacherActivity extends BaseActivity {
         ButterKnife.bind(this);
         setTitle("Profil");
         init();
-
+        Log.e("onCreate", "DetailTeacherActivity" + user.toString());
     }
 
     @Override
@@ -211,11 +211,13 @@ public class DetailTeacherActivity extends BaseActivity {
 
     public void initAbout(String content){
         this.userAbout = content;
+        Log.e("initAbout", "DetailTeacherActivity" + content);
         txtAbout.setText(Html.fromHtml(content));
     }
 
 
     public void initPrice(int price){
+        Log.e("initPrice", "DetailTeacherActivity" + price);
         this.user.setStartFrom(price);
         double fee = 0;
 
@@ -228,9 +230,10 @@ public class DetailTeacherActivity extends BaseActivity {
 
     @OnClick(R.id.btn_edit_about)
     void showEditAbout(){
-        Intent intent = new Intent(this, BriefActivity.class);
+        Log.e("showEditAbout", "DetailTeacherActivity" + userAbout);
+       /* Intent intent = new Intent(this, BriefActivity.class);
         intent.putExtra("brief", userAbout);
-       /* startActivityForResult(intent, REQUEST_CODE_ADD_BRIEF);*/
+        startActivityForResult(intent, REQUEST_CODE_ADD_BRIEF);*/
     }
 
     @OnClick(R.id.lin_skill)

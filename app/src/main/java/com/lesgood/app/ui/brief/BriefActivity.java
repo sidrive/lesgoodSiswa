@@ -40,7 +40,7 @@ import jp.wasabeef.richeditor.RichEditor;
 public class BriefActivity extends BaseActivity {
 
     private static int REQUEST_CODE_ADD_BRIEF = 1054;
-
+    public static String EXTRA_BRIF= "brif";
     @BindString(R.string.error_field_required)
     String errRequired;
 

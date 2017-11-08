@@ -123,7 +123,7 @@ public class DetailTeacherActivity extends BaseActivity {
         ButterKnife.bind(this);
         setTitle("Profil");
         init();
-        Log.e("onCreate", "DetailTeacherActivity" + user.toString());
+
     }
 
     @Override
@@ -273,7 +273,6 @@ public class DetailTeacherActivity extends BaseActivity {
 
     @OnClick(R.id.btn_book)
     void showBook(){
-
         Loading(true);
         startActivity(new Intent(this, BookActivity.class));
     }

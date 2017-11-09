@@ -76,24 +76,16 @@ public class ListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         ButterKnife.bind(this);
-
         showItems();
-
         Bundle extras = getIntent().getExtras();
         if (extras != null){
             code = extras.getString("code");
             pelajaran = extras.getString("pelajaran");
-
-
             if (code != null) {
                 Log.d("search", "code = "+code);
-
-                        presenter.getGurus(code);
-
+                presenter.getGurus(code);
             }
-
         }
-
         toolbar.setTitle("Hasil Pencarian");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -111,8 +103,6 @@ public class ListActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
         return true;
     }
 

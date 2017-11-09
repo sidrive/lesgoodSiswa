@@ -2,6 +2,7 @@ package com.lesgood.app.ui.list;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Printer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +11,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -55,7 +59,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
     UserService userService;
     FirebaseImageService firebaseImageService;
     Guru user;
-
+    GeoQuery geoQuery;
     ListActivity activity;
 
     public ListViewHolder(View itemView, UserService userService,
@@ -66,6 +70,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
         this.userService = userService;
         this.firebaseImageService = firebaseImageService;
         this.activity = activity;
+
     }
 
     public void bind(String item) {
@@ -73,6 +78,9 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
         //getAvatar(item);
 
     }
+
+
+
 
     public void getGuru(final String uid) {
         getGuruTarif(uid);
@@ -82,7 +90,6 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
                 Guru userf = dataSnapshot.getValue(Guru.class);
                 if (userf != null) {
                     user = userf;
-                    Log.e("onDataChange", "ListViewHolder" + userf.getPhoto_url());
                     txtName.setText(userf.getFull_name());
                     txtSkill.setText(userf.getTotalSkill() + " Kemampuan Mengajar");
                     Glide.with(itemView.getContext())
@@ -130,7 +137,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 
     public void getAvatar(String uid) {
         StorageReference coverRef = firebaseImageService.getImageRefThumb(uid);
-        Log.e("getAvatar", "ListViewHolder" + coverRef);
+
         Glide.with(itemView.getContext())
             .using(new FirebaseImageLoader())
             .load(coverRef)

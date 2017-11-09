@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
@@ -67,13 +69,14 @@ public class User implements Serializable {
     public boolean acceptTOS;
     @Nullable
     public String userType;
+    @Nullable
+    private GeoFire geoFire;
     public static User newInstance(FirebaseUser firebaseUser, UserInfo provider) {
         User user = new User(firebaseUser.getUid());
         user.setProvider(provider.getProviderId());
         // TODO : refactoring
         if (provider.getProviderId().equals("password")) {
             user.setEmail(firebaseUser.getEmail());
-
         } else {
 
         }
@@ -329,6 +332,15 @@ public class User implements Serializable {
 
     public void setAcceptTOS(@Nullable boolean acceptTOS) {
         this.acceptTOS = acceptTOS;
+    }
+
+    @Nullable
+    public GeoFire getGeoFire() {
+        return geoFire;
+    }
+
+    public void setGeoFire(@Nullable GeoFire geoFire) {
+        this.geoFire = geoFire;
     }
 
     @Override

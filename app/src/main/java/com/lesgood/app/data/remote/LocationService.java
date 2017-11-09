@@ -272,10 +272,10 @@ public class LocationService extends Service implements
         @Override
         public void onLocationChanged(final Location loc)
         {
-            Log.i("**************************************", "Location changed = "+loc);
-            Log.i("**************************************", "Latitude = "+loc.getLatitude());
-            Log.i("**************************************", "Longitude = "+loc.getLongitude());
-            Log.i("**************************************", "Provider = "+loc.getProvider());
+            Log.i("******************", "Location changed = "+loc);
+            Log.i("******************", "Latitude = "+loc.getLatitude());
+            Log.i("******************", "Longitude = "+loc.getLongitude());
+            Log.i("******************", "Provider = "+loc.getProvider());
             if(isBetterLocation(loc, previousBestLocation)) {
                 loc.getLatitude();
                 loc.getLongitude();

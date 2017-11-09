@@ -1,6 +1,12 @@
 package com.lesgood.app.ui.list;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Toast;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
+import com.firebase.geofire.GeoQueryEventListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -8,8 +14,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.lesgood.app.base.BasePresenter;
+import com.lesgood.app.base.config.DefaultConfig;
+import com.lesgood.app.data.model.GeoFire;
 import com.lesgood.app.data.model.User;
+
 import com.lesgood.app.data.remote.UserService;
+import com.lesgood.app.util.Utils;
 
 /**
  * Created by Agus on 5/11/17.
@@ -21,17 +31,68 @@ public class ListPresenter implements BasePresenter {
     User user;
     DatabaseReference databaseRef;
     ChildEventListener childEventListener;
-    Query queryGuru;
-    public ListPresenter(ListActivity activity, UserService userService, User user){
+    SharedPreferences preferences;
+
+
+    public ListPresenter(ListActivity activity, UserService userService, User user ){
         this.activity = activity;
         this.userService = userService;
         this.user = user;
         this.databaseRef = FirebaseDatabase.getInstance().getReference();
-        this.queryGuru = databaseRef.child("geoFire");
+        this.preferences = activity.getSharedPreferences(DefaultConfig.KEY_USER_PREF, Context.MODE_PRIVATE);
+
     }
 
     @Override
     public void subscribe() {
+    }
+
+    private void getGeofireguru(String uid) {
+        Log.e("getGeofireguru", "Running....." );
+        Log.e("getGeofireguru", "ListPresenter" +
+            Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00)
+        );
+        Log.e("getGeofireguru", "ListPresenter" +
+            Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00)
+        );
+
+        GeoLocation location = new GeoLocation(Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00), Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00));
+        if (location!=null){
+            GeoQuery geoQuery = userService.getUserGeofire(databaseRef.child("user-geofire"))
+                .queryAtLocation(location,20);//20km
+            geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+                @Override
+                public void onKeyEntered(String s, GeoLocation geoLocation) {
+                    if (s.equals(uid)){
+                        activity.showAddedItem(s);
+                    }
+
+
+                }
+
+                @Override
+                public void onKeyExited(String s) {
+
+                }
+
+                @Override
+                public void onKeyMoved(String s, GeoLocation geoLocation) {
+
+                }
+
+                @Override
+                public void onGeoQueryReady() {
+
+                }
+
+                @Override
+                public void onGeoQueryError(DatabaseError databaseError) {
+
+                }
+            });
+        }else {
+            Toast.makeText( activity.getApplicationContext(), "Gps Disabled, current location is approximate", Toast.LENGTH_LONG ).show();
+        }
 
     }
 
@@ -44,11 +105,10 @@ public class ListPresenter implements BasePresenter {
         childEventListener = userService.getGurus(code).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.e("onChildAdded", "getRef" + dataSnapshot.getRef());
-                Log.e("onChildAdded", "getRef" + dataSnapshot.getRef());
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
-                    activity.showAddedItem(uid);
+                    //activity.showAddedItem(uid);
+                    getGeofireguru(uid);
                 }
             }
 
@@ -56,7 +116,8 @@ public class ListPresenter implements BasePresenter {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
-                    activity.showChangedItem(uid);
+                    //activity.showChangedItem(uid);
+                    getGeofireguru(uid);
                 }
             }
 
@@ -64,7 +125,8 @@ public class ListPresenter implements BasePresenter {
             public void onChildRemoved(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
-                    activity.showRemovedItem(uid);
+                    //activity.showRemovedItem(uid);
+                    getGeofireguru(uid);
                 }
             }
 

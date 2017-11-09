@@ -70,7 +70,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(String item) {
         getGuru(item);
-        getAvatar(item);
+        //getAvatar(item);
 
     }
 
@@ -82,8 +82,16 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
                 Guru userf = dataSnapshot.getValue(Guru.class);
                 if (userf != null) {
                     user = userf;
+                    Log.e("onDataChange", "ListViewHolder" + userf.getPhoto_url());
                     txtName.setText(userf.getFull_name());
                     txtSkill.setText(userf.getTotalSkill() + " Kemampuan Mengajar");
+                    Glide.with(itemView.getContext())
+                        .load(userf.getPhoto_url())
+                        .placeholder(R.drawable.bg_wave_primary)
+                        .dontAnimate()
+                        .diskCacheStrategy(NONE)
+                        .skipMemoryCache(true)
+                        .into(imgAvatar);
                 }
             }
 
@@ -122,6 +130,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 
     public void getAvatar(String uid) {
         StorageReference coverRef = firebaseImageService.getImageRefThumb(uid);
+        Log.e("getAvatar", "ListViewHolder" + coverRef);
         Glide.with(itemView.getContext())
             .using(new FirebaseImageLoader())
             .load(coverRef)

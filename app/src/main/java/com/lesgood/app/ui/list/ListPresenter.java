@@ -6,6 +6,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.UserService;
@@ -20,12 +21,13 @@ public class ListPresenter implements BasePresenter {
     User user;
     DatabaseReference databaseRef;
     ChildEventListener childEventListener;
-
+    Query queryGuru;
     public ListPresenter(ListActivity activity, UserService userService, User user){
         this.activity = activity;
         this.userService = userService;
         this.user = user;
         this.databaseRef = FirebaseDatabase.getInstance().getReference();
+        this.queryGuru = databaseRef.child("geoFire");
     }
 
     @Override
@@ -73,7 +75,7 @@ public class ListPresenter implements BasePresenter {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Log.e("onCancelled", "ListPresenter" + databaseError.getMessage());
             }
         });
     }

@@ -53,7 +53,7 @@ android {
 
             buildConfigField "String", "BASE_URL", "\"http://sandbox.duitku.com/webapi/api/\""
             buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
-            buildConfigField "String", "PAYMENT_URL", "\"https://lesgood.herokuapp.com/\""
+            buildConfigField "String", "PAYMENT_URL", "\"https://devlesgood.herokuapp.com/\""
             buildConfigField "String", "MERCHANT_CODE", "\"D2588\""
             buildConfigField "String", "MERCHANT_KEY", "\"84f1dfc4d8b71b13ef1248296099cb4e\""
         }
@@ -67,7 +67,7 @@ android {
 
             buildConfigField "String", "BASE_URL", "\"http://sandbox.duitku.com/webapi/api/\""
             buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
-            buildConfigField "String", "PAYMENT_URL", "\"https://lesgood.herokuapp.com/\""
+            buildConfigField "String", "PAYMENT_URL", "\"https://devlesgood.herokuapp.com/\""
             buildConfigField "String", "MERCHANT_CODE", "\"D2588\""
             buildConfigField "String", "MERCHANT_KEY", "\"84f1dfc4d8b71b13ef1248296099cb4e\""
         }
@@ -80,6 +80,7 @@ android {
 
 dependencies {
     compile 'com.google.firebase:firebase-auth:10.2.0'
+    compile 'com.github.sundeepk:compact-calendar-view:2.0.3-beta'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.supportV7
     compile rootProject.ext.supportDesign

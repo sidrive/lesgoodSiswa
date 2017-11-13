@@ -1,15 +1,18 @@
 package com.lesgood.app.ui.book;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -245,6 +248,7 @@ public class BookActivity extends BaseActivity implements DialogAddPertemuan.OnD
         DialogAddPertemuan dialogAddPertemuan = new DialogAddPertemuan(this, user);
         dialogAddPertemuan.show();
 
+
     }
 
     @Override
@@ -308,6 +312,20 @@ public class BookActivity extends BaseActivity implements DialogAddPertemuan.OnD
             order.setTotal(totalSiswa);
             order.setTitle(title);
             order.setStatus("waiting");
+        }
+    }
+    public static class DialogCalender extends DialogFragment{
+        static DialogCalender newInstance(){
+            return new DialogCalender();
+        }
+
+        @Nullable
+        @Override
+        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            Bundle savedInstanceState) {
+            View view = inflater.inflate(R.layout.dialog_calender,container,false);
+
+            return view;
         }
     }
 }

@@ -49,14 +49,7 @@ public class ListPresenter implements BasePresenter {
 
     private void getGeofireguru(String uid) {
         Log.e("getGeofireguru", "Running....." );
-        Log.e("getGeofireguru", "ListPresenter" +
-            Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00)
-        );
-        Log.e("getGeofireguru", "ListPresenter" +
-            Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00)
-        );
-
-        GeoLocation location = new GeoLocation(Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00), Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00));
+           GeoLocation location = new GeoLocation(Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00), Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00));
         if (location!=null){
             GeoQuery geoQuery = userService.getUserGeofire(databaseRef.child("user-geofire"))
                 .queryAtLocation(location,20);//20km

@@ -247,7 +247,7 @@ public class DetailTeacherActivity extends BaseActivity {
     void showSetLocation(){
 
     }
-   void Loading(boolean show){
+    void Loading(boolean show){
     if(show){
       viewProgress.setVisibility(View.VISIBLE);
     }else{

@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.base.config.DefaultConfig;
 import com.lesgood.app.data.model.GeoFire;
@@ -101,6 +102,8 @@ public class ListPresenter implements BasePresenter {
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
                     //activity.showAddedItem(uid);
+                    Log.e("onChildAdded", "ListPresenter getGurus " + uid);
+                    //getGuruIsActive(uid);
                     getGeofireguru(uid);
                 }
             }
@@ -110,6 +113,7 @@ public class ListPresenter implements BasePresenter {
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
                     //activity.showChangedItem(uid);
+                    //getGeofireguru(uid);
                     getGeofireguru(uid);
                 }
             }
@@ -119,6 +123,7 @@ public class ListPresenter implements BasePresenter {
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
                     //activity.showRemovedItem(uid);
+                    //getGeofireguru(uid);
                     getGeofireguru(uid);
                 }
             }
@@ -131,6 +136,37 @@ public class ListPresenter implements BasePresenter {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e("onCancelled", "ListPresenter" + databaseError.getMessage());
+            }
+        });
+    }
+    public void getGuruIsActive(String uid){
+        userService.getGutuIsActive(uid)
+            .addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                user = dataSnapshot.getValue(User.class);
+                Log.e("onDataChange", "ListPresenter getGuruIsActive " + user.getUid());
+                //getGeofireguru(user.getUid());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

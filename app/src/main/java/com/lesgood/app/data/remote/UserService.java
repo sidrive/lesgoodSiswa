@@ -44,7 +44,9 @@ public class UserService {
     public DatabaseReference getUser(String userUid) {
         return databaseRef.child("users").child(userUid);
     }
-
+    public Query getGutuIsActive(String uid){
+        return databaseRef.child("users").child(uid).orderByChild("active").equalTo(true);
+    }
 
     public Task<Void> updateUser(User user) {
         return databaseRef.child("users").child(user.getUid()).setValue(user);

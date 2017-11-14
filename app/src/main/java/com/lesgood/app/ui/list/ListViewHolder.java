@@ -88,6 +88,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Guru userf = dataSnapshot.getValue(Guru.class);
+
                 if (userf != null) {
                     user = userf;
                     txtName.setText(userf.getFull_name());
@@ -124,7 +125,7 @@ public class ListViewHolder extends RecyclerView.ViewHolder {
 
                         int finaltarif = (int) ((tarif + fee) + 0.5d);
 
-                        txtPrice.setText(Utils.getRupiah(finaltarif));
+                        txtPrice.setText(Utils.getRupiah(finaltarif)+ " /per jam");
                     }
                 }
 

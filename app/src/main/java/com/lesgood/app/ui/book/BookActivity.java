@@ -314,18 +314,5 @@ public class BookActivity extends BaseActivity implements DialogAddPertemuan.OnD
             order.setStatus("waiting");
         }
     }
-    public static class DialogCalender extends DialogFragment{
-        static DialogCalender newInstance(){
-            return new DialogCalender();
-        }
 
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-            Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.dialog_calender,container,false);
-
-            return view;
-        }
-    }
 }

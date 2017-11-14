@@ -1,10 +1,9 @@
 package com.lesgood.app.ui.book_2;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DialogFragment;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -13,6 +12,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog.Builder;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -41,6 +44,7 @@ import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalend
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraIdleListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -51,11 +55,12 @@ import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.User;
-import com.lesgood.app.ui.detail_teacher.DetailTeacherActivity;
 import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.util.DateFormatter;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -65,14 +70,15 @@ import javax.inject.Inject;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
+import pub.devrel.easypermissions.EasyPermissions.PermissionCallbacks;
 
 /**
  * Created by Agus on 8/10/17.
  */
 
 public class BookActivity extends BaseActivity implements OnMapReadyCallback,
-    GoogleMap.OnCameraIdleListener, DatePickerDialog.OnDateSetListener,
-    TimePickerDialog.OnTimeSetListener, EasyPermissions.PermissionCallbacks {
+    OnCameraIdleListener, OnDateSetListener,
+    OnTimeSetListener, PermissionCallbacks {
 
   private static String TAG = "BookActivity";
   @Bind(R.id.toolbar)
@@ -123,19 +129,19 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   @Bind(R.id.rel_map)
   RelativeLayout relMap;
 
-  @Inject
-  Order order;
+  @Inject Order order;
 
-  @Inject
-  Guru guru;
+  @Inject Guru guru;
 
-  @Inject
-  User user;
+  @Inject User user;
 
-  @Inject
-  BookActivityPresenter presenter;
+  @Inject BookActivityPresenter presenter;
 
+  @Inject ScheduleAdapter scheduleAdapter;
   MenuItem menuDone;
+
+  @Bind(R.id.rcvJadwal)
+  RecyclerView rcvJadwal;
 
   private GoogleMap mMap;
 
@@ -179,6 +185,13 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
     init();
 
+  }
+
+  private void showSchedules() {
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+
+    rcvJadwal.setLayoutManager(linearLayoutManager);
+    rcvJadwal.setAdapter(scheduleAdapter);
   }
 
   @Override
@@ -269,9 +282,9 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     initMap(indonesia);
     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(indonesia, 16));
     mMap.setOnCameraIdleListener(this);
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+    if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
         != PackageManager.PERMISSION_GRANTED) {
       return;
     }
@@ -419,35 +432,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     inputTarifPertemuan.setText(tarifStr);
   }
 
-  @OnClick(R.id.btn_date)
-  void clickedDate() {
-    showDialogDatePicker();
-  }
-
-  @OnClick(R.id.btn_time)
-  void clickedTime() {
-    showDialogTimePicker();
-  }
-
-  private void showDialogDatePicker() {
-        /*Calendar cal = Calendar.getInstance();
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
-                this,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)
-        );
-
-        dpd.setTitle("Tanggal");
-        dpd.vibrate(true);
-        dpd.dismissOnPause(true);
-        dpd.show(getFragmentManager(), "Datepickerdialog");*/
-    DialogFragment dialogFragment = DialogCalender.newInstance(presenter, order, eventList,btnDate);
-
-    dialogFragment.show(getFragmentManager(), "calender");
-  }
-
-  private void showDialogTimePicker() {
+  public void showDialogTimePicker() {
     Calendar cal = Calendar.getInstance();
     TimePickerDialog dpd = TimePickerDialog.newInstance(
         this,
@@ -463,14 +448,15 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
   public void setEvent(String date) {
-    eventList.add(new Event(Color.argb(252, 200, 64, 1), Long.parseLong(date),
-        "Aviable" + new Date(Long.parseLong(date))));
+    scheduleAdapter.onItemAdded(date);
+    showSchedules();
   }
-
+  public void setDate(String date){
+    btnDate.setText(DateFormatter.getDate(Long.parseLong(date),"EE dd MMM yyyy"));
+  }
   @Override
   public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
     calendar.set(year, monthOfYear, dayOfMonth);
-
     btnDate.setText(DateFormatter.getDate(calendar.getTimeInMillis(), "EE dd MMM yyyy"));
   }
 
@@ -595,7 +581,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   private void showAlertDialog(String title, String desc, int icon) {
     final Intent intent = new Intent(this, MainActivity.class);
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    new AlertDialog.Builder(this)
+    new Builder(this)
         .setTitle(title)
         .setMessage(desc)
         .setCancelable(false)
@@ -610,9 +596,9 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   @AfterPermissionGranted(RC_LOCATION_PERM)
   public void locationPerm() {
-    String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION};
-    if (EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
+    String[] perms = {permission.ACCESS_FINE_LOCATION,
+        permission.ACCESS_COARSE_LOCATION};
+    if (EasyPermissions.hasPermissions(this, permission.CAMERA)) {
       // Have permission, do the thing!
       //onMapMyLocation();
     } else {
@@ -623,9 +609,9 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
   public void onMapMyLocation() {
-    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+    if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
         != PackageManager.PERMISSION_GRANTED
-        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+        && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
         != PackageManager.PERMISSION_GRANTED) {
       // TODO: Consider calling
       //    ActivityCompat#requestPermissions
@@ -664,61 +650,5 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       new AppSettingsDialog.Builder(this).build().show();
     }
   }
-
-  @SuppressLint("ValidFragment")
-  public static class DialogCalender extends DialogFragment {
-
-    @Bind(R.id.cv_schedule)
-    CompactCalendarView cvSchedule;
-    private BookActivityPresenter presenter;
-    private Order order;
-    private List<Event> eventList;
-    private   Button btn;
-    public DialogCalender(BookActivityPresenter presenter, Order order, List<Event> events,Button context) {
-      this.presenter = presenter;
-      this.order = order;
-      this.eventList = events;
-      this.btn = context;
-    }
-
-    static DialogCalender newInstance(BookActivityPresenter presenter, Order order,
-        List<Event> events,Button btn) {
-      return new DialogCalender(presenter, order, events,btn);
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-        Bundle savedInstanceState) {
-      View view = inflater.inflate(R.layout.dialog_calender, container, false);
-      ButterKnife.bind(this, view);
-      presenter.getSchedule();
-      cvSchedule.addEvents(eventList);
-
-      cvSchedule.setListener(new CompactCalendarViewListener() {
-        @Override
-        public void onDayClick(Date date) {
-          order.setPertemuanTime(date.getTime());
-          btn.setText(DateFormatter.getDateFromLong(date.getTime(), "EE dd MMM yyyy"));
-          dismiss();
-        }
-
-        @Override
-        public void onMonthScroll(Date date) {
-
-        }
-      });
-      return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-      super.onDestroyView();
-      ButterKnife.unbind(this);
-    }
-
-
-  }
-
 
 }

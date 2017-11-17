@@ -75,6 +75,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "587589507868-itlborvcpbl3magss2l9qebqgreo604b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lesgood.app",
+            "certificate_hash": "95cb0efa1b968154e719ed89351fad90fc6cc0a7"
+          }
+        },
+        {
           "client_id": "587589507868-03tg3cq39a6msfmqalbh4osdkjdcirtk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

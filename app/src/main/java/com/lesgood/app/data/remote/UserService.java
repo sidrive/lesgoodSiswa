@@ -3,9 +3,13 @@ package com.lesgood.app.data.remote;
 import android.app.Application;
 
 import com.alamkanak.weekview.WeekViewEvent;
+import com.firebase.geofire.GeoFire;
+import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.GeoQuery;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.lesgood.app.data.model.EmailConfirmation;
 import com.lesgood.app.data.model.Pengalaman;
 import com.lesgood.app.data.model.Prestasi;
@@ -21,10 +25,11 @@ public class UserService {
 
     private Application application;
     private DatabaseReference databaseRef;
-
+    private Query query;
     public UserService(Application application) {
         this.application = application;
         this.databaseRef = FirebaseDatabase.getInstance().getReference();
+        this.query = FirebaseDatabase.getInstance().getReference();
     }
 
     public void createUser(User user) {
@@ -39,7 +44,9 @@ public class UserService {
     public DatabaseReference getUser(String userUid) {
         return databaseRef.child("users").child(userUid);
     }
-
+    public Query getGutuIsActive(String uid){
+        return databaseRef.child("users").child(uid).orderByChild("active").equalTo(true);
+    }
 
     public Task<Void> updateUser(User user) {
         return databaseRef.child("users").child(user.getUid()).setValue(user);
@@ -182,6 +189,10 @@ public class UserService {
         return databaseRef.child("users").child(uid);
     }
 
+    public GeoFire getUserGeofire(DatabaseReference reference){
+        return new GeoFire(reference);
+    }
+    public void geoQuery(double lat, double lng){
 
-
+    }
 }

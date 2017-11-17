@@ -56,26 +56,26 @@
 
         <activity
             android:name=".ui.search.SearchActivity"
-            android:label="Pengaturan"></activity>
+            android:label="Pencarian"></activity>
 
 
         <activity
             android:name=".ui.list.ListActivity"
-            android:label="Pengaturan"></activity>
+            android:label="List Guru"></activity>
 
 
         <activity
             android:name=".ui.order_detail.OrderDetailActivity"
-            android:label="Pengaturan"></activity>
+            android:label="Detail Order"></activity>
 
 
         <activity
             android:name=".ui.detail_teacher.DetailTeacherActivity"
-            android:label="Pengaturan"></activity>
+            android:label="Detail Guru"></activity>
 
         <activity
             android:name=".ui.skill.SkillActivity"
-            android:label="Pengaturan"></activity>
+            android:label="Skill"></activity>
 
         <activity
             android:name=".ui.reviews.ReviewsActivity"
@@ -92,7 +92,8 @@
 
         <activity
             android:name=".ui.book.BookActivity"
-            android:label="Pesan Pengajar"></activity>
+            android:label="Pesan Pengajar"
+            android:windowSoftInputMode="stateHidden"/>
 
         <activity
             android:name=".ui.book_2.BookActivity"

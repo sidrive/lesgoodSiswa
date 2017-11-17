@@ -67,11 +67,36 @@
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="top"
+                    android:inputType="text"
                     android:id="@+id/input_detail"
                     android:lines="3" />
 
             </LinearLayout>
+            <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:layout_marginTop="@dimen/activity_margin">
 
+                <com.lesgood.app.util.TypefacedTextView
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  app:typeface="Roboto-Light.ttf"
+                  android:text="Jadwal Mengajar"/>
+                <LinearLayout
+                  android:layout_width="match_parent"
+                  android:orientation="horizontal"
+                  android:gravity="center"
+                  android:layout_marginTop="5dp"
+                  android:layout_height="wrap_content">
+                  <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rcvJadwal"
+                    android:layout_margin="2dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                </LinearLayout>
+
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

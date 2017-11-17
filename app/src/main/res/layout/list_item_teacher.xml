@@ -30,7 +30,7 @@
                 app:typeface="Roboto-Regular.ttf"
                 android:textSize="18sp"
                 android:id="@+id/txt_name"
-                android:text="Agus Setiawan"/>
+                android:text=""/>
 
             <com.lesgood.app.util.TypefacedTextView
                 android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 app:typeface="Roboto-Light.ttf"
                 android:id="@+id/txt_skill"
                 android:maxLines="2"
-                android:text="5 Kemampuan mengajar"/>
+                android:text=""/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
                     android:textColor="@color/colorAccentDark"
                     android:layout_marginRight="10dp"
                     android:id="@+id/txt_distance"
-                    android:text="10 km -"/>
+                    android:text=""/>
 
                 <com.lesgood.app.util.TypefacedTextView
                     android:layout_width="match_parent"
@@ -62,7 +62,7 @@
                     android:textColor="@color/colorAccent"
                     android:id="@+id/txt_price"
                     app:typeface="Roboto-Regular.ttf"
-                    android:text="Rp.65.000/per jam"/>
+                    android:text=""/>
             </LinearLayout>
 
             <RatingBar

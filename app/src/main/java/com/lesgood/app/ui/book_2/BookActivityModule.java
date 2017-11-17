@@ -32,4 +32,9 @@ public class BookActivityModule {
     BookActivityPresenter provideBookActivityPresenter(UserService userService, OrderService orderService, Guru user){
         return new BookActivityPresenter(activity, userService, orderService, user);
     }
+    @ActivityScope
+    @Provides
+    ScheduleAdapter provideSchduleAdapter (){
+        return new ScheduleAdapter(activity);
+    }
 }

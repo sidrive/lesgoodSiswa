@@ -3,6 +3,7 @@ package com.lesgood.app.ui.list;
 import com.lesgood.app.base.annotation.ActivityScope;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.FirebaseImageService;
+import com.lesgood.app.data.remote.LocationService;
 import com.lesgood.app.data.remote.UserService;
 
 import dagger.Module;
@@ -27,7 +28,7 @@ public class ListActivityModule {
 
     @ActivityScope
     @Provides
-    ListPresenter provideListPresenter(UserService userService, User user){
+    ListPresenter provideListPresenter(UserService userService, User user ){
         return new ListPresenter(activity, userService, user);
     }
 

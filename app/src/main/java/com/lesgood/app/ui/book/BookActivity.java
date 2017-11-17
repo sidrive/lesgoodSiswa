@@ -1,15 +1,18 @@
 package com.lesgood.app.ui.book;
 
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -245,6 +248,7 @@ public class BookActivity extends BaseActivity implements DialogAddPertemuan.OnD
         DialogAddPertemuan dialogAddPertemuan = new DialogAddPertemuan(this, user);
         dialogAddPertemuan.show();
 
+
     }
 
     @Override
@@ -310,4 +314,5 @@ public class BookActivity extends BaseActivity implements DialogAddPertemuan.OnD
             order.setStatus("waiting");
         }
     }
+
 }

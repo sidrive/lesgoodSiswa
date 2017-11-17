@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 /**
@@ -63,14 +65,18 @@ public class User implements Serializable {
     public String location;
     @Nullable
     public String about;
-
+    @Nullable
+    public boolean acceptTOS;
+    @Nullable
+    public String userType;
+    @Nullable
+    private GeoFire geoFire;
     public static User newInstance(FirebaseUser firebaseUser, UserInfo provider) {
         User user = new User(firebaseUser.getUid());
         user.setProvider(provider.getProviderId());
         // TODO : refactoring
         if (provider.getProviderId().equals("password")) {
             user.setEmail(firebaseUser.getEmail());
-
         } else {
 
         }
@@ -317,5 +323,65 @@ public class User implements Serializable {
 
     public void setAbout(@Nullable String about) {
         this.about = about;
+    }
+
+    @Nullable
+    public boolean isAcceptTOS() {
+        return acceptTOS;
+    }
+
+    public void setAcceptTOS(@Nullable boolean acceptTOS) {
+        this.acceptTOS = acceptTOS;
+    }
+
+    @Nullable
+    public GeoFire getGeoFire() {
+        return geoFire;
+    }
+
+    public void setGeoFire(@Nullable GeoFire geoFire) {
+        this.geoFire = geoFire;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+            "uid='" + uid + '\'' +
+            ", phone='" + phone + '\'' +
+            ", email='" + email + '\'' +
+            ", provider='" + provider + '\'' +
+            ", photo_url='" + photo_url + '\'' +
+            ", full_name='" + full_name + '\'' +
+            ", gender='" + gender + '\'' +
+            ", birthday=" + birthday +
+            ", verified=" + verified +
+            ", latitude=" + latitude +
+            ", longitude=" + longitude +
+            ", fullAddress='" + fullAddress + '\'' +
+            ", totalSkill=" + totalSkill +
+            ", review=" + review +
+            ", startFrom=" + startFrom +
+            ", religion='" + religion + '\'' +
+            ", pendidikan='" + pendidikan + '\'' +
+            ", prodi='" + prodi + '\'' +
+            ", active=" + active +
+            ", instagram='" + instagram + '\'' +
+            ", facebook='" + facebook + '\'' +
+            ", createdAt=" + createdAt +
+            ", updateAt=" + updateAt +
+            ", location='" + location + '\'' +
+            ", about='" + about + '\'' +
+            ", acceptTOS=" + acceptTOS +
+            ", userType='" + userType + '\'' +
+            '}';
+    }
+
+    @Nullable
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(@Nullable String userType) {
+        this.userType = userType;
     }
 }

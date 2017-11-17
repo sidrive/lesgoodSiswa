@@ -65,7 +65,8 @@ public class Guru implements Serializable {
     public String about;
     @Nullable
     public boolean acceptTOS;
-
+    @Nullable
+    public String userType;
 
     public static User newInstance(FirebaseUser firebaseUser, UserInfo provider) {
         User user = new User(firebaseUser.getUid());
@@ -363,6 +364,15 @@ public class Guru implements Serializable {
 
     public void setAcceptTOS(@Nullable boolean acceptTOS) {
         this.acceptTOS = acceptTOS;
+    }
+
+    @Nullable
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(@Nullable String userType) {
+        this.userType = userType;
     }
 
     @Override

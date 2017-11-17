@@ -91,14 +91,12 @@ public class CompleteOrderActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_order);
         ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
         setTitle("Selesaikan Pesanan");
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         defaultConfig.setApiUrl(BuildConfig.BASE_URL);
-
+        Log.e("onCreate", "CompleteOrderActivity" + defaultConfig.toString());
         init();
     }
 

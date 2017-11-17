@@ -32,6 +32,7 @@ import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.dialog.DialogUploadOption;
 import com.lesgood.app.ui.main.MainActivity;
+import com.lesgood.app.util.Const;
 import com.lesgood.app.util.DateFormatter;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -468,6 +469,7 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
         }else{
             user.setFull_name(name);
             user.setEmail(email);
+            user.setUserType(Const.USER_TYPE);
             if (!TextUtils.isEmpty(phone)) user.setPhone(phone);
             if (genderVal != 3) user.setGender(gender);
             if (dateBirthDay != 0) user.setBirthday(dateBirthDay);

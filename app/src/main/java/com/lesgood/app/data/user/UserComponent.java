@@ -19,6 +19,9 @@ import com.lesgood.app.ui.pengalaman.PengalamanActivityComponent;
 import com.lesgood.app.ui.pengalaman.PengalamanActivityModule;
 import com.lesgood.app.ui.prestasi.PrestasiActivityComponent;
 import com.lesgood.app.ui.prestasi.PrestasiActivityModule;
+import com.lesgood.app.ui.rating.RatingActivity;
+import com.lesgood.app.ui.rating.RatingActivityComponent;
+import com.lesgood.app.ui.rating.RatingActivityModule;
 import com.lesgood.app.ui.search.SearchActivityComponent;
 import com.lesgood.app.ui.search.SearchActivityModule;
 import com.lesgood.app.ui.setting.SettingActivityComponent;
@@ -49,4 +52,6 @@ public interface UserComponent {
         DetailTeacherComponent plus(DetailTeacherModule module);
 
         ListActivityComponent plus(ListActivityModule module);
+
+        RatingActivityComponent plus(RatingActivityModule module);
 }

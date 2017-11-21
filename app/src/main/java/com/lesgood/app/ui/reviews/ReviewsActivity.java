@@ -2,16 +2,21 @@ package com.lesgood.app.ui.reviews;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.Reviews;
+import com.lesgood.app.data.model.User;
+import com.lesgood.app.ui.rating.RatingActivity;
 
 import javax.inject.Inject;
 
@@ -19,6 +24,7 @@ import butterknife.Bind;
 import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Agus on 6/1/17.
@@ -48,6 +54,9 @@ public class ReviewsActivity extends BaseActivity {
     @Inject
     ReviewsPresenter presenter;
 
+    @Inject
+    ReviewsAdapter adapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,6 +68,9 @@ public class ReviewsActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        showItems();
 
     }
 
@@ -73,12 +85,14 @@ public class ReviewsActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        adapter.clearList();
         presenter.subscribe();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        adapter.clearList();
 
     }
 
@@ -100,5 +114,33 @@ public class ReviewsActivity extends BaseActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showAddedItem(Reviews item) {
+        adapter.onItemAdded(item);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void showChangedItem(Reviews item) {
+        adapter.onItemChanged(item);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void showRemovedItem(Reviews item){
+        adapter.onItemRemoved(item);
+        adapter.notifyDataSetChanged();
+    }
+
+    public void showItems() {
+        rvItems.setAdapter(adapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvItems.setLayoutManager(linearLayoutManager);
+    }
+
+
+
+
+    public void startAddReview(Reviews reviews){
+        RatingActivity.startWithData(this, reviews);
     }
 }

@@ -8,8 +8,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.lesgood.app.base.BasePresenter;
+import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
+import com.lesgood.app.data.model.Reviews;
+import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.OrderService;
+import com.lesgood.app.data.remote.UserService;
 
 /**
  * Created by Agus on 5/3/17.
@@ -19,11 +23,18 @@ public class OrderDetailPresenter implements BasePresenter {
     OrderDetailActivity activity;
     OrderService orderService;
     Order order;
+    UserService userService;
+    User user;
 
-    public OrderDetailPresenter(OrderDetailActivity activity, OrderService orderService, Order order){
+
+
+    public OrderDetailPresenter(OrderDetailActivity activity, OrderService orderService, Order order, UserService userService, User user){
         this.activity = activity;
         this.orderService = orderService;
         this.order = order;
+        this.userService = userService;
+        this.user   = user;
+
     }
 
     @Override
@@ -46,5 +57,10 @@ public class OrderDetailPresenter implements BasePresenter {
         orderService.declineOrder(order.getOid()).addOnFailureListener(e -> {
 
         }).addOnCompleteListener(task -> activity.successAction(order));
+    }
+
+    public void updateReview(Reviews reviews){
+        userService.updateReviews(order.getGid(), user.getUid(), reviews).addOnCompleteListener(
+                task -> activity.showLoading(false));
     }
 }

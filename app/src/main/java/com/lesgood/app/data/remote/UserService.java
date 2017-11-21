@@ -13,6 +13,7 @@ import com.google.firebase.database.Query;
 import com.lesgood.app.data.model.EmailConfirmation;
 import com.lesgood.app.data.model.Pengalaman;
 import com.lesgood.app.data.model.Prestasi;
+import com.lesgood.app.data.model.Reviews;
 import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.User;
 
@@ -84,6 +85,7 @@ public class UserService {
     //userabout
 
 
+
     //userskills
 
     public DatabaseReference getUserSkills(String uid){
@@ -124,6 +126,16 @@ public class UserService {
     }
 
     //userschedule
+
+    //userreviews
+    public DatabaseReference getUserReviews(String uid){
+        return databaseRef.child("user-reviews").child(uid).child("reviews");
+    }
+
+    public Task<Void> updateReviews(String gid, String uid, Reviews reviews){
+        return databaseRef.child("user-reviews").child(gid).child("reviews").child(reviews.getId()).setValue(reviews);
+    }
+    //userreview
 
     //userprestasi
 

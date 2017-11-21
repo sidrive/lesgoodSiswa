@@ -144,7 +144,7 @@ public class DetailTeacherActivity extends BaseActivity {
   @SuppressLint("ResourceType")
   private void init() {
     txtName.setText(user.getFull_name());
-    float ratings = user.getReview() / 2;
+    float ratings = user.getReview() / 10;
     totalrating.setText(String.valueOf(ratings));
     rating.setRating(ratings);
     if (user.getPhoto_url() != null) {

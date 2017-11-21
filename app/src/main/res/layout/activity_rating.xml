@@ -1,69 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <ScrollView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/gradient_bg">
+
+
+        <com.lesgood.app.util.TypefacedTextView
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            app:typeface="Roboto-Regular.ttf"
+            android:textSize="16sp"
+            android:layout_centerInParent="true"
+            android:id="@+id/txt_desc"
+            android:textColor="@color/colorWhite"
+            android:text="Masukan Reviews"
+            android:drawablePadding="5dp"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?actionBarSize"
-        >
+        android:padding="@dimen/activity_margin"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_margin"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/activity_half_margin">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@color/colorGrey400"
+                android:id="@+id/img_avatar"/>
 
-            <LinearLayout
+            <com.lesgood.app.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="@dimen/activity_half_margin">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@color/colorGrey400"
-                    android:id="@+id/img_avatar"/>
-
-                <com.lesgood.app.util.TypefacedTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="5dp"
-                    android:text="Name Pengajar"
-                    android:id="@+id/txt_nama_pengajar"
-                    android:layout_gravity="center"/>
-            </LinearLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_margin">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Reviews"
-                    android:inputType="textMultiLine"
-                    android:id="@+id/input_reviews"
-                    android:text="Tulis reviews"
-                    android:enabled="false"/>
-            </android.support.design.widget.TextInputLayout>
-
-            <RatingBar
-                android:id="@+id/rating_bar"
-                style="@style/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:isIndicator="true"
-                android:stepSize="1.0"/>
-
-
+                android:paddingLeft="5dp"
+                android:text="Name Pengajar"
+                android:id="@+id/txt_nama_pengajar"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
-    </ScrollView>
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_margin">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Reviews"
+                android:inputType="textMultiLine"
+                android:id="@+id/input_reviews"
+                android:text="Tulis reviews"
+                android:enabled="false"/>
+        </android.support.design.widget.TextInputLayout>
 
+        <RatingBar
+            android:id="@+id/rating_bar"
+            style="@style/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:isIndicator="true"
+            android:stepSize="1.0"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lin_action"
+        android:layout_marginBottom="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_weight="1"
+            android:text="Cancel"
+            android:id="@+id/btn_negatif"
+            android:visibility="visible"
+            android:textAllCaps="true"
+            android:textColor="@color/colorRed"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
+            android:layout_weight="1"
+            android:text="Save"
+            android:textAllCaps="true"
+            android:id="@+id/btn_positif"
+            android:textColor="@color/colorPrimary"/>
+
+    </LinearLayout>
     <include layout="@layout/toolbar_basic"/>
 
     <include layout="@layout/view_progress"/>
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

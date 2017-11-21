@@ -1,6 +1,7 @@
 package com.lesgood.app.ui.order_detail;
 
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +9,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,16 +26,20 @@ import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Order;
+import com.lesgood.app.data.model.Reviews;
+import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.complete_order.CompleteOrderActivity;
 import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.util.DateFormatter;
 
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -38,6 +48,10 @@ import butterknife.OnClick;
  */
 
 public class OrderDetailActivity extends BaseActivity {
+
+    @BindString(R.string.error_field_required)
+    String errRequired;
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
@@ -74,6 +88,9 @@ public class OrderDetailActivity extends BaseActivity {
     @Bind(R.id.txt_total)
     TextView txtTotal;
 
+    @Bind(R.id.btn_reviews)
+    Button btnbtn;
+
     @Bind(R.id.img_map)
     ImageView imgMap;
 
@@ -86,8 +103,14 @@ public class OrderDetailActivity extends BaseActivity {
     @Bind(R.id.lin_action)
     LinearLayout linAction;
 
+    /*@Bind(R.id.lin_action2)
+    LinearLayout linAction2;*/
+
     @Inject
     Order order;
+
+    /*@Inject
+    Reviews reviews;*/
 
     @Inject
     OrderDetailPresenter presenter;
@@ -195,8 +218,13 @@ public class OrderDetailActivity extends BaseActivity {
     public void handleStatus(String status){
         if (status.equalsIgnoreCase("pending_murid")){
             linAction.setVisibility(View.VISIBLE);
+            btnbtn.setVisibility(View.INVISIBLE);
+        }else if (status.equalsIgnoreCase("pending_guru")){
+            linAction.setVisibility(View.INVISIBLE);
+            btnbtn.setVisibility(View.INVISIBLE);
         }else {
             linAction.setVisibility(View.GONE);
+           /* linAction2.setVisibility(View.VISIBLE);*/
         }
 
         if (status.equalsIgnoreCase("cancel_guru")){
@@ -258,6 +286,46 @@ public class OrderDetailActivity extends BaseActivity {
                 })
                 .setIcon(icon)
                 .show();
+    }
+
+    public void showLoading(boolean show){
+        if(show){
+            viewProgress.setVisibility(View.VISIBLE);
+        }else{
+            viewProgress.setVisibility(View.GONE);
+        }
+    }
+
+    @OnClick(R.id.btn_reviews)
+    void showAddReviews(){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_insert_prestasi);
+
+        final EditText inputReview = (EditText) dialog.findViewById(R.id.input_prestasi);
+        final RatingBar ratingBar = (RatingBar) dialog.findViewById(R.id.simpleRatingBar);
+        Button btnPositif = (Button) dialog.findViewById(R.id.btn_positif);
+        Button btnNegatif = (Button) dialog.findViewById(R.id.btn_negatif);
+
+        btnPositif.setOnClickListener(v -> {
+            final String review = inputReview.getText().toString();
+            final float rating = ratingBar.getRating();
+            final String reviewer = order.getCustomerName();
+            if (TextUtils.isEmpty(review)){
+                inputReview.setError(errRequired);
+                inputReview.requestFocus();
+            }else{
+                showLoading(true);
+                Reviews reviews = new Reviews(UUID.randomUUID().toString(), review, rating, reviewer);
+                presenter.updateReview(reviews);
+            }
+            dialog.dismiss();
+        });
+
+        btnNegatif.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
+
     }
 
 }

@@ -18,7 +18,7 @@
             android:layout_centerInParent="true"
             android:id="@+id/txt_desc"
             android:textColor="@color/colorWhite"
-            android:text="Masukan prestasi"
+            android:text="Masukan Reviews"
             android:drawablePadding="5dp"
             android:layout_height="wrap_content"
             android:padding="30dp"
@@ -40,8 +40,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/input_prestasi"
-                android:hint="Prestasi (contoh: Juara 1 Debat Inggris Nasional)" />
+                android:hint="Reviews (contoh: Baik,Ramah, Pintar mengajar)" />
         </android.support.design.widget.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beri Bintang" />
+
+        <RatingBar
+            android:id="@+id/simpleRatingBar"
+            style="@style/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:rating="2" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.lesgood.app.ui.rating;
 
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.UserService;
 
 /**
@@ -12,6 +13,8 @@ public class RatingActivityPresenter implements BasePresenter {
     RatingActivity activity;
     UserService userService;
     Guru guru;
+    /*User user;*/
+
 
     @Override
     public void subscribe() {
@@ -23,9 +26,10 @@ public class RatingActivityPresenter implements BasePresenter {
 
     }
 
-    public RatingActivityPresenter (RatingActivity activity, UserService userService, Guru guru){
+    public RatingActivityPresenter (RatingActivity activity, UserService userService, Guru guru/*, User user*/){
         this.activity       = activity;
         this.userService    = userService;
         this.guru           = guru;
+        /*this.user           = user;*/
     }
 }

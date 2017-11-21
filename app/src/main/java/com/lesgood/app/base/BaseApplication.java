@@ -2,6 +2,7 @@ package com.lesgood.app.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.media.Rating;
 import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.util.Log;
@@ -17,14 +18,18 @@ import com.lesgood.app.data.main.MainComponent;
 import com.lesgood.app.data.main.MainModule;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
+import com.lesgood.app.data.model.Reviews;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.network.NetworkModule;
 import com.lesgood.app.data.order_detail.OrderDetailComponent;
 import com.lesgood.app.data.order_detail.OrderDetailModule;
+import com.lesgood.app.data.rating.RatingComponent;
+import com.lesgood.app.data.rating.RatingModule;
 import com.lesgood.app.data.user.UserComponent;
 import com.lesgood.app.data.user.UserModule;
 import com.lesgood.app.ui.book_2.BookActivityModule;
 import com.lesgood.app.ui.main.MainActivity;
+import com.lesgood.app.ui.rating.RatingActivityComponent;
 
 /**
  * Created by Agus on 4/16/17.
@@ -38,6 +43,7 @@ public class BaseApplication extends MultiDexApplication {
     public static OrderDetailComponent orderDetailComponent;
     public static DetailTeacherComponent detailTeacherComponent;
     public static BookComponent bookComponent;
+    public static RatingComponent ratingComponent;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -135,5 +141,10 @@ public class BaseApplication extends MultiDexApplication {
     public void releaseBookComponent(){
         bookComponent = null;
     }
+
+    /*public RatingComponent createRatingComponent(Reviews reviews){
+        ratingComponent = userComponent.plus(new RatingModule(reviews));
+        return ratingComponent;
+    }*/
 
 }

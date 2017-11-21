@@ -2,7 +2,7 @@ package com.lesgood.app.data.book;
 
 import com.lesgood.app.base.annotation.UserScope;
 import com.lesgood.app.data.model.Order;
-import com.lesgood.app.data.remote.OrderService;
+
 
 import dagger.Module;
 import dagger.Provides;

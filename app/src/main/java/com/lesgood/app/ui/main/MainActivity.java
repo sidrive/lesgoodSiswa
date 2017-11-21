@@ -61,6 +61,7 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, LocationService.class);
         startService(intent);
         registerReceiver(broadcastReceiver, new IntentFilter(LocationService.BROADCAST_ACTION));
+
     }
 
     protected void startServiceAddress(Location location) {

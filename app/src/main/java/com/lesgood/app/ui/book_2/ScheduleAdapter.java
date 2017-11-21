@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.lesgood.app.R;
 
+import com.lesgood.app.data.model.TimeSchedule;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private BookActivity activity;
 
-    public final List<String> items = new ArrayList<>();
+    public final List<TimeSchedule> items = new ArrayList<>();
 
     public ScheduleAdapter(BookActivity activity) {
         this.activity = activity;
@@ -35,9 +36,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    private void onItemClicked(String date) {
-        Log.e("onItemClicked", "ScheduleAdapter" + date);
-        activity.showDialogTimePicker();
+    private void onItemClicked(TimeSchedule date) {
         activity.setDate(date);
     }
 
@@ -47,13 +46,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
-    public void onItemAdded(String item) {
+    public void onItemAdded(TimeSchedule item) {
         items.add(item);
         notifyDataSetChanged();
         //activity.updateTotalPertemuan(getItemCount());
     }
 
-    public void onItemChanged(String item) {
+    public void onItemChanged(TimeSchedule item) {
         int index = items.indexOf(item);
         if(index > -1) {
             items.set(index, item);
@@ -64,7 +63,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void onItemRemoved(String item){
+    public void onItemRemoved(TimeSchedule item){
         items.remove(item);
         notifyDataSetChanged();
         //activity.updateTotalPertemuan(getItemCount());

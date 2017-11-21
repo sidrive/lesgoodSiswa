@@ -19,6 +19,7 @@ import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Skill;
+import com.lesgood.app.data.model.TimeSchedule;
 import com.lesgood.app.data.remote.FirebaseImageService;
 import com.lesgood.app.data.remote.OrderService;
 import com.lesgood.app.data.remote.UserService;
@@ -80,11 +81,15 @@ public class BookActivityPresenter implements BasePresenter {
         });
     }
     public void getSchedule(){
+
         userService.getUserSchedule(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                String date = dataSnapshot.getKey();
-                activity.setEvent(date);
+                Log.e("onChildAdded", "BookActivityPresenter" + dataSnapshot.toString());
+                TimeSchedule schedule = dataSnapshot.getValue(TimeSchedule.class);
+                activity.setEvent(schedule);
+                /*String date = dataSnapshot.getKey();
+                activity.setEvent(date);*/
                 /*List<Event> eventList = new ArrayList<>();
                 eventList.add(new Event(Color.argb(252, 200, 64, 1),Long.parseLong(date),"Aviable"+new Date(Long.parseLong(date))));*/
 
@@ -92,8 +97,8 @@ public class BookActivityPresenter implements BasePresenter {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                String date = dataSnapshot.getKey();
-                activity.setEvent(date);
+               /* String date = dataSnapshot.getKey();
+                activity.setEvent(date);*/
                 /*List<Event> eventList = new ArrayList<>();
                 eventList.add(new Event(Color.argb(252, 200, 64, 1),Long.parseLong(date),"Aviable"+new Date(Long.parseLong(date))));*/
 

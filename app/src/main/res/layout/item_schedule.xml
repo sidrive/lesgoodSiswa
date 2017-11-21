@@ -6,32 +6,16 @@
   android:layout_width="wrap_content"
   android:layout_height="wrap_content">
   <LinearLayout
-  android:layout_width="50dp"
-  android:layout_height="100dp"
-  android:gravity="center"
-  android:background="@drawable/gradient_bg"
-  android:orientation="vertical">
-  <com.lesgood.app.util.TypefacedTextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="40sp"
-    android:id="@+id/txt_day"
-    android:textColor="@color/colorWhite"
-    app:typeface="Roboto-Medium.ttf"
-    android:text="25"/>
-</LinearLayout>
-  <LinearLayout
     android:layout_width="50dp"
     android:layout_height="100dp"
     android:gravity="center"
     android:background="@drawable/gradient_bg"
     android:orientation="vertical">
-
     <com.lesgood.app.util.TypefacedTextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:textSize="14sp"
-      android:id="@+id/txt_month"
+      android:textSize="16sp"
+      android:id="@+id/tv_day"
       android:textColor="@color/colorWhite"
       app:typeface="Roboto-Light.ttf"
       android:text="FEB"/>
@@ -39,7 +23,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:textSize="14sp"
-      android:id="@+id/txt_year"
+      android:id="@+id/tv_time"
       android:textColor="@color/colorWhite"
       app:typeface="Roboto-Light.ttf"
       android:text="2017"/>

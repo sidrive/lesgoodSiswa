@@ -102,7 +102,7 @@ public class ListPresenter implements BasePresenter {
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
                     //activity.showAddedItem(uid);
-                    Log.e("onChildAdded", "ListPresenter getGurus " + uid);
+                    Log.d("onChildAdded", "ListPresenter getGurus " + uid);
                     //getGuruIsActive(uid);
                     getGeofireguru(uid);
                 }

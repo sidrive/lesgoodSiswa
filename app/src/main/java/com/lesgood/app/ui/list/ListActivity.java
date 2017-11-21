@@ -170,7 +170,6 @@ public class ListActivity extends BaseActivity {
         Random rand = new Random();
         String oid = System.currentTimeMillis()+""+Integer.toString(rand.nextInt(99999));
         Order order = new Order(oid, code, pelajaran);
-
         DetailTeacherActivity.startWithData(this, user, order);
     }
 }

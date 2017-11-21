@@ -54,6 +54,7 @@ import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Skill;
+import com.lesgood.app.data.model.TimeSchedule;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.util.DateFormatter;
@@ -182,7 +183,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     mapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
-
     init();
 
   }
@@ -447,12 +447,13 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     dpd.show(getFragmentManager(), "TImepickerdialog");
   }
 
-  public void setEvent(String date) {
+  public void setEvent(TimeSchedule date) {
     scheduleAdapter.onItemAdded(date);
     showSchedules();
   }
-  public void setDate(String date){
-    btnDate.setText(DateFormatter.getDate(Long.parseLong(date),"EE dd MMM yyyy"));
+  public void setDate(TimeSchedule date){
+    btnDate.setText(date.getDay());
+    btnTime.setText(date.getTime());
   }
   @Override
   public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {

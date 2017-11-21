@@ -196,7 +196,7 @@ public class DetailTeacherActivity extends BaseActivity {
     if (user.isVerified()) {
       txtVerified.setText("Status : Terverifikasi");
     }
-    Log.e("init", "DetailTeacherActivity" + user.active);
+
     if (user.active == false) {
         btnBook.setClickable(false);
         btnBook.setText("Not Aviable");

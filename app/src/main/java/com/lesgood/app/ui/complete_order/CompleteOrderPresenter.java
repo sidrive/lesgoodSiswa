@@ -55,9 +55,6 @@ public class CompleteOrderPresenter implements BasePresenter {
         Call<TransactionResponse> call = paymentService.transaction(transaction);
         call.enqueue(transCallback);
     }
-
-
-
     private Callback<TransactionResponse> transCallback = new Callback<TransactionResponse>() {
         @Override
         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
@@ -66,10 +63,14 @@ public class CompleteOrderPresenter implements BasePresenter {
                 TransactionResponse transactionResponse = response.body();
                 if (transactionResponse.getPaymentUrl() != null){
                     if (transactionResponse.getReference() != null) {
-
                         order.setPaymentUrl(transactionResponse.getPaymentUrl());
                         order.setReference(transactionResponse.getReference());
                         updateOrder(order, transactionResponse);
+                        Log.e("onResponse", "CompleteOrderPresenter" + transactionResponse.getMerchantCode());
+                        Log.e("onResponse", "CompleteOrderPresenter" + transactionResponse.getPaymentUrl());
+                        Log.e("onResponse", "CompleteOrderPresenter" + transactionResponse.getReference());
+                        Log.e("onResponse", "CompleteOrderPresenter" + transactionResponse.getStatusCode());
+                        Log.e("onResponse", "CompleteOrderPresenter" + transactionResponse.getStatusMessage());
                     }
                 }
             }

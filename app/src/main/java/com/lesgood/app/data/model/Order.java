@@ -80,7 +80,7 @@ public class Order {
         this.code = code;
         this.title = title;
     }
-
+/*
     public Order(String gid, String uid, String oid, String title, String status, int amount, List<Jadwal> pertemuan, long ordertime){
         this.gid = gid;
         this.uid = uid;
@@ -92,8 +92,46 @@ public class Order {
         this.total = amount+fee;
         this.pertemuan = pertemuan;
         this.ordertime = ordertime;
-    }
+    }*/
 
+    public Order(@NonNull String gid, @NonNull String uid, @NonNull String oid, String code,
+        String title, String status, int amount, int totalSiswa, int totalPertemuan, double fee,
+        double total, List<Jadwal> pertemuan, long ordertime, long pertemuanTime, double latitude,
+        double longitude, String detailLocation, String phone, long createdAt, long updatedAt,
+        String paket, double discount, String customerName, String customerPhone,
+        String customerEmail, String guruEmail, String guruPhone, String guruName,
+        String reference, String paymentUrl) {
+        this.gid = gid;
+        this.uid = uid;
+        this.oid = oid;
+        this.code = code;
+        this.title = title;
+        this.status = status;
+        this.amount = amount;
+        this.totalSiswa = totalSiswa;
+        this.totalPertemuan = totalPertemuan;
+        this.fee = amount * 0.3;
+        this.total = amount+fee;
+        this.pertemuan = pertemuan;
+        this.ordertime = ordertime;
+        this.pertemuanTime = pertemuanTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.detailLocation = detailLocation;
+        this.phone = phone;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.paket = paket;
+        this.discount = discount;
+        this.customerName = customerName;
+        this.customerPhone = customerPhone;
+        this.customerEmail = customerEmail;
+        this.guruEmail = guruEmail;
+        this.guruPhone = guruPhone;
+        this.guruName = guruName;
+        this.reference = reference;
+        this.paymentUrl = paymentUrl;
+    }
 
     @NonNull
     public String getGid() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/lyt_btn_absen"
+  android:background="@color/colorPrimary"
   android:orientation="vertical"
   android:visibility="visible"
   android:gravity="center_horizontal"
@@ -8,11 +9,12 @@
   android:layout_height="wrap_content">
     <Button
       android:id="@+id/btn_absent"
+      android:textStyle="bold"
       style="@style/Base.Widget.AppCompat.Button.Borderless"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_weight="1"
       android:text="Absen"
       android:textAllCaps="true"
-      android:textColor="@color/colorAccent" />
+      android:textColor="@color/colorWhite" />
 </LinearLayout>

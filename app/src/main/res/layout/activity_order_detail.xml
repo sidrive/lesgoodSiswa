@@ -45,7 +45,7 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/lin_action"
         android:layout_width="match_parent"
         android:layout_height="49dp"
         android:layout_gravity="bottom"
@@ -57,7 +57,6 @@
             android:layout_height="1dp"
             android:background="@color/colorShadow2" />
         <include layout="@layout/include_buttom_bayar_batalkan"/>
-        <include layout="@layout/include_buttom_absen"/>
     </LinearLayout>
 
     <include layout="@layout/view_progress"/>

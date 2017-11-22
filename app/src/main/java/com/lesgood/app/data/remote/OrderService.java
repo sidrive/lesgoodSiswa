@@ -20,6 +20,9 @@ public class OrderService {
         return databaseRef.child("orders");
     }
 
+    public DatabaseReference getDetalsOrder(String oid){
+        return databaseRef.child("orders").child(oid);
+    }
     public DatabaseReference getOrderItems(String oid){
         return databaseRef.child("order-items").child(oid);
     }
@@ -38,4 +41,9 @@ public class OrderService {
     public Task<Void> order(Order order){
         return databaseRef.child("orders").child(order.getOid()).setValue(order);
     }
+    //Siswa Absen
+    public Task<Void> updateTotalPertemuan(String orderId,int pertemuan){
+        return databaseRef.child("orders").child(orderId).child("totalPertemuan").setValue(pertemuan);
+    }
+    //
 }

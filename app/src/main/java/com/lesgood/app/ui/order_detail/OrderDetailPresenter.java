@@ -2,11 +2,15 @@ package com.lesgood.app.ui.order_detail;
 
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
@@ -26,8 +30,6 @@ public class OrderDetailPresenter implements BasePresenter {
     UserService userService;
     User user;
 
-
-
     public OrderDetailPresenter(OrderDetailActivity activity, OrderService orderService, Order order, UserService userService, User user){
         this.activity = activity;
         this.orderService = orderService;
@@ -39,7 +41,8 @@ public class OrderDetailPresenter implements BasePresenter {
 
     @Override
     public void subscribe() {
-        if (order != null){
+        if (order!=null){
+
         }
     }
 
@@ -47,7 +50,23 @@ public class OrderDetailPresenter implements BasePresenter {
     public void unsubscribe() {
 
     }
+    public void getDetailOrder(String orderId){
+        orderService.getDetalsOrder(orderId).addListenerForSingleValueEvent(
+            new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    order = dataSnapshot.getValue(Order.class);
+                    if (dataSnapshot!=null){
+                        activity.init(order);
+                    }
+                }
 
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+    }
     public void acceptOrder(final Order order){
         orderService.approveOrder(order.getOid()).addOnCompleteListener(
             task -> activity.successAction(order)).addOnFailureListener(e -> activity.successAction(order));
@@ -62,5 +81,22 @@ public class OrderDetailPresenter implements BasePresenter {
     public void updateReview(Reviews reviews){
         userService.updateReviews(order.getGid(), user.getUid(), reviews).addOnCompleteListener(
                 task -> activity.showLoading(false));
+    }
+    public void absenLes(){
+        if (order.getTotalPertemuan()>0){
+            int pertemuan = order.getTotalPertemuan() -1 ;
+            orderService.updateTotalPertemuan(order.getOid(),pertemuan)
+                .addOnFailureListener(e -> {
+                    Log.e("absenLes", "OrderDetailPresenter" + e.getMessage());
+                }).addOnCompleteListener(task -> {
+                    if (task.isComplete()){
+                        getDetailOrder(order.getOid());
+                    }
+            });
+        }else {
+
+        }
+
+
     }
 }

@@ -32,8 +32,9 @@
       android:orientation="horizontal">
 
       <LinearLayout
+        android:gravity="center|center_vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/activity_margin"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -59,22 +60,36 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_margin"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <com.lesgood.app.util.TypefacedTextView
+        android:weightSum="2"
+        android:orientation="horizontal">
+        <LinearLayout
+          android:gravity="center|center_vertical"
+          android:layout_weight="1"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="Pertemuan"
-          android:textSize="12sp"
-          app:typeface="Roboto-Light.ttf" />
-
-        <com.lesgood.app.util.TypefacedTextView
-          android:id="@+id/txt_pertemuan"
+          android:layout_height="match_parent"
+          android:orientation="vertical">
+          <com.lesgood.app.util.TypefacedTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pertemuan"
+            android:textSize="12sp"
+            app:typeface="Roboto-Light.ttf" />
+          <com.lesgood.app.util.TypefacedTextView
+            android:id="@+id/txt_pertemuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="20 kali"
+            android:textSize="14sp"
+            app:typeface="Roboto-Medium.ttf" />
+        </LinearLayout>
+        <LinearLayout
+          android:gravity="center"
+          android:layout_weight="1"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text="20 kali"
-          android:textSize="14sp"
-          app:typeface="Roboto-Medium.ttf" />
+          android:layout_height="wrap_content">
+          <include layout="@layout/include_buttom_absen"/>
+        </LinearLayout>
+
       </LinearLayout>
     </LinearLayout>
 

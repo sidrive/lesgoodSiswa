@@ -2,6 +2,8 @@ package com.lesgood.app.ui.order_detail;
 
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +11,7 @@ import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -30,6 +33,7 @@ import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Reviews;
 import com.lesgood.app.ui.complete_order.CompleteOrderActivity;
 import com.lesgood.app.ui.main.MainActivity;
+import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.DateFormatter;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -129,17 +133,16 @@ public class OrderDetailActivity extends BaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_order_detail);
     ButterKnife.bind(this);
-
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    init();
+    presenter.getDetailOrder(order.getOid());
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-    presenter.subscribe();
+    presenter.getDetailOrder(order.getOid());
   }
 
   @Override
@@ -175,13 +178,11 @@ public class OrderDetailActivity extends BaseActivity {
   }
 
 
-  public void init() {
+  public void init(Order order) {
 
     txtCustomerName.setText(order.getCustomerName().toUpperCase());
     txtOrderId.setText("#" + order.getOid());
-    String statusOrder = order.getStatus();
 
-    //txtStatus.setText(order.getStatus().toUpperCase());
     txtDate.setText(DateFormatter.getDate(order.getPertemuanTime(), "EEE, dd MMM yyyy, HH:mm"));
     txtProduct.setText(order.getTitle());
     txtSiswa.setText(String.valueOf(order.getTotalSiswa()));
@@ -334,10 +335,19 @@ public class OrderDetailActivity extends BaseActivity {
 
   @OnClick(R.id.btn_ganti_pengajar)
   public void onBtnGantiPengajarClicked() {
-
+    AppUtils.ShowDialogWithBtn(this,"Ganti Pengajar","Apakah anda yakin untuk menganti pengajar ?",gantiPengajarClickListener);
   }
 
   @OnClick(R.id.btn_absent)
   public void onBtnAbsenClicked() {
+    AppUtils.ShowDialogWithBtn(this,"Absen Harian", "Selesai les untuk hari ini ?", absenClickListener);
   }
+  public DialogInterface.OnClickListener gantiPengajarClickListener = (dialog, which) -> {
+    dialog.dismiss();
+
+  };
+  public  DialogInterface.OnClickListener absenClickListener = (dialog, which) -> {
+    dialog.dismiss();
+    presenter.absenLes();
+  };
 }

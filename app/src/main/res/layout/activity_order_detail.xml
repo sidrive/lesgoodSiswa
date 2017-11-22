@@ -38,7 +38,9 @@
 
             <include layout="@layout/include_detail_order_detail"/>
             <include layout="@layout/include_detail_order_location"/>
+            <include layout="@layout/include_detail_order_putaka"/>
             <include layout="@layout/include_detail_order_btn_ganti_guru"/>
+
         </LinearLayout>
     </ScrollView>
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog.Builder;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -109,6 +110,10 @@ public class OrderDetailActivity extends BaseActivity {
   OrderDetailPresenter presenter;
   @Bind(R.id.lyt_btn_ganti_pengajar)
   LinearLayout lytBtnGantiPengajar;
+  @Bind(R.id.rcv_pustaka)
+  RecyclerView rcvPustaka;
+  @Bind(R.id.lyt_pustaka)
+  LinearLayout lytPustaka;
 
 
   public static void startWithOrder(BaseActivity activity, Order order) {
@@ -175,9 +180,9 @@ public class OrderDetailActivity extends BaseActivity {
     txtOrderId.setText("#" + order.getOid());
     String statusOrder = order.getStatus();
     Log.e("init", "OrderDetailActivity" + statusOrder);
-    if (statusOrder.equalsIgnoreCase("success")){
-      lytBtnGantiPengajar.setVisibility(View.VISIBLE);
-    }else if (statusOrder.equalsIgnoreCase("pending_guru")) {
+    if (statusOrder.equalsIgnoreCase("success")) {
+        setLayoutOrderSuccess();
+    } else if (statusOrder.equalsIgnoreCase("pending_guru")) {
       txtStatus.setText("Menunggu Konfirmasi Guru");
     } else {
       txtStatus.setText("Menunggu Pembayaran");
@@ -210,6 +215,11 @@ public class OrderDetailActivity extends BaseActivity {
 
     handleStatus(order.getStatus());
 
+  }
+
+  private void setLayoutOrderSuccess() {
+    lytBtnGantiPengajar.setVisibility(View.VISIBLE);
+    lytPustaka.setVisibility(View.VISIBLE);
   }
 
   public void handleStatus(String status) {

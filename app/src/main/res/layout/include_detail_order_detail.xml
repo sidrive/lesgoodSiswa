@@ -9,6 +9,7 @@
 
 
     <Button
+      android:visibility="gone"
       android:id="@+id/btn_reviews"
       style="@style/com_facebook_button_like"
       android:layout_width="match_parent"

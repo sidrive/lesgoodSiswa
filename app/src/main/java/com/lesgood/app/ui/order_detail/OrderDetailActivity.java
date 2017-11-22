@@ -9,7 +9,6 @@ import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -83,7 +82,7 @@ public class OrderDetailActivity extends BaseActivity {
   TextView txtTotal;
 
   @Bind(R.id.btn_reviews)
-  Button btnbtn;
+  Button btn_reviews;
 
   @Bind(R.id.img_map)
   ImageView imgMap;
@@ -114,6 +113,8 @@ public class OrderDetailActivity extends BaseActivity {
   RecyclerView rcvPustaka;
   @Bind(R.id.lyt_pustaka)
   LinearLayout lytPustaka;
+  @Bind(R.id.lyt_btn_absen)
+  LinearLayout lytBtnAbsen;
 
 
   public static void startWithOrder(BaseActivity activity, Order order) {
@@ -179,21 +180,16 @@ public class OrderDetailActivity extends BaseActivity {
     txtCustomerName.setText(order.getCustomerName().toUpperCase());
     txtOrderId.setText("#" + order.getOid());
     String statusOrder = order.getStatus();
-    Log.e("init", "OrderDetailActivity" + statusOrder);
-    if (statusOrder.equalsIgnoreCase("success")) {
-        setLayoutOrderSuccess();
-    } else if (statusOrder.equalsIgnoreCase("pending_guru")) {
-      txtStatus.setText("Menunggu Konfirmasi Guru");
-    } else {
-      txtStatus.setText("Menunggu Pembayaran");
-    }
+
     //txtStatus.setText(order.getStatus().toUpperCase());
     txtDate.setText(DateFormatter.getDate(order.getPertemuanTime(), "EEE, dd MMM yyyy, HH:mm"));
     txtProduct.setText(order.getTitle());
     txtSiswa.setText(String.valueOf(order.getTotalSiswa()));
     txtPertemuan.setText(String.valueOf(order.getTotalPertemuan()) + " kali");
     txtDetailLokasi.setText(order.getDetailLocation());
-
+    if (order.getTotalPertemuan() == 0) {
+      btn_reviews.setVisibility(View.VISIBLE);
+    }
     String url =
         "http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
             + order.getLatitude() + "," + order.getLongitude() + "+&sensor=false";
@@ -220,25 +216,26 @@ public class OrderDetailActivity extends BaseActivity {
   private void setLayoutOrderSuccess() {
     lytBtnGantiPengajar.setVisibility(View.VISIBLE);
     lytPustaka.setVisibility(View.VISIBLE);
+    lytBtnAbsen.setVisibility(View.VISIBLE);
+    linAction.setVisibility(View.GONE);
   }
 
   public void handleStatus(String status) {
-    if (status.equalsIgnoreCase("pending_murid")) {
-      linAction.setVisibility(View.VISIBLE);
-      btnbtn.setVisibility(View.INVISIBLE);
+    if (status.equalsIgnoreCase("success")) {
+        setLayoutOrderSuccess();
+    } else if (status.equalsIgnoreCase("pending_murid")) {
+        txtStatus.setText("Menunggu Pembayaran");
+        linAction.setVisibility(View.VISIBLE);
+        btn_reviews.setVisibility(View.INVISIBLE);
     } else if (status.equalsIgnoreCase("pending_guru")) {
-      linAction.setVisibility(View.INVISIBLE);
-      btnbtn.setVisibility(View.INVISIBLE);
-    } else {
-      linAction.setVisibility(View.GONE);
-           /* linAction2.setVisibility(View.VISIBLE);*/
-    }
-
-    if (status.equalsIgnoreCase("cancel_guru")) {
-      String title = "Pesanan Dibatalkan";
-      String desc = "Pesanan telah dibatalkan oleh pengajar";
-      int icon = R.drawable.ic_appointment_reminders_primary_32dp;
-      showAlertDialog(title, desc, icon);
+        txtStatus.setText("Menunggu Konfirmasi Guru");
+        linAction.setVisibility(View.INVISIBLE);
+        btn_reviews.setVisibility(View.INVISIBLE);
+    } else if (status.equalsIgnoreCase("cancel_guru")) {
+        String title = "Pesanan Dibatalkan";
+        String desc = "Pesanan telah dibatalkan oleh pengajar";
+        int icon = R.drawable.ic_appointment_reminders_primary_32dp;
+        showAlertDialog(title, desc, icon);
     }
   }
 
@@ -337,6 +334,10 @@ public class OrderDetailActivity extends BaseActivity {
 
   @OnClick(R.id.btn_ganti_pengajar)
   public void onBtnGantiPengajarClicked() {
+
   }
 
+  @OnClick(R.id.btn_absent)
+  public void onBtnAbsenClicked() {
+  }
 }

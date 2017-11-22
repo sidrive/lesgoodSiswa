@@ -2,7 +2,6 @@ package com.lesgood.app.ui.order_detail;
 
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -117,8 +115,10 @@ public class OrderDetailActivity extends BaseActivity {
   RecyclerView rcvPustaka;
   @Bind(R.id.lyt_pustaka)
   LinearLayout lytPustaka;
-  @Bind(R.id.lyt_btn_absen)
-  LinearLayout lytBtnAbsen;
+  @Bind(R.id.btn_absent)
+  Button btnAbsent;
+  @Bind(R.id.lyt_btn_review)
+  LinearLayout lytBtnReview;
 
 
   public static void startWithOrder(BaseActivity activity, Order order) {
@@ -189,8 +189,16 @@ public class OrderDetailActivity extends BaseActivity {
     txtPertemuan.setText(String.valueOf(order.getTotalPertemuan()) + " kali");
     txtDetailLokasi.setText(order.getDetailLocation());
     if (order.getTotalPertemuan() == 0) {
-      btn_reviews.setVisibility(View.VISIBLE);
+      lytBtnReview.setVisibility(View.VISIBLE);
+      lytBtnGantiPengajar.setVisibility(View.GONE);
     }
+    if (order.getTotalPertemuan() > 0 && order.getStatus().equalsIgnoreCase("success")) {
+      btnAbsent.setVisibility(View.VISIBLE);
+      lytBtnGantiPengajar.setVisibility(View.VISIBLE);
+    } else {
+      btnAbsent.setVisibility(View.GONE);
+    }
+
     String url =
         "http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
             + order.getLatitude() + "," + order.getLongitude() + "+&sensor=false";
@@ -215,28 +223,27 @@ public class OrderDetailActivity extends BaseActivity {
   }
 
   private void setLayoutOrderSuccess() {
-    lytBtnGantiPengajar.setVisibility(View.VISIBLE);
     lytPustaka.setVisibility(View.VISIBLE);
-    lytBtnAbsen.setVisibility(View.VISIBLE);
+
     linAction.setVisibility(View.GONE);
   }
 
   public void handleStatus(String status) {
     if (status.equalsIgnoreCase("success")) {
-        setLayoutOrderSuccess();
+      setLayoutOrderSuccess();
     } else if (status.equalsIgnoreCase("pending_murid")) {
-        txtStatus.setText("Menunggu Pembayaran");
-        linAction.setVisibility(View.VISIBLE);
-        btn_reviews.setVisibility(View.INVISIBLE);
+      txtStatus.setText("Menunggu Pembayaran");
+      linAction.setVisibility(View.VISIBLE);
+      btn_reviews.setVisibility(View.INVISIBLE);
     } else if (status.equalsIgnoreCase("pending_guru")) {
-        txtStatus.setText("Menunggu Konfirmasi Guru");
-        linAction.setVisibility(View.INVISIBLE);
-        btn_reviews.setVisibility(View.INVISIBLE);
+      txtStatus.setText("Menunggu Konfirmasi Guru");
+      linAction.setVisibility(View.INVISIBLE);
+      btn_reviews.setVisibility(View.INVISIBLE);
     } else if (status.equalsIgnoreCase("cancel_guru")) {
-        String title = "Pesanan Dibatalkan";
-        String desc = "Pesanan telah dibatalkan oleh pengajar";
-        int icon = R.drawable.ic_appointment_reminders_primary_32dp;
-        showAlertDialog(title, desc, icon);
+      String title = "Pesanan Dibatalkan";
+      String desc = "Pesanan telah dibatalkan oleh pengajar";
+      int icon = R.drawable.ic_appointment_reminders_primary_32dp;
+      showAlertDialog(title, desc, icon);
     }
   }
 
@@ -335,18 +342,22 @@ public class OrderDetailActivity extends BaseActivity {
 
   @OnClick(R.id.btn_ganti_pengajar)
   public void onBtnGantiPengajarClicked() {
-    AppUtils.ShowDialogWithBtn(this,"Ganti Pengajar","Apakah anda yakin untuk menganti pengajar ?",gantiPengajarClickListener);
+    AppUtils
+        .ShowDialogWithBtn(this, "Ganti Pengajar", "Apakah anda yakin untuk menganti pengajar ?",
+            gantiPengajarClickListener);
   }
 
   @OnClick(R.id.btn_absent)
   public void onBtnAbsenClicked() {
-    AppUtils.ShowDialogWithBtn(this,"Absen Harian", "Selesai les untuk hari ini ?", absenClickListener);
+    AppUtils.ShowDialogWithBtn(this, "Absen Harian", "Selesai les untuk hari ini ?",
+        absenClickListener);
   }
-  public DialogInterface.OnClickListener gantiPengajarClickListener = (dialog, which) -> {
+
+  public OnClickListener gantiPengajarClickListener = (dialog, which) -> {
     dialog.dismiss();
 
   };
-  public  DialogInterface.OnClickListener absenClickListener = (dialog, which) -> {
+  public OnClickListener absenClickListener = (dialog, which) -> {
     dialog.dismiss();
     presenter.absenLes();
   };

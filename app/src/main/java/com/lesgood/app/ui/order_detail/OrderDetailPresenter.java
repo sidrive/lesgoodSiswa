@@ -93,8 +93,8 @@ public class OrderDetailPresenter implements BasePresenter {
                         getDetailOrder(order.getOid());
                     }
             });
-        }else {
-
+        }else if (order.getTotalPertemuan()==0){
+            activity.showAddReviews();
         }
 
 

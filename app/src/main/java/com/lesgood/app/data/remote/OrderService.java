@@ -46,4 +46,12 @@ public class OrderService {
         return databaseRef.child("orders").child(orderId).child("totalPertemuan").setValue(pertemuan);
     }
     //
+
+    //Temporery Order
+    public Task<Void> createTempOrder(String oid_temp,Order order){
+        return databaseRef.child("temp-orders").child(oid_temp).setValue(order);
+    }
+    public Task<Void> deleteTempOrder(String temp_oid){
+        return databaseRef.child("temp-orders").child(temp_oid).removeValue();
+    }
 }

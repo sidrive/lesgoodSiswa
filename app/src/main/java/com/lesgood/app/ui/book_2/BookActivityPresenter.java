@@ -51,6 +51,7 @@ public class BookActivityPresenter implements BasePresenter {
         userService.getUserSkill(uid, code).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.e("onDataChange", "BookActivityPresenter" + dataSnapshot.toString());
                 Skill skill = dataSnapshot.getValue(Skill.class);
                 if (skill != null){
                     activity.initSkill(skill);
@@ -112,5 +113,20 @@ public class BookActivityPresenter implements BasePresenter {
             }
         });
     }
+    public void getOrderById(String oid){
+        orderService.getDetalsOrder(oid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot!=null){
+                    Order order = dataSnapshot.getValue(Order.class);
+                    activity.updateUiForCangeTeacher(order);
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("onCancelled", "BookActivityPresenter" + databaseError.getMessage());
+            }
+        });
+    }
 }

@@ -88,12 +88,18 @@ public class DetailTeacherActivity extends BaseActivity {
   String userAbout = "";
   @Bind(R.id.btn_book)
   Button btnBook;
-
+  String oldOrderId;
   public static void startWithData(BaseActivity activity, Guru user, Order order) {
     BaseApplication.get(activity).createDetailTeacherComponent(user);
     BaseApplication.get(activity).createBookComponent(order);
     Intent intent = new Intent(activity, DetailTeacherActivity.class);
-
+    activity.startActivity(intent);
+  }
+  public static void startFromChangeTeacher(BaseActivity activity, Guru user, Order order, String oldOid) {
+    BaseApplication.get(activity).createDetailTeacherComponent(user);
+    BaseApplication.get(activity).createBookComponent(order);
+    Intent intent = new Intent(activity, DetailTeacherActivity.class);
+    intent.putExtra("old_oid",oldOid);
     activity.startActivity(intent);
   }
 
@@ -111,7 +117,18 @@ public class DetailTeacherActivity extends BaseActivity {
     setContentView(R.layout.activity_detail_techear);
     ButterKnife.bind(this);
     setTitle("Profil");
-    init();
+    Bundle extras = getIntent().getExtras();
+    if (extras!=null){
+      oldOrderId = extras.getString("old_oid");
+      iniFromChangeTeacher(oldOrderId);
+    }else {
+      init();
+    }
+    Log.e("onCreate", "DetailTeacherActivity" + oldOrderId);
+
+  }
+
+  private void iniFromChangeTeacher(String oldOrderId) {
 
   }
 
@@ -269,8 +286,14 @@ public class DetailTeacherActivity extends BaseActivity {
 
   @OnClick(R.id.btn_book)
   void showBook() {
-    Loading(true);
-    startActivity(new Intent(this, BookActivity.class));
+    //Loading(true);
+    //startActivity(new Intent(this, BookActivity.class));
+
+    if (oldOrderId!=null){
+      BookActivity.startFromChangeTeacher(this,oldOrderId);
+    }else {
+      BookActivity.start(this);
+    }
   }
 
 }

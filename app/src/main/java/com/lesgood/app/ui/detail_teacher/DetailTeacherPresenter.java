@@ -7,6 +7,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.User;
+import com.lesgood.app.data.remote.OrderService;
 import com.lesgood.app.data.remote.UserService;
 
 /**
@@ -18,7 +19,8 @@ public class DetailTeacherPresenter implements BasePresenter {
     Guru user;
     UserService userService;
 
-    public DetailTeacherPresenter(DetailTeacherActivity fragment, Guru user, UserService userService){
+    public DetailTeacherPresenter(DetailTeacherActivity fragment, Guru user,
+        UserService userService ){
         this.fragment = fragment;
         this.user = user;
         this.userService = userService;
@@ -54,5 +56,6 @@ public class DetailTeacherPresenter implements BasePresenter {
             }
         });
     }
+
 
 }

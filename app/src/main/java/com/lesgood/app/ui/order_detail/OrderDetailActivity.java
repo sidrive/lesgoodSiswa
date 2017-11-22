@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -30,6 +31,7 @@ import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Reviews;
 import com.lesgood.app.ui.complete_order.CompleteOrderActivity;
+import com.lesgood.app.ui.list.ListActivity;
 import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.DateFormatter;
@@ -354,9 +356,15 @@ public class OrderDetailActivity extends BaseActivity {
   }
 
   public OnClickListener gantiPengajarClickListener = (dialog, which) -> {
+    openListGuru(order.getTitle(),order.getCode(),order.getOid());
     dialog.dismiss();
-
   };
+
+  private void openListGuru(String title, String code, String oid) {
+    ListActivity.startFromChangeTeacher(this,code,title,oid);
+    finish();
+  }
+
   public OnClickListener absenClickListener = (dialog, which) -> {
     dialog.dismiss();
     presenter.absenLes();

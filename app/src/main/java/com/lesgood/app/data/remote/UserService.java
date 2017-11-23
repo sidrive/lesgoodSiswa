@@ -188,7 +188,9 @@ public class UserService {
         return databaseRef.child("partner-payment").child(uid);
     }
 
-
+    public Task<Void> setSaldoUser(String uid, int saldo){
+        return databaseRef.child("users").child(uid).child("saldo").setValue(saldo);
+    }
     public void updateStatus(String uid, boolean status){
         databaseRef.child("users").child(uid).child("active").setValue(status);
     }
@@ -206,6 +208,5 @@ public class UserService {
         return new GeoFire(reference);
     }
     public void geoQuery(double lat, double lng){
-
     }
 }

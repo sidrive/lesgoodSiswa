@@ -126,7 +126,6 @@ public class ListActivity extends BaseActivity {
             finish();
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 

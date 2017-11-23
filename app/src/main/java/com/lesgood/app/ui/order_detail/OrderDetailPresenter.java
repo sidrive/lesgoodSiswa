@@ -67,6 +67,31 @@ public class OrderDetailPresenter implements BasePresenter {
                 }
             });
     }
+    public void updateSaldoGuru(String uid, int saldo){
+        userService.getUser(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot!=null){
+                    User user = dataSnapshot.getValue(User.class);
+                    setSaldoUser(uid,user.getSaldo(),saldo);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setSaldoUser(String uid, int saldo, int saldo1) {
+
+        int newSaldo = saldo+saldo1;
+        userService.setSaldoUser(uid,newSaldo).addOnCompleteListener(task -> {
+            Log.e("setSaldoUser", "OrderDetailPresenter" +task.isComplete());
+        });
+    }
+
     public void acceptOrder(final Order order){
         orderService.approveOrder(order.getOid()).addOnCompleteListener(
             task -> activity.successAction(order)).addOnFailureListener(e -> activity.successAction(order));
@@ -91,6 +116,7 @@ public class OrderDetailPresenter implements BasePresenter {
                 }).addOnCompleteListener(task -> {
                     if (task.isComplete()){
                         getDetailOrder(order.getOid());
+                        updateSaldoGuru(order.getGid(),order.getTarif());
                     }
             });
         }else if (order.getTotalPertemuan()==0){

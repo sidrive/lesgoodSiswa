@@ -160,6 +160,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   double fee;
   int amount = 0;
   double discount = 0;
+  int base_tarif = 0;
   String oldOid;
   List<Event> eventList = new ArrayList<>();
   Calendar calendar = Calendar.getInstance();
@@ -408,14 +409,19 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
     if (siswa == 1) {
       tarif = skill.getPrice1();
+      base_tarif = skill.getPrice1();
     } else if (siswa == 2) {
       tarif = skill.getPrice2();
+      base_tarif = skill.getPrice2();
     } else if (siswa == 3) {
       tarif = skill.getPrice3();
+      base_tarif = skill.getPrice3();
     } else if (siswa == 4) {
       tarif = skill.getPrice4();
+      base_tarif = skill.getPrice4();
     } else {
       tarif = skill.getPrice5();
+      base_tarif = skill.getPrice5();
     }
 
     fee = tarif * 0.3;
@@ -426,9 +432,9 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
     String tarifStr = "Rp." + this.tarif;
     inputTarifSiswa.setText(tarifStr);
-
     handleTotalPertemuan();
     initPaket();
+    Log.e("base_tarif", "BookActivity" + base_tarif);
   }
 
 
@@ -533,6 +539,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
           String oid = Integer.toString(rand.nextInt(99999));
           long ordertime = System.currentTimeMillis();
             order.setOid(oid);
+
             order.setAmount(newOrder.getAmount());
             order.setCode(skill.getCode());
             order.setGid(guru.getUid());
@@ -610,10 +617,11 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       int cleanAmount = cleanTarif * totalPertemuan;
 
       int disc = (int) (discount + 0.5d);
-
       int total = amount - disc;
 
       order.setOid(oid);
+      order.setCreatedAt(ordertime);
+      order.setTarif(base_tarif);
       order.setAmount(cleanAmount);
       order.setCode(skill.getCode());
       order.setGid(guru.getUid());

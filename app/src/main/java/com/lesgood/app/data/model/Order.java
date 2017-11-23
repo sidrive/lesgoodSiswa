@@ -73,28 +73,16 @@ public class Order {
     @Nullable
     String statusPayment;
 
-    public Order(){
+    @Nullable
+    int tarif;
 
-    }
+    public Order(){}
 
     public Order(String oid, String code, String title){
         this.oid = oid;
         this.code = code;
         this.title = title;
     }
-/*
-    public Order(String gid, String uid, String oid, String title, String status, int amount, List<Jadwal> pertemuan, long ordertime){
-        this.gid = gid;
-        this.uid = uid;
-        this.oid = oid;
-        this.title = title;
-        this.status = status;
-        this.amount = amount;
-        this.fee = amount * 0.3;
-        this.total = amount+fee;
-        this.pertemuan = pertemuan;
-        this.ordertime = ordertime;
-    }*/
 
     public Order(@NonNull String gid, @NonNull String uid, @NonNull String oid, String code,
         String title, String status, int amount, int totalSiswa, int totalPertemuan, double fee,
@@ -102,7 +90,7 @@ public class Order {
         double longitude, String detailLocation, String phone, long createdAt, long updatedAt,
         String paket, double discount, String customerName, String customerPhone,
         String customerEmail, String guruEmail, String guruPhone, String guruName,
-        String reference, String paymentUrl, String statusPayment) {
+        String reference, String paymentUrl, String statusPayment, int tarif) {
         this.gid = gid;
         this.uid = uid;
         this.oid = oid;
@@ -134,6 +122,16 @@ public class Order {
         this.reference = reference;
         this.paymentUrl = paymentUrl;
         this.statusPayment = statusPayment;
+        this.tarif = tarif;
+    }
+
+    @Nullable
+    public int getTarif() {
+        return tarif;
+    }
+
+    public void setTarif(@Nullable int tarif) {
+        this.tarif = tarif;
     }
 
     @Nullable

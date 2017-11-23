@@ -70,7 +70,13 @@ public class User implements Serializable {
     @Nullable
     public String userType;
     @Nullable
+    public String token;
+    @Nullable
+    public int  saldo;
+
+    @Nullable
     private GeoFire geoFire;
+
     public static User newInstance(FirebaseUser firebaseUser, UserInfo provider) {
         User user = new User(firebaseUser.getUid());
         user.setProvider(provider.getProviderId());
@@ -91,13 +97,33 @@ public class User implements Serializable {
         this.uid = uid;
     }
 
-    public User(String uid, String phone, String email, String provider, String photo_url, String full_name) {
+    public User(String uid, String phone, String email, String provider, String photo_url, String full_name, String token, int saldo) {
         this.uid = uid;
         this.phone = phone;
         this.email = email;
         this.provider = provider;
         this.photo_url = photo_url;
         this.full_name = full_name;
+        this.token = token;
+        this.saldo =saldo;
+    }
+
+    @Nullable
+    public int getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(@Nullable int saldo) {
+        this.saldo = saldo;
+    }
+
+    @Nullable
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(@Nullable String token) {
+        this.token = token;
     }
 
     @NonNull

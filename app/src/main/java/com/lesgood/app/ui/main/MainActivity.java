@@ -1,5 +1,6 @@
 package com.lesgood.app.ui.main;
 
+import android.accessibilityservice.GestureDescription.StrokeDescription;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
@@ -134,7 +136,9 @@ public class MainActivity extends BaseActivity {
         ft.commit();
 
         startService();
-
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.e("onCreate", "MainActivity" + token);
+        presenter.updateFCMToken(user.getUid(),token);
     }
 
     public void MethodName(Intent intent){

@@ -53,7 +53,7 @@ public class ListPresenter implements BasePresenter {
            GeoLocation location = new GeoLocation(Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00), Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00));
         if (location!=null){
             GeoQuery geoQuery = userService.getUserGeofire(databaseRef.child("user-geofire"))
-                .queryAtLocation(location,20);//20km
+                .queryAtLocation(location,30);//20km
             geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
                 @Override
                 public void onKeyEntered(String s, GeoLocation geoLocation) {
@@ -102,7 +102,7 @@ public class ListPresenter implements BasePresenter {
                 if (dataSnapshot.getValue() != null){
                     String uid = dataSnapshot.getKey();
                     //activity.showAddedItem(uid);
-                    Log.d("onChildAdded", "ListPresenter getGurus " + uid);
+                    Log.e("onChildAdded", "ListPresenter getGurus " + uid);
                     //getGuruIsActive(uid);
                     getGeofireguru(uid);
                 }

@@ -7,6 +7,7 @@ import com.lesgood.app.data.remote.OrderService;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 /**
  * Created by Agus on 3/15/17.
@@ -28,8 +29,8 @@ public class PlaceholderFragmentModule {
 
     @FragmentScope
     @Provides
-    PlaceHolderFragmentPresenter providePlaceHolderFragmentPresenter(User user, OrderService orderService){
-        return new PlaceHolderFragmentPresenter(fragment, orderService, user);
+    PlaceHolderFragmentPresenter providePlaceHolderFragmentPresenter(User user, OrderService orderService, Retrofit retrofit){
+        return new PlaceHolderFragmentPresenter(fragment, orderService, user,retrofit);
     }
 
 

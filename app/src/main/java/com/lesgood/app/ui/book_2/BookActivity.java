@@ -4,6 +4,7 @@ import android.Manifest.permission;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -58,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -464,7 +466,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     inputTarifPertemuan.setText(tarifStr);
   }
 
-  public void showDialogTimePicker() {
+  public void showDialogTimePicker(long startTime, long endTime) {
     Calendar cal = Calendar.getInstance();
     TimePickerDialog dpd = TimePickerDialog.newInstance(
         this,
@@ -472,6 +474,17 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
         cal.get(Calendar.MINUTE),
         true
     );
+
+    int starH = (int) ((startTime / 1000) / 3600);
+    int starM = (int) (((startTime / 1000) / 60) % 60);
+    int starS = (int) ((startTime / 1000) % 60);
+
+    Log.e("showDialogTimePicker", "BookActivity" + starH+starM+starS);
+    int endH = (int) ((endTime / 1000) / 3600);
+    int endM = (int) (((endTime / 1000) / 60) % 60);
+    int endS = (int) (((endTime / 1000) / 60) % 60);
+    Log.e("showDialogTimePicker", "BookActivity" + endH+endM+endS);
+    dpd.setMaxTime(endH,endM,endS);
 
     dpd.setTitle("Waktu mulai");
     dpd.vibrate(true);

@@ -36,8 +36,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    private void onItemClicked(TimeSchedule date) {
-        activity.setDate(date);
+    private void onItemClicked(TimeSchedule time) {
+        activity.showDialogTimePicker(time.getStartTime(),time.getEndTime());
     }
 
     @Override

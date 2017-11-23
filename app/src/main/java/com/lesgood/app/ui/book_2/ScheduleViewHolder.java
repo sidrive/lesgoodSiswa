@@ -10,13 +10,14 @@ import com.lesgood.app.R;
 import com.lesgood.app.data.model.Jadwal;
 import com.lesgood.app.data.model.TimeSchedule;
 import com.lesgood.app.util.DateFormatter;
+import com.lesgood.app.util.Utils;
 import java.util.Calendar;
 import java.util.Date;
 
 public class ScheduleViewHolder extends RecyclerView.ViewHolder {
 
-    @Bind(R.id.tv_day) TextView tv_day;
-    @Bind(R.id.tv_time) TextView tv_time;
+    @Bind(R.id.tvDay) TextView tvDay;
+    @Bind(R.id.tvTime) TextView tvTime;
 
 
 
@@ -30,8 +31,9 @@ public class ScheduleViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(TimeSchedule schedule) {
-        tv_day.setText(schedule.getDay());
-        tv_time.setText(schedule.getTime());
+        tvTime.setText(Utils.longToString(schedule.getStartTime())+" - "+Utils.longToString(schedule.getEndTime()));
+        tvDay.setText(schedule.getDay());
+
 
     }
 }

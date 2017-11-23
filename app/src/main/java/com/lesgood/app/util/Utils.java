@@ -10,6 +10,9 @@ import com.lesgood.app.R;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -69,4 +72,15 @@ public class Utils {
             Glide.with(context).load(R.drawable.ic_account_circle).placeholder(R.color.colorSoft).dontAnimate().into(img);
         }
     }
+    public static String dateToString(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, ''yyyy");
+        return format.format(date);
+    }
+    public static String longToString(long date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        SimpleDateFormat format = new SimpleDateFormat("kk:mm");
+        return format.format(date);
+    }
+
 }

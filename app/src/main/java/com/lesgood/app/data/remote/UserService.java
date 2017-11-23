@@ -118,7 +118,7 @@ public class UserService {
     //userschedule
 
     public Query getUserSchedule(String uid){
-        return databaseRef.child("user_schedules").orderByChild("id").equalTo(uid);
+        return databaseRef.child("user-schedules").orderByChild("id").equalTo(uid);
     }
 
     public void updateSchedule(String uid, WeekViewEvent weekViewEvent){

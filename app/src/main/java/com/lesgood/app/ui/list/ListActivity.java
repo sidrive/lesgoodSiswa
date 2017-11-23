@@ -59,13 +59,22 @@ public class ListActivity extends BaseActivity {
     UserService userService;
     Guru user;
 
-    public String code, pelajaran;
+    public String code, pelajaran, oldOrderId;
 
     public static void startWithData(BaseActivity activity, String code, String pelajaran){
         Intent intent = new Intent(activity, ListActivity.class);
         if (code != null){
             intent.putExtra("code", code);
             intent.putExtra("pelajaran", pelajaran);
+        }
+        activity.startActivity(intent);
+    }
+    public static void startFromChangeTeacher(BaseActivity activity, String code, String pelajaran,String orderId){
+        Intent intent = new Intent(activity, ListActivity.class);
+        if (code != null){
+            intent.putExtra("code", code);
+            intent.putExtra("pelajaran", pelajaran);
+            intent.putExtra("oldOrderId",orderId);
         }
         activity.startActivity(intent);
     }
@@ -81,8 +90,11 @@ public class ListActivity extends BaseActivity {
         if (extras != null){
             code = extras.getString("code");
             pelajaran = extras.getString("pelajaran");
+            oldOrderId = extras.getString("oldOrderId");
+            Log.e("onCreate", "ListActivity" + oldOrderId);
+            Log.e("onCreate", "ListActivity" + code);
+            Log.e("onCreate", "ListActivity" + pelajaran);
             if (code != null) {
-                Log.d("search", "code = "+code);
                 presenter.getGurus(code);
             }
         }
@@ -166,10 +178,15 @@ public class ListActivity extends BaseActivity {
     }
 
     public void showItemClicked(Guru user){
-
+        Log.e("showItemClicked", "ListActivity" + oldOrderId);
         Random rand = new Random();
         String oid = System.currentTimeMillis()+""+Integer.toString(rand.nextInt(99999));
         Order order = new Order(oid, code, pelajaran);
-        DetailTeacherActivity.startWithData(this, user, order);
+        if (oldOrderId!=null){
+            DetailTeacherActivity.startFromChangeTeacher(this,user,order,oldOrderId);
+        }else {
+            DetailTeacherActivity.startWithData(this, user, order);
+        }
+
     }
 }

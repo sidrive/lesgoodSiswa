@@ -1,30 +1,23 @@
 package com.lesgood.app.ui.book_2;
 
-import android.Manifest;
 import android.Manifest.permission;
-import android.annotation.SuppressLint;
-import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,9 +31,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import butterknife.OnTextChanged.Callback;
 import com.bumptech.glide.Glide;
-import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-import com.github.sundeepk.compactcalendarview.CompactCalendarView.CompactCalendarViewListener;
 import com.github.sundeepk.compactcalendarview.domain.Event;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -64,7 +56,6 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -130,19 +121,28 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   @Bind(R.id.rel_map)
   RelativeLayout relMap;
 
-  @Inject Order order;
+  @Inject
+  Order order;
 
-  @Inject Guru guru;
+  @Inject
+  Guru guru;
 
-  @Inject User user;
+  @Inject
+  User user;
 
-  @Inject BookActivityPresenter presenter;
+  @Inject
+  BookActivityPresenter presenter;
 
-  @Inject ScheduleAdapter scheduleAdapter;
+  @Inject
+  ScheduleAdapter scheduleAdapter;
   MenuItem menuDone;
 
   @Bind(R.id.rcvJadwal)
   RecyclerView rcvJadwal;
+  @Bind(R.id.lyt_jml_siswa)
+  LinearLayout lytJmlSiswa;
+  @Bind(R.id.lyt_tarif)
+  LinearLayout lytTarif;
 
   private GoogleMap mMap;
 
@@ -160,6 +160,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   double fee;
   int amount = 0;
   double discount = 0;
+  String oldOid;
   List<Event> eventList = new ArrayList<>();
   Calendar calendar = Calendar.getInstance();
   SupportMapFragment mapFragment;
@@ -167,6 +168,17 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   public static void startWithData(BaseActivity activity, Order order) {
     BaseApplication.get(activity).createBookComponent(order);
+  }
+
+  public static void start(Context context) {
+    Intent starter = new Intent(context, BookActivity.class);
+    context.startActivity(starter);
+  }
+
+  public static void startFromChangeTeacher(BaseActivity activity, String oldOid) {
+    Intent intent = new Intent(activity, BookActivity.class);
+    intent.putExtra("oldOid", oldOid);
+    activity.startActivity(intent);
   }
 
   @Override
@@ -183,13 +195,28 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     mapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
-    init();
+    Bundle extras = getIntent().getExtras();
+    if (extras != null) {
+      oldOid = extras.getString("oldOid");
+    }
+    Log.e("onCreate", "BookActivity" + oldOid);
+    if (oldOid != null) {
+      initWithChangeTeacher(oldOid);
+    } else {
+      init();
+    }
+
 
   }
 
-  private void showSchedules() {
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+  private void initWithChangeTeacher(String oldOid) {
+    presenter.getGuruSkill(guru.getUid(), order.getCode());
+    presenter.getOrderById(oldOid);
+  }
 
+  private void showSchedules() {
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,
+        LinearLayoutManager.HORIZONTAL, false);
     rcvJadwal.setLayoutManager(linearLayoutManager);
     rcvJadwal.setAdapter(scheduleAdapter);
   }
@@ -271,7 +298,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     showLoading(false);
     inputSiswa.setText("1");
     inputPertemuan.setText("6");
-
     initPaket();
   }
 
@@ -363,7 +389,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
 
-  @OnTextChanged(R.id.input_siswa)
+  @OnTextChanged(value = R.id.input_siswa, callback = Callback.AFTER_TEXT_CHANGED)
   void onInputSiswa(Editable s) {
     if (TextUtils.isEmpty(s.toString())) {
       inputSiswa.setText("1");
@@ -406,7 +432,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
 
-  @OnTextChanged(R.id.input_pertemuan)
+  @OnTextChanged(value = R.id.input_pertemuan, callback = Callback.AFTER_TEXT_CHANGED)
   void onInputPertemuan(Editable s) {
     if (TextUtils.isEmpty(s.toString())) {
       inputPertemuan.setText("6");
@@ -451,10 +477,12 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     scheduleAdapter.onItemAdded(date);
     showSchedules();
   }
-  public void setDate(TimeSchedule date){
+
+  public void setDate(TimeSchedule date) {
     btnDate.setText(date.getDay());
     btnTime.setText(date.getTime());
   }
+
   @Override
   public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
     calendar.set(year, monthOfYear, dayOfMonth);
@@ -472,7 +500,62 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   @OnClick(R.id.btn_book)
   void book() {
-    validate();
+    if (oldOid!=null){
+      validateWithNewData();
+    }else {
+      validate();
+    }
+
+  }
+  Order newOrder = null;
+  private void validateWithNewData() {
+    boolean cancel = false;
+    View focusView = null;
+    int totalPertemuan = Integer.valueOf(newOrder.getTotalPertemuan());
+    String detilLokasi = newOrder.getDetailLocation();
+    if (btnDate.getText().toString().equalsIgnoreCase("Tanggal")) {
+      Toast.makeText(this, "Pilih Tanggal Terlebih dahulu", Toast.LENGTH_SHORT).show();
+      cancel = true;
+    }
+
+    if (btnTime.getText().toString().equalsIgnoreCase("Jam")) {
+      Toast.makeText(this, "Pilih Jam Terlebih dahulu", Toast.LENGTH_SHORT).show();
+      cancel = true;
+    }
+    if (cancel) {
+      if (focusView != null) {
+        focusView.requestFocus();
+      }
+
+    } else {
+          showLoading(true);
+          Random rand = new Random();
+          String oid = Integer.toString(rand.nextInt(99999));
+          long ordertime = System.currentTimeMillis();
+            order.setOid(oid);
+            order.setAmount(newOrder.getAmount());
+            order.setCode(skill.getCode());
+            order.setGid(guru.getUid());
+            order.setOrdertime(ordertime);
+            order.setUid(user.getUid());
+            order.setPertemuanTime(calendar.getTimeInMillis());
+            order.setFee(fee);
+            order.setTotalSiswa(siswa);
+            order.setLatitude(latitude);
+            order.setLongitude(longitude);
+            order.setDetailLocation(detilLokasi);
+            order.setTotalPertemuan(totalPertemuan);
+            order.setTotal(newOrder.getTotal());
+            order.setStatus("pending_guru");
+            order.setDiscount(discount);
+            order.setCustomerPhone(user.getPhone());
+            order.setCustomerName(user.getFull_name());
+            order.setCustomerEmail(user.getEmail());
+            order.setGuruEmail(guru.getEmail());
+            order.setGuruPhone(guru.getPhone());
+            order.setGuruName(guru.getFull_name());
+            saveOrder(order);
+        }
   }
 
   public void validate() {
@@ -523,8 +606,11 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       long ordertime = System.currentTimeMillis();
 
       double fee = this.fee * totalPertemuan;
+
       int cleanAmount = cleanTarif * totalPertemuan;
+
       int disc = (int) (discount + 0.5d);
+
       int total = amount - disc;
 
       order.setOid(oid);
@@ -549,25 +635,60 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setGuruEmail(guru.getEmail());
       order.setGuruPhone(guru.getPhone());
       order.setGuruName(guru.getFull_name());
+      saveOrder(order);
 
+    }
+  }
+
+  private void saveOrder(Order order) {
+    Log.e("saveOrder", "BookActivity" + oldOid);
+    if (oldOid!=null){
+      presenter.saveOrder(order);
+    }else {
       presenter.saveOrder(order);
     }
+
+  }
+
+  public void updateUiForCangeTeacher(Order orderFromData) {
+    newOrder = orderFromData;
+    txtMengajar.setText(orderFromData.getTitle());
+    txtGuru.setText(guru.getFull_name());
+    showLoading(true);
+    radioPaket.setVisibility(View.GONE);
+    inputDetail.setText(orderFromData.getDetailLocation());
+    String pertemuan = String.valueOf(orderFromData.getTotalPertemuan());
+    inputPertemuan.setText(pertemuan);
+    presenter.getGuruSkill(orderFromData.getGid(), orderFromData.getCode());
+    lytJmlSiswa.setVisibility(View.GONE);
+    lytTarif.setVisibility(View.GONE);
+
+  }
+
+  public void set20Pertemuan(String pertemuan) {
+    Log.e("set20Pertemuan", "BookActivity" + pertemuan);
+    order.setPaket("Paket 20 kali pertemuan");
+    inputPertemuan.setText(pertemuan);
+    //inputPertemuan.setEnabled(false);
+    discount = amount * 0.05;
+  }
+
+  public void set30Pertemuan(String pertemuan) {
+    Log.e("set30Pertemuan", "BookActivity" + pertemuan);
+    order.setPaket("Paket 30 kali pertemuan");
+    inputPertemuan.setText(pertemuan);
+    //inputPertemuan.setEnabled(false);
+    discount = amount * 0.1;
   }
 
   @OnClick({R.id.radio_paket_1, R.id.radio_paket_2})
   public void radioGroupUpdate() {
     if (radioPaket1.isChecked()) {
-      order.setPaket("Paket 20 kali pertemuan");
-      inputPertemuan.setText("20");
-      inputPertemuan.setEnabled(false);
-      discount = amount * 0.05;
+      set20Pertemuan("20");
     }
 
     if (radioPaket2.isChecked()) {
-      order.setPaket("Paket 30 kali pertemuan");
-      inputPertemuan.setText("30");
-      inputPertemuan.setEnabled(false);
-      discount = amount * 0.1;
+      set30Pertemuan("30");
     }
   }
 

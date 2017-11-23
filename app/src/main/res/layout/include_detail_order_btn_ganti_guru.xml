@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/lyt_btn_ganti_pengajar"
+  android:gravity="center"
+  android:layout_marginTop="@dimen/activity_margin"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@color/colorWhite"
+  android:orientation="vertical"
+  android:visibility="gone"
+  android:padding="@dimen/activity_margin">
+
+    <com.lesgood.app.util.TypefacedTextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="10dp"
+      android:text="Ganti Pengajar"
+      app:typeface="Roboto-Medium.ttf" />
+    <Button
+      android:id="@+id/btn_ganti_pengajar"
+      android:textColor="@color/mdtp_white"
+      android:background="@color/colorPrimary"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="GANTI PENGAJAR"
+      android:textAppearance="@style/TextAppearance.AppCompat" />
+</LinearLayout>

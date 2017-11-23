@@ -6,6 +6,7 @@ package com.lesgood.app.ui.detail_teacher;
 import com.lesgood.app.base.annotation.UserScope;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.User;
+import com.lesgood.app.data.remote.OrderService;
 import com.lesgood.app.data.remote.UserService;
 
 import dagger.Module;

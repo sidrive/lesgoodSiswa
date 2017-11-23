@@ -64,4 +64,14 @@ public class TransactionResponse {
         this.statusMessage = statusMessage;
     }
 
+    @Override
+    public String toString() {
+        return "TransactionResponse{" +
+            "merchantCode='" + merchantCode + '\'' +
+            ", reference='" + reference + '\'' +
+            ", paymentUrl='" + paymentUrl + '\'' +
+            ", statusCode=" + statusCode +
+            ", statusMessage=" + statusMessage +
+            '}';
+    }
 }

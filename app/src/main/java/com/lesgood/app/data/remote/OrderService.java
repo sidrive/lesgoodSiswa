@@ -20,6 +20,9 @@ public class OrderService {
         return databaseRef.child("orders");
     }
 
+    public DatabaseReference getDetalsOrder(String oid){
+        return databaseRef.child("orders").child(oid);
+    }
     public DatabaseReference getOrderItems(String oid){
         return databaseRef.child("order-items").child(oid);
     }
@@ -37,5 +40,24 @@ public class OrderService {
     }
     public Task<Void> order(Order order){
         return databaseRef.child("orders").child(order.getOid()).setValue(order);
+    }
+    public Task<Void> updateOrderPaymentStatus(String oid,String status){
+        return databaseRef.child("orders").child(oid).child("statusPayment").setValue(status);
+    }
+    public Task<Void> updateStatusOrder(String oid,String status){
+        return databaseRef.child("orders").child(oid).child("status").setValue(status);
+    }
+    //Siswa Absen
+    public Task<Void> updateTotalPertemuan(String orderId,int pertemuan){
+        return databaseRef.child("orders").child(orderId).child("totalPertemuan").setValue(pertemuan);
+    }
+    //
+
+    //Temporery Order
+    public Task<Void> createTempOrder(String oid_temp,Order order){
+        return databaseRef.child("temp-orders").child(oid_temp).setValue(order);
+    }
+    public Task<Void> deleteTempOrder(String temp_oid){
+        return databaseRef.child("temp-orders").child(temp_oid).removeValue();
     }
 }

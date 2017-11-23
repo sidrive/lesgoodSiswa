@@ -176,7 +176,6 @@ public class CompleteOrderActivity extends BaseActivity {
             focusView.requestFocus();
         }else{
             showLoading(true);
-
             int total = (int)(order.getTotal()+0.5d);
             String forSignature = BuildConfig.MERCHANT_CODE+order.getOid()+total+BuildConfig.MERCHANT_KEY;
             Log.d("signature", forSignature);
@@ -192,7 +191,8 @@ public class CompleteOrderActivity extends BaseActivity {
             transaction.setPaymentMethod(metode);
             transaction.setReturnUrl(BuildConfig.PAYMENT_URL+"orders");
             transaction.setSignature(Utils.md5(BuildConfig.MERCHANT_CODE+order.getOid()+total+BuildConfig.MERCHANT_KEY));
-            presenter.sendTransaction(transaction);
+            //presenter.sendTransaction(transaction);
+            presenter.prosessTransaction(transaction);
         }
     }
 

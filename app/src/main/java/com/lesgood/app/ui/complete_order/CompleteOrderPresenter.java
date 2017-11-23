@@ -13,6 +13,11 @@ import com.lesgood.app.data.remote.OrderService;
 import com.lesgood.app.data.remote.PaymentService;
 
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,13 +33,13 @@ public class CompleteOrderPresenter implements BasePresenter {
     OrderService orderService;
     Retrofit retrofit;
     PaymentService paymentService;
-
+    Disposable disposable;
     public CompleteOrderPresenter(CompleteOrderActivity activity, OrderService orderService, Order order, Retrofit retrofit){
         this.activity = activity;
         this.orderService =orderService;
         this.order = order;
         this.paymentService = retrofit.create(PaymentService.class);
-        
+
     }
 
 
@@ -55,9 +60,6 @@ public class CompleteOrderPresenter implements BasePresenter {
         Call<TransactionResponse> call = paymentService.transaction(transaction);
         call.enqueue(transCallback);
     }
-
-
-
     private Callback<TransactionResponse> transCallback = new Callback<TransactionResponse>() {
         @Override
         public void onResponse(Call<TransactionResponse> call, Response<TransactionResponse> response) {
@@ -66,7 +68,6 @@ public class CompleteOrderPresenter implements BasePresenter {
                 TransactionResponse transactionResponse = response.body();
                 if (transactionResponse.getPaymentUrl() != null){
                     if (transactionResponse.getReference() != null) {
-
                         order.setPaymentUrl(transactionResponse.getPaymentUrl());
                         order.setReference(transactionResponse.getReference());
                         updateOrder(order, transactionResponse);
@@ -80,7 +81,21 @@ public class CompleteOrderPresenter implements BasePresenter {
             Log.d("error", t.toString());
         }
     };
+    public void prosessTransaction(Transaction transaction){
+        Observable<TransactionResponse> observable = paymentService.sendTransactions(transaction).subscribeOn(
+            Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread());
+        observable.subscribe(
+            transactionResponse -> {
+                order.setPaymentUrl(transactionResponse.getPaymentUrl());
+                order.setReference(transactionResponse.getReference());
+                activity.showPayment(transactionResponse);
+            },
+            throwable -> {
+                Log.e("prosessTransaction", "CompleteOrderPresenter" + throwable.getMessage());
+            }
+            );
 
+    }
 
     public void updateOrder(Order order, final TransactionResponse response){
         orderService.order(order).addOnCompleteListener(task -> activity.showPayment(response));

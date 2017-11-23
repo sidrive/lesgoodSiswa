@@ -70,6 +70,8 @@ public class Order {
     String reference;
     @Nullable
     String paymentUrl;
+    @Nullable
+    String statusPayment;
 
     public Order(){
 
@@ -100,7 +102,7 @@ public class Order {
         double longitude, String detailLocation, String phone, long createdAt, long updatedAt,
         String paket, double discount, String customerName, String customerPhone,
         String customerEmail, String guruEmail, String guruPhone, String guruName,
-        String reference, String paymentUrl) {
+        String reference, String paymentUrl, String statusPayment) {
         this.gid = gid;
         this.uid = uid;
         this.oid = oid;
@@ -110,8 +112,8 @@ public class Order {
         this.amount = amount;
         this.totalSiswa = totalSiswa;
         this.totalPertemuan = totalPertemuan;
-        this.fee = amount * 0.3;
-        this.total = amount+fee;
+        this.fee = fee;
+        this.total = total;
         this.pertemuan = pertemuan;
         this.ordertime = ordertime;
         this.pertemuanTime = pertemuanTime;
@@ -131,6 +133,16 @@ public class Order {
         this.guruName = guruName;
         this.reference = reference;
         this.paymentUrl = paymentUrl;
+        this.statusPayment = statusPayment;
+    }
+
+    @Nullable
+    public String getStatusPayment() {
+        return statusPayment;
+    }
+
+    public void setStatusPayment(@Nullable String statusPayment) {
+        this.statusPayment = statusPayment;
     }
 
     @NonNull

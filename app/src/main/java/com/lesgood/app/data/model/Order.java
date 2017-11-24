@@ -76,6 +76,9 @@ public class Order {
     @Nullable
     int tarif;
 
+    @Nullable
+    String orderType;
+
     public Order(){}
 
     public Order(String oid, String code, String title){
@@ -90,7 +93,8 @@ public class Order {
         double longitude, String detailLocation, String phone, long createdAt, long updatedAt,
         String paket, double discount, String customerName, String customerPhone,
         String customerEmail, String guruEmail, String guruPhone, String guruName,
-        String reference, String paymentUrl, String statusPayment, int tarif) {
+        String reference, String paymentUrl, String statusPayment, int tarif,
+        String orderType) {
         this.gid = gid;
         this.uid = uid;
         this.oid = oid;
@@ -123,6 +127,16 @@ public class Order {
         this.paymentUrl = paymentUrl;
         this.statusPayment = statusPayment;
         this.tarif = tarif;
+        this.orderType = orderType;
+    }
+
+    @Nullable
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(@Nullable String orderType) {
+        this.orderType = orderType;
     }
 
     @Nullable

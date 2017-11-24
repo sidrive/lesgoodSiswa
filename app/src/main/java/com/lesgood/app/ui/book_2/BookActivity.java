@@ -551,7 +551,9 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setDetailLocation(detilLokasi);
       order.setTotalPertemuan(totalPertemuan);
       order.setTotal(newOrder.getTotal());
-      order.setStatus("pending_guru");
+      order.setStatus("change_guru");
+      order.setStatusPayment(newOrder.getStatus());
+      order.setOrderType(newOrder.getOid());
       order.setDiscount(discount);
       order.setCustomerPhone(user.getPhone());
       order.setCustomerName(user.getFull_name());
@@ -772,8 +774,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   public void onPermissionsDenied(int requestCode, List<String> perms) {
     Log.d(TAG, "onPermissionsDenied:" + requestCode + ":" + perms.size());
 
-    // (Optional) Check whether the user denied any permissions and checked "NEVER ASK AGAIN."
-    // This will display a dialog directing them to enable the permission in app settings.
     if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
       new AppSettingsDialog.Builder(this).build().show();
     }

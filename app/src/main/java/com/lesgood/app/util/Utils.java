@@ -79,7 +79,7 @@ public class Utils {
     public static String longToString(long date){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date);
-        SimpleDateFormat format = new SimpleDateFormat("kk:mm");
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
         return format.format(date);
     }
     public static String longToDay(long date){

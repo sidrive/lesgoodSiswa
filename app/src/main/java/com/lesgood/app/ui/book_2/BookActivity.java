@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -58,7 +59,6 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -785,14 +785,19 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     AppUtils.showToas(this,"Pilih jam sesuai dengan hari yang tersedia terlebih dahulu");
   }
 
-  private void showDialogDatePicker(long time) {
+  private void showDialogDatePicker(long time, String scheduleDay) {
     Calendar cal = Calendar.getInstance();
     DatePickerDialog dpd = DatePickerDialog.newInstance((view, year, monthOfYear, dayOfMonth) -> {
           cal.set(year,monthOfYear,dayOfMonth);
-          String day = Utils.longToDay(time);
+
           String selected = Utils.longToDay(cal.getTimeInMillis());
-          Log.e("showDialogDatePicker", "BookActivity" + day);
+          Log.e("showDialogDatePicker", "BookActivity" + scheduleDay);
           Log.e("showDialogDatePicker", "BookActivity" + selected);
+          if (scheduleDay.equals(selected)){
+            btnDate.setText(DateFormatter.getDate(cal.getTimeInMillis(), "EE dd MMM yyyy"));
+          }else {
+            handleWrongSelectedDay(selected,scheduleDay);
+          }
         },
         cal.get(Calendar.YEAR),
         cal.get(Calendar.MONTH),
@@ -800,24 +805,31 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
     dpd.show(getFragmentManager(), "Datepickerdialog");
   }
-  public void showDialogTimePicker(long startTime, long endTime) {
+
+  private void handleWrongSelectedDay(String selected, String scheduleDay) {
+    AppUtils.ShowDialogWithBtn(this,"Salah memilih hari", "Hari pada jadwal yang anda pilih "+scheduleDay+" hari pada kalender yang anda pilih "+selected, (dialog, which) -> {
+      dialog.dismiss();
+    });
+  }
+
+  public void showDialogTimePicker(long startTime, long endTime, String day) {
     Calendar cal = Calendar.getInstance();
     TimePickerDialog dpd = TimePickerDialog.newInstance(
         (view, hourOfDay, minute, second) -> {
           cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
               hourOfDay, minute, second);
           if (cal.getTimeInMillis() > endTime) {
-            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis());
+            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
           } else if (cal.getTimeInMillis() < startTime) {
-            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis());
+            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
           } else {
             btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
-            showDialogDatePicker(startTime);
+            showDialogDatePicker(startTime,day);
           }
         },
         cal.get(Calendar.HOUR_OF_DAY),
         cal.get(Calendar.MINUTE),
-        true
+        false
     );
     Calendar startTimeCal = Calendar.getInstance();
     startTimeCal.setTimeInMillis(startTime);
@@ -830,14 +842,15 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     dpd.dismissOnPause(true);
     dpd.show(getFragmentManager(), "TImepickerdialog");
   }
-  private void handleWrongSelectedTime(long startTime, long endTime, long timeInMillis) {
+  private void handleWrongSelectedTime(long startTime, long endTime, long timeInMillis,
+      String day) {
     String selectedTime = Utils.longToString(timeInMillis);
     String sTime = Utils.longToString(startTime);
     String eTime = Utils.longToString(endTime);
     AppUtils.ShowDialogWithBtn(this, "Guru tidak memiliki jadwal pada jam " + selectedTime,
         "Pilih antara jam " + sTime + " - " + eTime, (dialog, which) -> {
           dialog.dismiss();
-          showDialogTimePicker(startTime, endTime);
+          showDialogTimePicker(startTime, endTime, day);
         });
   }
 

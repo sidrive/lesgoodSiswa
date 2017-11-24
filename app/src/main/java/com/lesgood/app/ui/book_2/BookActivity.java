@@ -4,7 +4,6 @@ import android.Manifest.permission;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -50,16 +49,18 @@ import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.TimeSchedule;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.main.MainActivity;
+import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.DateFormatter;
+import com.lesgood.app.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
@@ -145,6 +146,11 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   LinearLayout lytJmlSiswa;
   @Bind(R.id.lyt_tarif)
   LinearLayout lytTarif;
+  @Bind(R.id.btn_book)
+  Button btnBook;
+
+  @Bind(R.id.img_marker)
+  ImageView imgMarker;
 
   private GoogleMap mMap;
 
@@ -466,31 +472,8 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     inputTarifPertemuan.setText(tarifStr);
   }
 
-  public void showDialogTimePicker(long startTime, long endTime) {
-    Calendar cal = Calendar.getInstance();
-    TimePickerDialog dpd = TimePickerDialog.newInstance(
-        this,
-        cal.get(Calendar.HOUR_OF_DAY),
-        cal.get(Calendar.MINUTE),
-        true
-    );
 
-    int starH = (int) ((startTime / 1000) / 3600);
-    int starM = (int) (((startTime / 1000) / 60) % 60);
-    int starS = (int) ((startTime / 1000) % 60);
 
-    Log.e("showDialogTimePicker", "BookActivity" + starH+starM+starS);
-    int endH = (int) ((endTime / 1000) / 3600);
-    int endM = (int) (((endTime / 1000) / 60) % 60);
-    int endS = (int) (((endTime / 1000) / 60) % 60);
-    Log.e("showDialogTimePicker", "BookActivity" + endH+endM+endS);
-    dpd.setMaxTime(endH,endM,endS);
-
-    dpd.setTitle("Waktu mulai");
-    dpd.vibrate(true);
-    dpd.dismissOnPause(true);
-    dpd.show(getFragmentManager(), "TImepickerdialog");
-  }
 
   public void setEvent(TimeSchedule date) {
     scheduleAdapter.onItemAdded(date);
@@ -519,14 +502,16 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   @OnClick(R.id.btn_book)
   void book() {
-    if (oldOid!=null){
+    if (oldOid != null) {
       validateWithNewData();
-    }else {
+    } else {
       validate();
     }
 
   }
+
   Order newOrder = null;
+
   private void validateWithNewData() {
     boolean cancel = false;
     View focusView = null;
@@ -547,35 +532,35 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       }
 
     } else {
-          showLoading(true);
-          Random rand = new Random();
-          String oid = Integer.toString(rand.nextInt(99999));
-          long ordertime = System.currentTimeMillis();
-            order.setOid(oid);
+      showLoading(true);
+      Random rand = new Random();
+      String oid = Integer.toString(rand.nextInt(99999));
+      long ordertime = System.currentTimeMillis();
+      order.setOid(oid);
 
-            order.setAmount(newOrder.getAmount());
-            order.setCode(skill.getCode());
-            order.setGid(guru.getUid());
-            order.setOrdertime(ordertime);
-            order.setUid(user.getUid());
-            order.setPertemuanTime(calendar.getTimeInMillis());
-            order.setFee(fee);
-            order.setTotalSiswa(siswa);
-            order.setLatitude(latitude);
-            order.setLongitude(longitude);
-            order.setDetailLocation(detilLokasi);
-            order.setTotalPertemuan(totalPertemuan);
-            order.setTotal(newOrder.getTotal());
-            order.setStatus("pending_guru");
-            order.setDiscount(discount);
-            order.setCustomerPhone(user.getPhone());
-            order.setCustomerName(user.getFull_name());
-            order.setCustomerEmail(user.getEmail());
-            order.setGuruEmail(guru.getEmail());
-            order.setGuruPhone(guru.getPhone());
-            order.setGuruName(guru.getFull_name());
-            saveOrder(order);
-        }
+      order.setAmount(newOrder.getAmount());
+      order.setCode(skill.getCode());
+      order.setGid(guru.getUid());
+      order.setOrdertime(ordertime);
+      order.setUid(user.getUid());
+      order.setPertemuanTime(calendar.getTimeInMillis());
+      order.setFee(fee);
+      order.setTotalSiswa(siswa);
+      order.setLatitude(latitude);
+      order.setLongitude(longitude);
+      order.setDetailLocation(detilLokasi);
+      order.setTotalPertemuan(totalPertemuan);
+      order.setTotal(newOrder.getTotal());
+      order.setStatus("pending_guru");
+      order.setDiscount(discount);
+      order.setCustomerPhone(user.getPhone());
+      order.setCustomerName(user.getFull_name());
+      order.setCustomerEmail(user.getEmail());
+      order.setGuruEmail(guru.getEmail());
+      order.setGuruPhone(guru.getPhone());
+      order.setGuruName(guru.getFull_name());
+      saveOrder(order);
+    }
   }
 
   public void validate() {
@@ -663,9 +648,9 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   private void saveOrder(Order order) {
     Log.e("saveOrder", "BookActivity" + oldOid);
-    if (oldOid!=null){
+    if (oldOid != null) {
       presenter.saveOrder(order);
-    }else {
+    } else {
       presenter.saveOrder(order);
     }
 
@@ -687,18 +672,18 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
   public void set20Pertemuan(String pertemuan) {
-    Log.e("set20Pertemuan", "BookActivity" + pertemuan);
+
     order.setPaket("Paket 20 kali pertemuan");
     inputPertemuan.setText(pertemuan);
-    //inputPertemuan.setEnabled(false);
+    inputPertemuan.setEnabled(false);
     discount = amount * 0.05;
   }
 
   public void set30Pertemuan(String pertemuan) {
-    Log.e("set30Pertemuan", "BookActivity" + pertemuan);
+
     order.setPaket("Paket 30 kali pertemuan");
     inputPertemuan.setText(pertemuan);
-    //inputPertemuan.setEnabled(false);
+    inputPertemuan.setEnabled(false);
     discount = amount * 0.1;
   }
 
@@ -792,6 +777,68 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
       new AppSettingsDialog.Builder(this).build().show();
     }
+  }
+
+  @OnClick(R.id.btn_date)
+  public void onBtnDatePicker() {
+    //showDialogDatePicker();
+    AppUtils.showToas(this,"Pilih jam sesuai dengan hari yang tersedia terlebih dahulu");
+  }
+
+  private void showDialogDatePicker(long time) {
+    Calendar cal = Calendar.getInstance();
+    DatePickerDialog dpd = DatePickerDialog.newInstance((view, year, monthOfYear, dayOfMonth) -> {
+          cal.set(year,monthOfYear,dayOfMonth);
+          String day = Utils.longToDay(time);
+          String selected = Utils.longToDay(cal.getTimeInMillis());
+          Log.e("showDialogDatePicker", "BookActivity" + day);
+          Log.e("showDialogDatePicker", "BookActivity" + selected);
+        },
+        cal.get(Calendar.YEAR),
+        cal.get(Calendar.MONTH),
+        cal.get(Calendar.DAY_OF_MONTH));
+
+    dpd.show(getFragmentManager(), "Datepickerdialog");
+  }
+  public void showDialogTimePicker(long startTime, long endTime) {
+    Calendar cal = Calendar.getInstance();
+    TimePickerDialog dpd = TimePickerDialog.newInstance(
+        (view, hourOfDay, minute, second) -> {
+          cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
+              hourOfDay, minute, second);
+          if (cal.getTimeInMillis() > endTime) {
+            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis());
+          } else if (cal.getTimeInMillis() < startTime) {
+            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis());
+          } else {
+            btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
+            showDialogDatePicker(startTime);
+          }
+        },
+        cal.get(Calendar.HOUR_OF_DAY),
+        cal.get(Calendar.MINUTE),
+        true
+    );
+    Calendar startTimeCal = Calendar.getInstance();
+    startTimeCal.setTimeInMillis(startTime);
+    int sH = startTimeCal.get(Calendar.HOUR);
+    int sM = startTimeCal.get(Calendar.MINUTE);
+    int sS = startTimeCal.get(Calendar.SECOND);
+    dpd.setStartTime(sH, sM, sS);
+    dpd.setTitle("Waktu mulai");
+    dpd.vibrate(true);
+    dpd.dismissOnPause(true);
+    dpd.show(getFragmentManager(), "TImepickerdialog");
+  }
+  private void handleWrongSelectedTime(long startTime, long endTime, long timeInMillis) {
+    String selectedTime = Utils.longToString(timeInMillis);
+    String sTime = Utils.longToString(startTime);
+    String eTime = Utils.longToString(endTime);
+    AppUtils.ShowDialogWithBtn(this, "Guru tidak memiliki jadwal pada jam " + selectedTime,
+        "Pilih antara jam " + sTime + " - " + eTime, (dialog, which) -> {
+          dialog.dismiss();
+          showDialogTimePicker(startTime, endTime);
+        });
   }
 
 }

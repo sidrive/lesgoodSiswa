@@ -278,7 +278,7 @@ public class OrderDetailActivity extends BaseActivity {
   public void successAction(Order order) {
     if (order.getStatus().equalsIgnoreCase("pending_murid")) {
       CompleteOrderActivity.startWithOrder(this, order);
-    } else if (order.getStatus().equalsIgnoreCase("cancel_guru")) {
+    } else if (order.getStatus().equalsIgnoreCase("cancel_murid")) {
       String title = "Pembatalan pesanan";
       String desc = "Pesanan telah dibatalkan";
       int icon = R.drawable.ic_appointment_reminders_primary_32dp;

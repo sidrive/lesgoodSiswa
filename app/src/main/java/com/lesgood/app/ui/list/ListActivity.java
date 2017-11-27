@@ -154,6 +154,7 @@ public class ListActivity extends BaseActivity {
 
 
     public void showAddedItem(String item) {
+
         String stat = showStatus(item);
         if (stat != null ){
              adapter.onItemAdded(item);

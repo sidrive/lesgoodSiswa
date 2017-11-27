@@ -829,7 +829,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
         },
         cal.get(Calendar.HOUR_OF_DAY),
         cal.get(Calendar.MINUTE),
-        false
+        true
     );
     Calendar startTimeCal = Calendar.getInstance();
     startTimeCal.setTimeInMillis(startTime);

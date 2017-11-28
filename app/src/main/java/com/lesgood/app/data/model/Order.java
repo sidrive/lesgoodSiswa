@@ -72,6 +72,9 @@ public class Order {
     String paymentUrl;
     @Nullable
     String statusPayment;
+    @Nullable
+    String guruAddres;
+
 
     @Nullable
     int tarif;
@@ -94,7 +97,7 @@ public class Order {
         String paket, double discount, String customerName, String customerPhone,
         String customerEmail, String guruEmail, String guruPhone, String guruName,
         String reference, String paymentUrl, String statusPayment, int tarif,
-        String orderType) {
+        String orderType, String guruAddres) {
         this.gid = gid;
         this.uid = uid;
         this.oid = oid;
@@ -128,6 +131,8 @@ public class Order {
         this.statusPayment = statusPayment;
         this.tarif = tarif;
         this.orderType = orderType;
+        this.guruAddres = guruAddres;
+
     }
 
     @Nullable
@@ -426,5 +431,14 @@ public class Order {
 
     public void setPaymentUrl(@Nullable String paymentUrl) {
         this.paymentUrl = paymentUrl;
+    }
+
+    @Nullable
+    public String getGuruAddres() {
+        return guruAddres;
+    }
+
+    public void setGuruAddres(@Nullable String guruAddres) {
+        this.guruAddres = guruAddres;
     }
 }

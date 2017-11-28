@@ -561,6 +561,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setGuruEmail(guru.getEmail());
       order.setGuruPhone(guru.getPhone());
       order.setGuruName(guru.getFull_name());
+      order.setGuruAddres(guru.getFullAddress());
       saveOrder(order);
     }
   }
@@ -643,6 +644,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setGuruEmail(guru.getEmail());
       order.setGuruPhone(guru.getPhone());
       order.setGuruName(guru.getFull_name());
+      order.setGuruAddres(guru.getFullAddress());
       saveOrder(order);
 
     }

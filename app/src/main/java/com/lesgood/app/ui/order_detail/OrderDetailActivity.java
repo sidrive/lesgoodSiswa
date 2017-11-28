@@ -28,8 +28,10 @@ import com.bumptech.glide.Glide;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
+import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Reviews;
+import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.complete_order.CompleteOrderActivity;
 import com.lesgood.app.ui.list.ListActivity;
 import com.lesgood.app.ui.main.MainActivity;
@@ -97,6 +99,30 @@ public class OrderDetailActivity extends BaseActivity {
   @Bind(R.id.txt_distance)
   TextView txtDistance;
 
+  @Bind(R.id.txt_nama_siswa)
+  TextView txtNamaSiswa;
+
+  @Bind(R.id.txt_alamat_siswa)
+  TextView txtAlamatSiswa;
+
+  @Bind(R.id.txt_telp_siswa)
+  TextView txtTelpSiswa;
+
+  @Bind(R.id.txt_email_siswa)
+  TextView txtEmailSiswa;
+
+  @Bind(R.id.txt_nama_guru)
+  TextView txtGuru;
+
+  @Bind(R.id.txt_alamat_guru)
+  TextView txtAlamatGuru;
+
+  @Bind(R.id.txt_telp_guru)
+  TextView txtTelpGuru;
+
+  @Bind(R.id.txt_email_guru)
+  TextView txtEmailGuru;
+
   @Bind(R.id.lin_action)
   LinearLayout linAction;
 
@@ -106,8 +132,11 @@ public class OrderDetailActivity extends BaseActivity {
   @Inject
   Order order;
 
-    /*@Inject
-    Reviews reviews;*/
+  @Inject
+  User user;
+
+  /*@Inject
+  Guru guru;*/
 
   @Inject
   OrderDetailPresenter presenter;
@@ -221,6 +250,15 @@ public class OrderDetailActivity extends BaseActivity {
     txtTotal.setText("Rp." + toRupiah(total));
 
     handleStatus(order.getStatus());
+
+    txtNamaSiswa.setText(order.getCustomerName());
+    txtGuru.setText(order.getGuruName());
+    txtAlamatSiswa.setText(user.getFullAddress());
+    txtAlamatGuru.setText(order.getGuruAddres());
+    txtTelpSiswa.setText(user.getPhone());
+    txtTelpGuru.setText(order.getGuruPhone());
+    txtEmailSiswa.setText(user.getEmail());
+    txtEmailGuru.setText(order.getGuruEmail());
 
   }
 

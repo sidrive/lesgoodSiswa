@@ -37,6 +37,8 @@
             android:paddingTop="@dimen/activity_margin">
 
             <include layout="@layout/include_detail_order_detail"/>
+            <include layout="@layout/include_detail_siswa"/>
+            <include layout="@layout/include_detail_guru"/>
             <include layout="@layout/include_detail_order_location"/>
             <include layout="@layout/include_detail_order_putaka"/>
             <include layout="@layout/include_detail_order_btn_ganti_guru"/>

@@ -52,6 +52,7 @@ android {
             versionName '1.0.1'
 
             buildConfigField "String", "BASE_URL", "\"https://passport.duitku.com/webapi/api/\""
+            buildConfigField "String", "BASE_URL_DEV", "\"http://sandbox.duitku.com/webapi/api/\""
             buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
             buildConfigField "String", "PAYMENT_URL", "\"http://lesgood-callback.dev.komuri.co.id/\""
             buildConfigField "String", "MERCHANT_CODE", "\"D2588\""
@@ -66,6 +67,7 @@ android {
             versionName '1.0.0'
 
             buildConfigField "String", "BASE_URL", "\"https://passport.duitku.com/webapi/api/\""
+            buildConfigField "String", "BASE_URL_DEV", "\"http://sandbox.duitku.com/webapi/api/\""
             buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
             buildConfigField "String", "PAYMENT_URL", "\"http://lesgood-callback.dev.komuri.co.id/\""
             buildConfigField "String", "MERCHANT_CODE", "\"D2588\""

@@ -19,6 +19,7 @@ package com.lesgood.app.base.config;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.lesgood.app.BuildConfig;
 
 
 public class DefaultConfig {
@@ -77,7 +78,7 @@ public class DefaultConfig {
     }
 
     public String getApiUrl() {
-        return mSharedPreferences.getString(KEY_API_URL, "https://api.nexmo.com/");
+        return mSharedPreferences.getString(KEY_API_URL, BuildConfig.BASE_URL);
     }
 
     public void setApiUrl(String url) {

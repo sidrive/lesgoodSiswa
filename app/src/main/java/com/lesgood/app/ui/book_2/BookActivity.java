@@ -646,6 +646,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setGuruPhone(guru.getPhone());
       order.setGuruName(guru.getFull_name());
       order.setGuruAddres(guru.getFullAddress());
+      order.setCustomerPhone(user.getPhone());
       saveOrder(order);
 
     }

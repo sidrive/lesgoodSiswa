@@ -253,11 +253,11 @@ public class OrderDetailActivity extends BaseActivity {
 
     txtNamaSiswa.setText(order.getCustomerName());
     txtGuru.setText(order.getGuruName());
-    txtAlamatSiswa.setText(user.getFullAddress());
+    txtAlamatSiswa.setText(order.getDetailLocation());
     txtAlamatGuru.setText(order.getGuruAddres());
-    txtTelpSiswa.setText(user.getPhone());
+    txtTelpSiswa.setText(order.getCustomerPhone());
     txtTelpGuru.setText(order.getGuruPhone());
-    txtEmailSiswa.setText(user.getEmail());
+    txtEmailSiswa.setText(order.getCustomerEmail());
     txtEmailGuru.setText(order.getGuruEmail());
 
   }

@@ -54,6 +54,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+
         }
 
         // Check if message contains a notification payload.
@@ -78,8 +79,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
      * @param messageBody FCM message body received.
      */
     private void sendNotification(String title, String messageBody, Bitmap image) {
-        Intent intent = new Intent(this, OrderDetailActivity.class/*MainActivity.class*/);
-        /*intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);*/
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(MainActivity.KEY_PARAM_MSG,messageBody);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 

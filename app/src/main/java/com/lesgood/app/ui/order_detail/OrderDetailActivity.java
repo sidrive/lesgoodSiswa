@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog.Builder;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -30,6 +32,7 @@ import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
+import com.lesgood.app.data.model.Pustaka;
 import com.lesgood.app.data.model.Reviews;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.complete_order.CompleteOrderActivity;
@@ -140,14 +143,23 @@ public class OrderDetailActivity extends BaseActivity {
 
   @Inject
   OrderDetailPresenter presenter;
+  @Inject
+  PustakaAdapter pustakaAdapter;
+
   @Bind(R.id.lyt_btn_ganti_pengajar)
   LinearLayout lytBtnGantiPengajar;
+
   @Bind(R.id.rcv_pustaka)
   RecyclerView rcvPustaka;
+
+
+
   @Bind(R.id.lyt_pustaka)
   LinearLayout lytPustaka;
+
   @Bind(R.id.btn_absent)
   Button btnAbsent;
+
   @Bind(R.id.lyt_btn_review)
   LinearLayout lytBtnReview;
 
@@ -264,12 +276,12 @@ public class OrderDetailActivity extends BaseActivity {
 
   private void setLayoutOrderSuccess() {
     lytPustaka.setVisibility(View.VISIBLE);
-
     linAction.setVisibility(View.GONE);
+    presenter.getPustaka();
   }
 
   public void handleStatus(String status) {
-    if (status.equalsIgnoreCase("success")) {
+    if (status.equalsIgnoreCase("SUCCESS")) {
       setLayoutOrderSuccess();
     } else if (status.equalsIgnoreCase("pending_murid")) {
       txtStatus.setText("Menunggu Pembayaran");
@@ -407,4 +419,20 @@ public class OrderDetailActivity extends BaseActivity {
     dialog.dismiss();
     presenter.absenLes();
   };
+
+  public void showPustakaLesgood(Pustaka pustaka) {
+    pustakaAdapter.onPustakaAdded(pustaka);
+    rcvPustaka.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+    rcvPustaka.setHasFixedSize(true);
+    rcvPustaka.setItemAnimator(new DefaultItemAnimator());
+    rcvPustaka.setAdapter(pustakaAdapter);
+  }
+
+  public void showDetailPustaka(Pustaka pustaka) {
+
+  }
+
+  public void showOnChangePustakaLesgood(Pustaka pustaka) {
+    pustakaAdapter.onPustakaChanged(pustaka);
+  }
 }

@@ -8,12 +8,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
+import com.lesgood.app.data.model.Pustaka;
 import com.lesgood.app.data.model.Reviews;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.data.remote.OrderService;
@@ -123,7 +125,42 @@ public class OrderDetailPresenter implements BasePresenter {
         }else if (order.getTotalPertemuan()==0){
             activity.showAddReviews();
         }
-
-
     }
+    public void getPustaka(){
+        if (order.getStatus().equals("SUCCESS")){
+            orderService.getPusataka().addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    Pustaka pustaka = dataSnapshot.getValue(Pustaka.class);
+                    if (dataSnapshot!=null){
+                        activity.showPustakaLesgood(pustaka);
+                    }
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    Pustaka pustaka = dataSnapshot.getValue(Pustaka.class);
+                    if (dataSnapshot!=null){
+                        activity.showOnChangePustakaLesgood(pustaka);
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+        }
+    }
+
 }

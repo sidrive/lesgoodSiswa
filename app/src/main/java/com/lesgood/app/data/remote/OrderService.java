@@ -60,4 +60,8 @@ public class OrderService {
     public Task<Void> deleteTempOrder(String temp_oid){
         return databaseRef.child("temp-orders").child(temp_oid).removeValue();
     }
+    //pustaka
+    public DatabaseReference getPusataka(){
+        return databaseRef.child("pustaka-pdf");
+    }
 }

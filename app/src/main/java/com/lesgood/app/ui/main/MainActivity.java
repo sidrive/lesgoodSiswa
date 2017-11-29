@@ -1,5 +1,6 @@
 package com.lesgood.app.ui.main;
 
+import android.Manifest.permission;
 import android.accessibilityservice.GestureDescription.StrokeDescription;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -7,11 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
@@ -32,6 +36,7 @@ import com.lesgood.app.data.remote.LocationService;
 import com.lesgood.app.ui.home.HomeFragment;
 import com.lesgood.app.ui.order.OrderFragment;
 import com.lesgood.app.ui.profile.ProfileFragment;
+import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.Utils;
 
 import java.util.List;
@@ -57,7 +62,14 @@ public class MainActivity extends BaseActivity {
 
     BroadcastReceiver broadcastReceiver;
     private AddressResultReceiver mResultReceiver;
-
+    private static final int RC_ALL_PERMISSION= 111;
+    private static final String[] PERMISION =
+        {permission.ACCESS_FINE_LOCATION,
+            permission.READ_CONTACTS,
+            permission.READ_EXTERNAL_STORAGE,
+            permission.WRITE_EXTERNAL_STORAGE,
+            permission.CAMERA
+        };
     private void startService(){
         // TODO Auto-generated method stub
         Intent intent = new Intent(this, LocationService.class);
@@ -114,9 +126,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver,
                 new IntentFilter("tokenReceiver"));
-
         ButterKnife.bind(this);
-
+        if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.M) {
+            requestPermissionForMvers();
+        }
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -135,10 +148,49 @@ public class MainActivity extends BaseActivity {
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
 
-        startService();
         String token = FirebaseInstanceId.getInstance().getToken();
-        Log.e("onCreate", "MainActivity" + token);
         presenter.updateFCMToken(user.getUid(),token);
+    }
+
+    private void requestPermissionForMvers() {
+        if (
+            ActivityCompat.checkSelfPermission(this, PERMISION[0]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[1]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[2]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[3]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[4]) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[0])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[1])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[2])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[3])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[4])) {
+            } else {
+                ActivityCompat.requestPermissions(this,PERMISION,RC_ALL_PERMISSION);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+        @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RC_ALL_PERMISSION){
+            boolean allGrant = false;
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    allGrant = true;
+                } else {
+                    allGrant = false;
+                }
+            }
+            if (allGrant) {
+                Log.e("allGrant", "MainActivity" + allGrant);
+                startService();
+            } else {
+                Log.e("allGrant", "MainActivity" + allGrant);
+            }
+
+        }
     }
 
     public void MethodName(Intent intent){

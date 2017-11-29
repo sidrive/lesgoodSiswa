@@ -59,6 +59,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -815,10 +816,15 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
   public void showDialogTimePicker(long startTime, long endTime, String day) {
+    String star = Utils.longToString(startTime);
+    Log.e("showDialogTimePicker", "BookActivity" + star);
     Calendar cal = Calendar.getInstance();
     TimePickerDialog dpd = TimePickerDialog.newInstance(
         (view, hourOfDay, minute, second) -> {
-          cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
+
+          btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
+          showDialogDatePicker(startTime,day);
+          /*cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
               hourOfDay, minute, second);
           if (cal.getTimeInMillis() > endTime) {
             handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
@@ -827,7 +833,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
           } else {
             btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
             showDialogDatePicker(startTime,day);
-          }
+          }*/
         },
         cal.get(Calendar.HOUR_OF_DAY),
         cal.get(Calendar.MINUTE),

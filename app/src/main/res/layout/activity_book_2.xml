@@ -200,7 +200,7 @@
                         android:inputType="number"
                         android:id="@+id/input_pertemuan"
                         android:layout_height="wrap_content"
-                        android:text="0"/>
+                        android:text="4"/>
 
                     <EditText
                         android:layout_width="wrap_content"
@@ -237,6 +237,7 @@ diskon 5%
 - Sesudah diskon Rp.160.000"/>
 
                     <RadioButton
+                      android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="top"

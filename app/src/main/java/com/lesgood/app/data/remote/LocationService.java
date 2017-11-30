@@ -291,6 +291,7 @@ public class LocationService extends Service implements
         public void onProviderDisabled(String provider)
         {
             Toast.makeText( getApplicationContext(), "Gps Disabled, current location is approximate", Toast.LENGTH_LONG ).show();
+            Log.e("onProviderDisabled", "MyLocationListener" + provider);
         }
 
 
@@ -298,6 +299,7 @@ public class LocationService extends Service implements
         public void onProviderEnabled(String provider)
         {
             Toast.makeText( getApplicationContext(), "Gps Enabled", Toast.LENGTH_LONG).show();
+            Log.e("onProviderEnabled", "MyLocationListener" + provider);
         }
 
 

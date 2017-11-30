@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -286,6 +287,8 @@ public class SearchActivity extends BaseActivity {
         if (cancel){
 
         }else{
+            Log.e("searchTeachers", "SearchActivity" + user.getLatitude());
+            Log.e("searchTeachers", "SearchActivity" + user.getLongitude());
             String code = skillID+levelID;
             String pelajaran = txtSkill.getText().toString()+" "+txtLevel.getText().toString();
             ListActivity.startWithData(this, code, pelajaran);

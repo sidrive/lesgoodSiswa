@@ -307,7 +307,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     this.skill = skill;
     showLoading(false);
     inputSiswa.setText("1");
-    inputPertemuan.setText("6");
+    inputPertemuan.setText("4");
     initPaket();
   }
 
@@ -450,18 +450,21 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   @OnTextChanged(value = R.id.input_pertemuan, callback = Callback.AFTER_TEXT_CHANGED)
   void onInputPertemuan(Editable s) {
     if (TextUtils.isEmpty(s.toString())) {
-      inputPertemuan.setText("6");
+      inputPertemuan.setText("4");
       inputPertemuan.selectAll();
       return;
     }
 
     pertemuan = Integer.valueOf(s.toString());
-    if (pertemuan < 6) {
-      inputSiswa.setText("6");
-      pertemuan = 1;
+    if (pertemuan < 3) {
+      inputSiswa.setText("4");
+      pertemuan = 4;
+      Toast.makeText(this, "Minimal 4 pertemuan", Toast.LENGTH_SHORT).show();
+    }else {
+      handleTotalPertemuan();
     }
 
-    handleTotalPertemuan();
+
   }
 
   public void handleTotalPertemuan() {
@@ -575,7 +578,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
     String detilLokasi = inputDetail.getText().toString();
 
-    if (totalPertemuan < 6) {
+    if (totalPertemuan < 3) {
       cancel = true;
       Toast.makeText(this, "Minimal 6 pertemuan", Toast.LENGTH_SHORT).show();
     }
@@ -681,7 +684,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
     order.setPaket("Paket 20 kali pertemuan");
     inputPertemuan.setText(pertemuan);
-    inputPertemuan.setEnabled(false);
+
     discount = amount * 0.05;
   }
 
@@ -689,7 +692,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
     order.setPaket("Paket 30 kali pertemuan");
     inputPertemuan.setText(pertemuan);
-    inputPertemuan.setEnabled(false);
+
     discount = amount * 0.1;
   }
 
@@ -811,30 +814,34 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
   private void handleWrongSelectedDay(String selected, String scheduleDay) {
-    AppUtils.ShowDialogWithBtn(this,"Salah memilih hari", "Hari pada jadwal yang anda pilih "+scheduleDay+" hari pada kalender yang anda pilih "+selected, (dialog, which) -> {
+    AppUtils.ShowDialogWithBtn(this,"Salah memilih hari", "Hari pada jadwal yang anda pilih "+Utils.dayFormated(scheduleDay)+" hari pada kalender yang anda pilih "+Utils.dayFormated(selected), (dialog, which) -> {
       dialog.dismiss();
     });
   }
 
   public void showDialogTimePicker(long startTime, long endTime, String day) {
-    String star = Utils.longToString(startTime);
-    Log.e("showDialogTimePicker", "BookActivity" + star);
     Calendar cal = Calendar.getInstance();
     TimePickerDialog dpd = TimePickerDialog.newInstance(
         (view, hourOfDay, minute, second) -> {
+          cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
+              hourOfDay, minute, second);
+          if (Utils.getHours(cal.getTimeInMillis())>= Utils.getHours(startTime) && Utils.getHours(cal.getTimeInMillis())<= Utils.getHours(endTime)){
+            Log.e("showDialogTimePicker", "OK HOUR" );
+            if (Utils.getMinute(cal.getTimeInMillis())>= Utils.getMinute(startTime) && Utils.getMinute(cal.getTimeInMillis())<= Utils.getMinute(endTime)){
+              Log.e("showDialogTimePicker", "OK MINUTE" );
+              btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
+              showDialogDatePicker(startTime,day);
+            }else {
+              Log.e("showDialogTimePicker", "ERROR MINUTE");
+              handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
+            }
+          }else {
+            Log.e("showDialogTimePicker", "ERROR HOURS");
+            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
+          }
 
           btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
-          showDialogDatePicker(startTime,day);
-          /*cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
-              hourOfDay, minute, second);
-          if (cal.getTimeInMillis() > endTime) {
-            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
-          } else if (cal.getTimeInMillis() < startTime) {
-            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
-          } else {
-            btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
-            showDialogDatePicker(startTime,day);
-          }*/
+
         },
         cal.get(Calendar.HOUR_OF_DAY),
         cal.get(Calendar.MINUTE),

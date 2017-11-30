@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity {
     private static final int RC_ALL_PERMISSION= 111;
     private static final String[] PERMISION =
         {permission.ACCESS_FINE_LOCATION,
+            permission.ACCESS_COARSE_LOCATION,
             permission.READ_CONTACTS,
             permission.READ_EXTERNAL_STORAGE,
             permission.WRITE_EXTERNAL_STORAGE,
@@ -114,12 +115,13 @@ public class MainActivity extends BaseActivity {
             };
 
 
+
     public static void startWithUser(BaseActivity activity, final User user) {
         Intent intent = new Intent(activity, MainActivity.class);
         BaseApplication.get(activity).createUserComponent(user);
         activity.startActivity(intent);
     }
-
+    public static String KEY_PARAM_MSG = "msg";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +129,7 @@ public class MainActivity extends BaseActivity {
         LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver,
                 new IntentFilter("tokenReceiver"));
         ButterKnife.bind(this);
+
         if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.M) {
             requestPermissionForMvers();
         }
@@ -147,9 +150,16 @@ public class MainActivity extends BaseActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
-
+        startService();
         String token = FirebaseInstanceId.getInstance().getToken();
+        Log.e("onCreate", "MainActivity" + token);
         presenter.updateFCMToken(user.getUid(),token);
+        Bundle extras = getIntent().getExtras();
+        Log.e("onCreate", "MainActivity" + extras);
+        if (extras!=null){
+            String msg = extras.getString(KEY_PARAM_MSG);
+            Log.e("onCreate", "MainActivity" + msg);
+        }
     }
 
     private void requestPermissionForMvers() {
@@ -158,12 +168,14 @@ public class MainActivity extends BaseActivity {
                 || ActivityCompat.checkSelfPermission(this, PERMISION[1]) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, PERMISION[2]) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, PERMISION[3]) != PackageManager.PERMISSION_GRANTED
-                || ActivityCompat.checkSelfPermission(this, PERMISION[4]) != PackageManager.PERMISSION_GRANTED) {
+                || ActivityCompat.checkSelfPermission(this, PERMISION[4]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[5]) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[0])
                 || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[1])
                 || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[2])
                 || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[3])
-                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[4])) {
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[4])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[5])) {
             } else {
                 ActivityCompat.requestPermissions(this,PERMISION,RC_ALL_PERMISSION);
             }

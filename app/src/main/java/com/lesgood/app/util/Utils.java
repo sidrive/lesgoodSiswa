@@ -79,7 +79,7 @@ public class Utils {
     public static String longToString(long date){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date);
-        SimpleDateFormat format = new SimpleDateFormat("hh:mm");
+        SimpleDateFormat format = new SimpleDateFormat("kk:mm");
         return format.format(date);
     }
     public static String longToDay(long date){
@@ -88,5 +88,38 @@ public class Utils {
         SimpleDateFormat format = new SimpleDateFormat("EEE");
         return format.format(date);
     }
-
+    public static int getHours(long time){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return calendar.get(Calendar.HOUR);
+    }
+    public static int getMinute(long time){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return calendar.get(Calendar.MINUTE);
+    }
+    public static String dayFormated(String day){
+        String dayFormated;
+        if (day.equals("Sun")){
+            dayFormated = "Minggu";
+        }else if (day.equals("Mon")){
+            dayFormated = "Senen";
+        }
+        else if (day.equals("Tue")){
+            dayFormated = "Selasa";
+        }
+        else if (day.equals("Wed")){
+            dayFormated = "Rabu";
+        }
+        else if (day.equals("Thu")){
+            dayFormated = "Kamis";
+        }
+        else if (day.equals("Fri")){
+            dayFormated = "Jum'at";
+        }
+        else {
+            dayFormated = "Sabtu";
+        }
+        return dayFormated;
+    }
 }

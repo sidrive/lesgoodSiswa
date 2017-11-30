@@ -798,9 +798,10 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
           cal.set(year,monthOfYear,dayOfMonth);
 
           String selected = Utils.longToDay(cal.getTimeInMillis());
-          Log.e("showDialogDatePicker", "BookActivity" + scheduleDay);
-          Log.e("showDialogDatePicker", "BookActivity" + selected);
-          if (scheduleDay.equals(selected)){
+          int daySelected = Utils.getNumberDay(cal.getTimeInMillis());
+          int daySchedule = Utils.converStringDayToInt(scheduleDay);
+
+          if (daySchedule == daySelected){
             btnDate.setText(DateFormatter.getDate(cal.getTimeInMillis(), "EE dd MMM yyyy"));
           }else {
             handleWrongSelectedDay(selected,scheduleDay);

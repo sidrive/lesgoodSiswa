@@ -82,6 +82,13 @@ public class Utils {
         SimpleDateFormat format = new SimpleDateFormat("kk:mm");
         return format.format(date);
     }
+    public static int getNumberDay(long date){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        calendar.get(Calendar.DAY_OF_WEEK);
+
+        return calendar.get(Calendar.DAY_OF_WEEK);
+    }
     public static String longToDay(long date){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(date);
@@ -121,5 +128,29 @@ public class Utils {
             dayFormated = "Sabtu";
         }
         return dayFormated;
+    }
+    public static int converStringDayToInt(String day){
+        int daySelected = 0;
+        if (day.equals("Sun") || day.equals("Mig")){
+            daySelected = 1;
+        }else if (day.equals("Mon") || day.equals("Sen") ){
+            daySelected = 2;
+        }
+        else if (day.equals("Tue") || day.equals("Sel")){
+            daySelected = 3;
+        }
+        else if (day.equals("Wed") || day.equals("Rab")){
+            daySelected = 4;
+        }
+        else if (day.equals("Thu") || day.equals("Kam")){
+            daySelected = 5;
+        }
+        else if (day.equals("Fri") || day.equals("Jum")){
+            daySelected = 6;
+        }
+        else if (day.equals("Sat") || day.equals("Sab")){
+            daySelected = 7;
+        }
+        return  daySelected;
     }
 }

@@ -32,7 +32,7 @@ public class ScheduleViewHolder extends RecyclerView.ViewHolder {
 
     public void bind(TimeSchedule schedule) {
         tvTime.setText(Utils.longToString(schedule.getStartTime())+" - "+Utils.longToString(schedule.getEndTime()));
-        tvDay.setText(schedule.getDay());
+        tvDay.setText(Utils.dayFormated(schedule.getDay()));
 
 
     }

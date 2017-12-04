@@ -131,8 +131,8 @@ public class ProfileFragment extends BaseFragment {
 
     private void init(){
         txtName.setText(user.getFull_name());
-        Utils.setAvatar(getContext(),user.getPhoto_url(),imgBgAvatar);
-        /*if (user.getPhoto_url() != null) {
+        /*Utils.setAvatar(getContext(),user.getPhoto_url(),imgBgAvatar);*/
+        if (user.getPhoto_url() != null) {
             if (!user.getPhoto_url().equalsIgnoreCase("NOT")){
                 Glide.with(this)
                         .load(user.getPhoto_url()).listener(new RequestListener<String, GlideDrawable>() {
@@ -158,7 +158,7 @@ public class ProfileFragment extends BaseFragment {
                         .dontAnimate()
                         .into(imgAvatar);
             }
-        }*/
+        }
     }
 
     @OnClick(R.id.btn_edit_profile)

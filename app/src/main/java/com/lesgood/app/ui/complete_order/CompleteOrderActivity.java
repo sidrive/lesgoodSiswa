@@ -188,8 +188,8 @@ public class CompleteOrderActivity extends BaseActivity {
       transaction.setReturnUrl(BuildConfig.PAYMENT_URL + "orders");
       transaction.setSignature(
           Utils.md5(BuildConfig.MERCHANT_CODE + order.getOid() + total + BuildConfig.MERCHANT_KEY));
-      presenter.sendTransaction(transaction);
-      //presenter.prosessTransaction(transaction);
+      //presenter.sendTransaction(transaction);
+      presenter.prosessTransaction(transaction);
     }
   }
 

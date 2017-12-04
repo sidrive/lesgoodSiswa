@@ -19,11 +19,12 @@ public class PustakaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private OrderDetailActivity activity;
 
-    private final List<Pustaka> pustakas = new ArrayList<>();
+    private final List<Pustaka> pustakas;
 
     public PustakaAdapter(OrderDetailActivity activity,
         OrderService orderService) {
         this.activity = activity;
+        this.pustakas = new ArrayList<>();
     }
 
     @Override
@@ -48,9 +49,10 @@ public class PustakaAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         return pustakas.size();
     }
 
-    public void onPustakaAdded(Pustaka order) {
-        pustakas.add(order);
-        notifyItemChanged(pustakas.size()-1);
+    public void onPustakaAdded(Pustaka pustaka) {
+        pustakas.add(pustaka);
+        notifyDataSetChanged();
+        //notifyItemChanged(pustakas.size()-1);
     }
 
     public void onPustakaChanged(Pustaka order) {

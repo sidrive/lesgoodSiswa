@@ -92,6 +92,7 @@ dependencies {
     compile rootProject.ext.supportV4
     compile rootProject.ext.supportVectorDrawable
 
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
     apt rootProject.ext.daggerCompiler
     provided rootProject.ext.javax
 

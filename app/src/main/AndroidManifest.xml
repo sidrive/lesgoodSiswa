@@ -1,148 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lesgood.app">
+  package="com.lesgood.app">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+  <uses-permission android:name="android.permission.CAMERA"/>
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+  <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-feature android:name="android.hardware.location.gps"/>
 
-    <uses-feature android:name="android.hardware.location.gps" />
+  <application
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:name=".base.BaseApplication"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/AppTheme">
+    <activity
+      android:name=".ui.splash.SplashActivity"
+      android:theme="@style/AppTheme">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
 
-    <application
-        android:name=".base.BaseApplication"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".ui.splash.SplashActivity"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+    <meta-data
+      android:name="com.facebook.sdk.ApplicationId"
+      android:value="@string/facebook_app_id"/>
 
-        <meta-data
-            android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+    <activity
+      android:name=".ui.login.LoginActivity"
+      android:theme="@style/AppTheme"/>
+    <activity
+      android:name=".ui.edit_profile.EditProfileActivity"
+      android:theme="@style/AppTheme"
+      android:windowSoftInputMode="stateHidden"/>
+    <activity
+      android:name=".ui.main.MainActivity"
+      android:theme="@style/AppTheme"
+      android:windowSoftInputMode="stateHidden"/>
+    <activity
+      android:label="Pengaturan"
+      android:name=".ui.setting.SettingActivity"/>
+    <activity
+      android:label="Pencarian"
+      android:name=".ui.search.SearchActivity"/>
+    <activity
+      android:label="List Guru"
+      android:name=".ui.list.ListActivity"/>
+    <activity
+      android:label="Detail Order"
+      android:name=".ui.order_detail.OrderDetailActivity"/>
+    <activity
+      android:label="Detail Guru"
+      android:name=".ui.detail_teacher.DetailTeacherActivity"/>
+    <activity
+      android:label="Skill"
+      android:name=".ui.skill.SkillActivity"/>
+    <activity
+      android:label="Penilaian"
+      android:name=".ui.reviews.ReviewsActivity"/>
+    <activity
+      android:label="Pengalaman"
+      android:name=".ui.pengalaman.PengalamanActivity"/>
+    <activity
+      android:label="Prestasi"
+      android:name=".ui.prestasi.PrestasiActivity"/>
+    <activity
+      android:label="Pesan Pengajar"
+      android:name=".ui.book.BookActivity"
+      android:windowSoftInputMode="stateHidden"/>
+    <activity
+      android:label="Pesan Pengajar"
+      android:name=".ui.book_2.BookActivity"/>
+    <activity
+      android:label="Selesaikan pesanan"
+      android:name=".ui.complete_order.CompleteOrderActivity"/>
+    <activity
+      android:label="Pembayaran"
+      android:name=".ui.webview.WebViewActivity"/>
+    <activity
+      android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+      android:theme="@style/Base.Theme.AppCompat"/>
 
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:theme="@style/AppTheme" />
-        <activity
-            android:name=".ui.edit_profile.EditProfileActivity"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden"/>
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_icon"
+      android:resource="@drawable/ic_appointment_reminders_primary_32dp"/>
+    <!--
+             Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+    <meta-data
+      android:name="com.google.firebase.messaging.default_notification_color"
+      android:resource="@color/colorPrimary"/>
 
-        <activity
-            android:name=".ui.main.MainActivity"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden"/>
+    <service android:name=".data.remote.LocationService"/>
+    <service
+      android:exported="false"
+      android:name=".data.remote.FetchAddressIntentService"/>
+    <service android:name=".data.remote.FirebaseMessagingService">
+      <intent-filter>
+        <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+      </intent-filter>
+    </service>
+    <!-- [END firebase_service] -->
+    <!-- [START firebase_iid_service] -->
+    <service android:name=".data.remote.FirebaseInstanceIDService">
+      <intent-filter>
+        <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+      </intent-filter>
+    </service>
 
-        <activity
-            android:name=".ui.setting.SettingActivity"
-            android:label="Pengaturan"></activity>
+    <meta-data
+      android:name="com.google.android.geo.API_KEY"
+      android:value="@string/google_maps_key"/>
 
-        <activity
-            android:name=".ui.search.SearchActivity"
-            android:label="Pencarian"></activity>
-
-
-        <activity
-            android:name=".ui.list.ListActivity"
-            android:label="List Guru"></activity>
-
-
-        <activity
-            android:name=".ui.order_detail.OrderDetailActivity"
-            android:label="Detail Order"></activity>
-
-
-        <activity
-            android:name=".ui.detail_teacher.DetailTeacherActivity"
-            android:label="Detail Guru"></activity>
-
-        <activity
-            android:name=".ui.skill.SkillActivity"
-            android:label="Skill"></activity>
-
-        <activity
-            android:name=".ui.reviews.ReviewsActivity"
-            android:label="Penilaian"></activity>
-
-        <activity
-            android:name=".ui.pengalaman.PengalamanActivity"
-            android:label="Pengalaman"></activity>
-
-        <activity
-            android:name=".ui.prestasi.PrestasiActivity"
-            android:label="Prestasi"></activity>
-
-
-        <activity
-            android:name=".ui.book.BookActivity"
-            android:label="Pesan Pengajar"
-            android:windowSoftInputMode="stateHidden"/>
-
-        <activity
-            android:name=".ui.book_2.BookActivity"
-            android:label="Pesan Pengajar"></activity>
-
-        <activity
-            android:name=".ui.complete_order.CompleteOrderActivity"
-            android:label="Selesaikan pesanan"></activity>
-
-        <activity
-            android:name=".ui.webview.WebViewActivity"
-            android:label="Pembayaran"></activity>
-
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_appointment_reminders_primary_32dp" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorPrimary" />
-
-        <service
-            android:name=".data.remote.LocationService"/>
-
-        <service
-            android:name=".data.remote.FetchAddressIntentService"
-            android:exported="false"/>
-
-        <service android:name=".data.remote.FirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-        <!-- [END firebase_service] -->
-        <!-- [START firebase_iid_service] -->
-        <service android:name=".data.remote.FirebaseInstanceIDService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
-    </application>
+  </application>
 
 </manifest>

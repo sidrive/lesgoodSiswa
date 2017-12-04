@@ -2,8 +2,10 @@ package com.lesgood.app.ui.order_detail;
 
 
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog.Builder;
@@ -30,7 +32,6 @@ import com.bumptech.glide.Glide;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
-import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Pustaka;
 import com.lesgood.app.data.model.Reviews;
@@ -180,6 +181,7 @@ public class OrderDetailActivity extends BaseActivity {
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     presenter.getDetailOrder(order.getOid());
+    presenter.getPustaka();
   }
 
   @Override
@@ -277,7 +279,8 @@ public class OrderDetailActivity extends BaseActivity {
   private void setLayoutOrderSuccess() {
     lytPustaka.setVisibility(View.VISIBLE);
     linAction.setVisibility(View.GONE);
-    presenter.getPustaka();
+
+    initPustaka();
   }
 
   public void handleStatus(String status) {
@@ -422,6 +425,10 @@ public class OrderDetailActivity extends BaseActivity {
 
   public void showPustakaLesgood(Pustaka pustaka) {
     pustakaAdapter.onPustakaAdded(pustaka);
+
+  }
+
+  private void initPustaka() {
     rcvPustaka.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
     rcvPustaka.setHasFixedSize(true);
     rcvPustaka.setItemAnimator(new DefaultItemAnimator());
@@ -429,10 +436,20 @@ public class OrderDetailActivity extends BaseActivity {
   }
 
   public void showDetailPustaka(Pustaka pustaka) {
+    Log.e("showDetailPustaka", "OrderDetailActivity" + pustaka.getUrl());
 
+    Intent intent = new Intent(Intent.ACTION_VIEW);
+    intent.setDataAndType(Uri.parse(pustaka.getUrl()), "application/pdf");
+    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    Intent newIntent = Intent.createChooser(intent, "Open File");
+    try {
+      startActivity(newIntent);
+    } catch (ActivityNotFoundException e) {
+      // Instruct the user to install a PDF reader here, or something
+    }
   }
 
   public void showOnChangePustakaLesgood(Pustaka pustaka) {
-    pustakaAdapter.onPustakaChanged(pustaka);
+    //pustakaAdapter.onPustakaChanged(pustaka);
   }
 }

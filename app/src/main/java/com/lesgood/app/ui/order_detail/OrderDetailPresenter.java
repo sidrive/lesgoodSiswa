@@ -46,6 +46,7 @@ public class OrderDetailPresenter implements BasePresenter {
         if (order!=null){
 
         }
+
     }
 
     @Override
@@ -127,40 +128,40 @@ public class OrderDetailPresenter implements BasePresenter {
         }
     }
     public void getPustaka(){
-        if (order.getStatus().equals("SUCCESS")){
-            orderService.getPusataka().addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        orderService.getPusataka().addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                if (dataSnapshot!=null){
                     Pustaka pustaka = dataSnapshot.getValue(Pustaka.class);
-                    if (dataSnapshot!=null){
-                        activity.showPustakaLesgood(pustaka);
-                    }
+                    activity.showPustakaLesgood(pustaka);
+                    Log.e("onChildAdded", "OrderDetailPresenter" + dataSnapshot.toString());
                 }
+            }
 
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                    Pustaka pustaka = dataSnapshot.getValue(Pustaka.class);
-                    if (dataSnapshot!=null){
-                        activity.showOnChangePustakaLesgood(pustaka);
-                    }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Pustaka pustaka = dataSnapshot.getValue(Pustaka.class);
+                if (dataSnapshot!=null){
+                    //activity.showOnChangePustakaLesgood(pustaka);
                 }
+            }
 
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                }
+            }
 
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                }
+            }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                }
-            });
-        }
+            }
+        });
     }
 
 }

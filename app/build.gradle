@@ -55,8 +55,8 @@ android {
             buildConfigField "String", "BASE_URL_DEV", "\"http://sandbox.duitku.com/webapi/api/\""
             buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
             buildConfigField "String", "PAYMENT_URL", "\"http://lesgood-callback.dev.komuri.co.id/\""
-            buildConfigField "String", "MERCHANT_CODE", "\"D2588\""
-            buildConfigField "String", "MERCHANT_KEY", "\"84f1dfc4d8b71b13ef1248296099cb4e\""
+            buildConfigField "String", "MERCHANT_CODE", "\"D0375\""
+            buildConfigField "String", "MERCHANT_KEY", "\"14346948b6314ab70230639118b2cddd\""
         }
 
         debugConfig {
@@ -70,8 +70,8 @@ android {
             buildConfigField "String", "BASE_URL_DEV", "\"http://sandbox.duitku.com/webapi/api/\""
             buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
             buildConfigField "String", "PAYMENT_URL", "\"http://lesgood-callback.dev.komuri.co.id/\""
-            buildConfigField "String", "MERCHANT_CODE", "\"D2588\""
-            buildConfigField "String", "MERCHANT_KEY", "\"84f1dfc4d8b71b13ef1248296099cb4e\""
+            buildConfigField "String", "MERCHANT_CODE", "\"D0375\""
+            buildConfigField "String", "MERCHANT_KEY", "\"14346948b6314ab70230639118b2cddd\""
         }
     }
 

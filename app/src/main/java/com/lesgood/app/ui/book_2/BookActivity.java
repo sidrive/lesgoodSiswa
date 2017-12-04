@@ -828,7 +828,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
               hourOfDay, minute, second);
           if (Utils.getHours(cal.getTimeInMillis())>= Utils.getHours(startTime) && Utils.getHours(cal.getTimeInMillis())<= Utils.getHours(endTime)){
             Log.e("showDialogTimePicker", "OK HOUR" );
-            if (Utils.getMinute(cal.getTimeInMillis())>= Utils.getMinute(startTime) && Utils.getMinute(cal.getTimeInMillis())<= Utils.getMinute(endTime)){
+            if (/*Utils.getMinute(cal.getTimeInMillis())>= Utils.getMinute(startTime) &&*/ Utils.getMinute(cal.getTimeInMillis())<= Utils.getMinute(endTime)){
               Log.e("showDialogTimePicker", "OK MINUTE" );
               btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
               showDialogDatePicker(startTime,day);
@@ -838,6 +838,10 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
             }
           }else {
             Log.e("showDialogTimePicker", "ERROR HOURS");
+            Log.e("showDialogTimePicker", "BookActivity" + Utils.getHours(cal.getTimeInMillis()));
+            Log.e("startTime", "BookActivity" + Utils.getHours(startTime));
+            Log.e("endTime", "BookActivity" + Utils.getHours(endTime));
+
             handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
           }
 

@@ -21,6 +21,7 @@ public interface PaymentService {
 
     @POST("merchant/inquiry")
     Call<TransactionResponse> transaction(@Body Transaction transaction);
+
     @Headers("Accept: application/json")
     @POST("merchant/inquiry")
     Observable<TransactionResponse> sendTransactions(@Body Transaction transaction);

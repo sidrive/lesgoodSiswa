@@ -177,7 +177,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   Calendar calendar = Calendar.getInstance();
   SupportMapFragment mapFragment;
   private static final int RC_LOCATION_PERM = 205;
-
+  Calendar calOrder;
   public static void startWithData(BaseActivity activity, Order order) {
     BaseApplication.get(activity).createBookComponent(order);
   }
@@ -203,7 +203,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     toolbar.setTitle("Pesan Pengajar");
     //locationPerm();
-
+    calOrder = Calendar.getInstance();
     mapFragment = (SupportMapFragment) getSupportFragmentManager()
         .findFragmentById(R.id.map);
     mapFragment.getMapAsync(this);
@@ -549,7 +549,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setGid(guru.getUid());
       order.setOrdertime(ordertime);
       order.setUid(user.getUid());
-      order.setPertemuanTime(calendar.getTimeInMillis());
+      order.setPertemuanTime(calOrder.getTimeInMillis());
       order.setFee(fee);
       order.setTotalSiswa(siswa);
       order.setLatitude(latitude);
@@ -634,7 +634,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setGid(guru.getUid());
       order.setOrdertime(ordertime);
       order.setUid(user.getUid());
-      order.setPertemuanTime(calendar.getTimeInMillis());
+      order.setPertemuanTime(calOrder.getTimeInMillis());
       order.setFee(fee);
       order.setTotalSiswa(siswa);
       order.setLatitude(latitude);
@@ -794,24 +794,25 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     AppUtils.showToas(this,"Pilih jam sesuai dengan hari yang tersedia terlebih dahulu");
   }
 
-  private void showDialogDatePicker(long time, String scheduleDay) {
-    Calendar cal = Calendar.getInstance();
+  private void showDialogDatePicker(long timeselected, String scheduleDay) {
+    int h = Utils.getHours(timeselected);
+    int m = Utils.getMinute(timeselected);
     DatePickerDialog dpd = DatePickerDialog.newInstance((view, year, monthOfYear, dayOfMonth) -> {
-          cal.set(year,monthOfYear,dayOfMonth);
-
-          String selected = Utils.longToDay(cal.getTimeInMillis());
-          int daySelected = Utils.getNumberDay(cal.getTimeInMillis());
+          /*calOrder.set(year,monthOfYear,dayOfMonth);*/
+          calOrder.set(year,monthOfYear,dayOfMonth,h,m);
+          String selected = Utils.longToDay(calOrder.getTimeInMillis());
+          int daySelected = Utils.getNumberDay(calOrder.getTimeInMillis());
           int daySchedule = Utils.converStringDayToInt(scheduleDay);
 
           if (daySchedule == daySelected){
-            btnDate.setText(DateFormatter.getDate(cal.getTimeInMillis(), "EE dd MMM yyyy"));
+            btnDate.setText(DateFormatter.getDate(calOrder.getTimeInMillis(), "EE dd MMM yyyy"));
           }else {
             handleWrongSelectedDay(selected,scheduleDay);
           }
         },
-        cal.get(Calendar.YEAR),
-        cal.get(Calendar.MONTH),
-        cal.get(Calendar.DAY_OF_MONTH));
+        calOrder.get(Calendar.YEAR),
+        calOrder.get(Calendar.MONTH),
+        calOrder.get(Calendar.DAY_OF_MONTH));
 
     dpd.show(getFragmentManager(), "Datepickerdialog");
   }
@@ -824,14 +825,12 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   public void handleTimeSelected(long statTime , long endTime, String day, long timeSelected){
     if (Utils.getHours(timeSelected)>= Utils.getHours(statTime) && Utils.getHours(timeSelected)<= Utils.getHours(endTime)){
-      Log.e("showDialogTimePicker", "OK HOUR" );
       if (Utils.getHours(timeSelected)== Utils.getHours(endTime)){
         if ( Utils.getMinute(timeSelected)<= Utils.getMinute(endTime)){
-          Log.e("showDialogTimePicker", "OK MINUTE" );
           btnTime.setText(DateFormatter.getDate(timeSelected, "HH:mm"));
-          showDialogDatePicker(statTime,day);
+
+          showDialogDatePicker(timeSelected,day);
         }else {
-          Log.e("showDialogTimePicker", "ERROR MINUTE");
           handleWrongSelectedTime(statTime, endTime, timeSelected,day);
         }
       }

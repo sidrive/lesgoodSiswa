@@ -139,26 +139,19 @@ public class MainActivity extends BaseActivity {
                 MainActivity.this.MethodName(intent);
             }
         };
-
         mResultReceiver = new AddressResultReceiver(new Handler());
-
         setSupportActionBar(toolbar);
-
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         Fragment fragment = HomeFragment.newInstance();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.content_frame, fragment);
         ft.commit();
         startService();
         String token = FirebaseInstanceId.getInstance().getToken();
-        Log.e("onCreate", "MainActivity" + token);
         presenter.updateFCMToken(user.getUid(),token);
         Bundle extras = getIntent().getExtras();
-        Log.e("onCreate", "MainActivity" + extras);
         if (extras!=null){
             String msg = extras.getString(KEY_PARAM_MSG);
-            Log.e("onCreate", "MainActivity" + msg);
         }
     }
 
@@ -199,11 +192,13 @@ public class MainActivity extends BaseActivity {
                 Log.e("allGrant", "MainActivity" + allGrant);
                 startService();
             } else {
-                Log.e("allGrant", "MainActivity" + allGrant);
+                requestPermissionForMvers();
             }
 
         }
     }
+
+
 
     public void MethodName(Intent intent){
         final double lat = intent.getDoubleExtra("Latitude", 0.00);
@@ -292,7 +287,8 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
         Intent intent = new Intent(this, LocationService.class);
         if(intent != null) {
-            unregisterReceiver(broadcastReceiver); stopService(intent);
+            unregisterReceiver(broadcastReceiver);
+            stopService(intent);
         }
     }
 }

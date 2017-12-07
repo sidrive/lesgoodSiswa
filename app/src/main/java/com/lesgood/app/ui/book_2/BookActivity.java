@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.LinearLayoutManager;
@@ -51,6 +52,7 @@ import com.lesgood.app.data.model.TimeSchedule;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.util.AppUtils;
+import com.lesgood.app.util.CustomTimeDialog;
 import com.lesgood.app.util.DateFormatter;
 import com.lesgood.app.util.Utils;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
@@ -820,15 +822,36 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     });
   }
 
+  public void handleTimeSelected(long statTime , long endTime, String day, long timeSelected){
+    if (Utils.getHours(timeSelected)>= Utils.getHours(statTime) && Utils.getHours(timeSelected)<= Utils.getHours(endTime)){
+      Log.e("showDialogTimePicker", "OK HOUR" );
+      if (Utils.getHours(timeSelected)== Utils.getHours(endTime)){
+        if ( Utils.getMinute(timeSelected)<= Utils.getMinute(endTime)){
+          Log.e("showDialogTimePicker", "OK MINUTE" );
+          btnTime.setText(DateFormatter.getDate(timeSelected, "HH:mm"));
+          showDialogDatePicker(statTime,day);
+        }else {
+          Log.e("showDialogTimePicker", "ERROR MINUTE");
+          handleWrongSelectedTime(statTime, endTime, timeSelected,day);
+        }
+      }
+    }else {
+      handleWrongSelectedTime(statTime, endTime, timeSelected,day);
+    }
+  }
+
   public void showDialogTimePicker(long startTime, long endTime, String day) {
-    Calendar cal = Calendar.getInstance();
+    CustomTimeDialog dialog = new CustomTimeDialog(startTime,endTime,this,day);
+    dialog.show(getFragmentManager(),"timedialog");
+
+    /*Calendar cal = Calendar.getInstance();
     TimePickerDialog dpd = TimePickerDialog.newInstance(
         (view, hourOfDay, minute, second) -> {
           cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
               hourOfDay, minute, second);
           if (Utils.getHours(cal.getTimeInMillis())>= Utils.getHours(startTime) && Utils.getHours(cal.getTimeInMillis())<= Utils.getHours(endTime)){
             Log.e("showDialogTimePicker", "OK HOUR" );
-            if (/*Utils.getMinute(cal.getTimeInMillis())>= Utils.getMinute(startTime) &&*/ Utils.getMinute(cal.getTimeInMillis())<= Utils.getMinute(endTime)){
+            if (*//*Utils.getMinute(cal.getTimeInMillis())>= Utils.getMinute(startTime) &&*//* Utils.getMinute(cal.getTimeInMillis())<= Utils.getMinute(endTime)){
               Log.e("showDialogTimePicker", "OK MINUTE" );
               btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
               showDialogDatePicker(startTime,day);
@@ -837,11 +860,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
               handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
             }
           }else {
-            Log.e("showDialogTimePicker", "ERROR HOURS");
-            Log.e("showDialogTimePicker", "BookActivity" + Utils.getHours(cal.getTimeInMillis()));
-            Log.e("startTime", "BookActivity" + Utils.getHours(startTime));
-            Log.e("endTime", "BookActivity" + Utils.getHours(endTime));
-
             handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
           }
 
@@ -861,7 +879,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     dpd.setTitle("Waktu mulai");
     dpd.vibrate(true);
     dpd.dismissOnPause(true);
-    dpd.show(getFragmentManager(), "TImepickerdialog");
+    dpd.show(getFragmentManager(), "TImepickerdialog");*/
   }
   private void handleWrongSelectedTime(long startTime, long endTime, long timeInMillis,
       String day) {

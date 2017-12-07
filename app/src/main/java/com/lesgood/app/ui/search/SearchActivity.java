@@ -287,8 +287,7 @@ public class SearchActivity extends BaseActivity {
         if (cancel){
 
         }else{
-            Log.e("searchTeachers", "SearchActivity" + user.getLatitude());
-            Log.e("searchTeachers", "SearchActivity" + user.getLongitude());
+
             String code = skillID+levelID;
             String pelajaran = txtSkill.getText().toString()+" "+txtLevel.getText().toString();
             ListActivity.startWithData(this, code, pelajaran);

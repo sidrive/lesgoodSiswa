@@ -34,7 +34,7 @@ android {
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
-            debuggable false
+            debuggable true
         }
     }
     configurations.all {
@@ -81,7 +81,7 @@ android {
 }
 
 dependencies {
-    compile 'com.google.firebase:firebase-auth:10.2.0'
+    //compile 'com.google.firebase:firebase-auth:10.2.0'
     compile 'com.github.sundeepk:compact-calendar-view:2.0.3-beta'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.supportV7

@@ -825,15 +825,16 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   public void handleTimeSelected(long statTime , long endTime, String day, long timeSelected){
     if (Utils.getHours(timeSelected)>= Utils.getHours(statTime) && Utils.getHours(timeSelected)<= Utils.getHours(endTime)){
-      if (Utils.getHours(timeSelected)== Utils.getHours(endTime)){
-        if ( Utils.getMinute(timeSelected)<= Utils.getMinute(endTime)){
-          btnTime.setText(DateFormatter.getDate(timeSelected, "HH:mm"));
+      /*if (Utils.getHours(timeSelected)== Utils.getHours(endTime)){
+        *//*if ( Utils.getMinute(timeSelected)<= Utils.getMinute(endTime)){
 
-          showDialogDatePicker(timeSelected,day);
         }else {
           handleWrongSelectedTime(statTime, endTime, timeSelected,day);
-        }
-      }
+        }*//*
+
+      }*/
+      btnTime.setText(DateFormatter.getDate(timeSelected, "HH:mm"));
+      showDialogDatePicker(timeSelected,day);
     }else {
       handleWrongSelectedTime(statTime, endTime, timeSelected,day);
     }

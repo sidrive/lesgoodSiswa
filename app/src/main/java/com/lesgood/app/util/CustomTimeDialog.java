@@ -60,7 +60,7 @@ public class CustomTimeDialog extends DialogFragment {
     timePicker.setOnTimeChangedListener((view1, hourOfDay, minute) -> {
       Calendar calendar = Calendar.getInstance();
       calendar.set(Calendar.YEAR,Calendar.MONTH,Calendar.DAY_OF_MONTH,hourOfDay,minute);
-      Log.e("onCreateView", "CustomTimeDialog" + calendar.getTimeInMillis());
+      Log.e("onCreateView", "CustomTimeDialog" + Utils.getHours(calendar.getTimeInMillis()));
       timeSelected = calendar.getTimeInMillis();
 
     });

@@ -97,8 +97,9 @@ public class Utils {
     }
     public static int getHours(long time){
         Calendar calendar = Calendar.getInstance();
+
         calendar.setTimeInMillis(time);
-        return calendar.get(Calendar.HOUR);
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
     public static int getMinute(long time){
         Calendar calendar = Calendar.getInstance();

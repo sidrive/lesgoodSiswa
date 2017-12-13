@@ -65,8 +65,7 @@ public class FirebaseUserService {
                 .build();
 
         googleApiClient = new GoogleApiClient.Builder(activity)
-                .enableAutoManage(activity, connectionResult -> {
-                })
+
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
 

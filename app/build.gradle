@@ -2,19 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 android {
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 
-    signingConfigs {
-        release {
-            keyAlias 'lesgood'
-            keyPassword 'doremi456'
-            storeFile file('/Volumes/DATA/Lesgood/Lesgood/Keystore/lesgood-release-key.jks')
-            storePassword 'doremi456'
-        }
-    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -28,6 +16,19 @@ android {
         vectorDrawables.useSupportLibrary = true
 
 
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'lesgood'
+            keyPassword 'doremi456'
+            storeFile file('/Volumes/DATA/Lesgood/Lesgood/Keystore/lesgood-release-key.jks')
+            storePassword 'doremi456'
+        }
     }
     buildTypes {
         release {

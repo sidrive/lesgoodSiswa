@@ -14,7 +14,12 @@ android {
         versionName "2.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-
+        buildConfigField "String", "BASE_URL", "\"https://passport.duitku.com/webapi/api/\""
+        buildConfigField "String", "BASE_URL_DEV", "\"http://sandbox.duitku.com/webapi/api/\""
+        buildConfigField "String", "MERCHANT_URL", "\"https://lesgood.com\""
+        buildConfigField "String", "PAYMENT_URL", "\"http://lesgood-callback.dev.komuri.co.id/\""
+        buildConfigField "String", "MERCHANT_CODE", "\"D0375\""
+        buildConfigField "String", "MERCHANT_KEY", "\"14346948b6314ab70230639118b2cddd\""
 
     }
     compileOptions {
@@ -43,7 +48,7 @@ android {
             force rootProject.ext.supportAnnotations
         }
     }
-    productFlavors {
+    /*productFlavors {
         releaseConfig {
             minSdkVersion 17
             applicationId 'com.lesgood.app'
@@ -74,7 +79,7 @@ android {
             buildConfigField "String", "MERCHANT_CODE", "\"D0375\""
             buildConfigField "String", "MERCHANT_KEY", "\"14346948b6314ab70230639118b2cddd\""
         }
-    }
+    }*/
 
     lintOptions {
         disable 'RestrictedApi'

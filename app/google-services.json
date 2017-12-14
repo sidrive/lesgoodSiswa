@@ -119,6 +119,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "587589507868-h7umgn10mbvdpqcp5q17c2a9qdl5a5bh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lesgood.app",
+            "certificate_hash": "dd927358b07c6358949c43783aac42ceffa1ed5b"
+          }
+        },
+        {
           "client_id": "587589507868-qfsi605u01o7oe1iskdjdt2okipnf96f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -131,6 +139,50 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.lesgood.app",
+            "certificate_hash": "67fff2efbf9f5cbdef6575a16e8890926cbe50ee"
+          }
+        },
+        {
+          "client_id": "587589507868-tqr11g4ra4co34s7qcbqknmvvv0abi9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_0xJa6SbHd0hVwGD-UY52odbN5UmUFw8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587589507868-tqr11g4ra4co34s7qcbqknmvvv0abi9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587589507868:android:68818ceb7c761231",
+        "android_client_info": {
+          "package_name": "com.lesgood.siswa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587589507868-m76k1bjmhuuu5mjc75tsvaa2o0prct9e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lesgood.siswa",
             "certificate_hash": "67fff2efbf9f5cbdef6575a16e8890926cbe50ee"
           }
         },

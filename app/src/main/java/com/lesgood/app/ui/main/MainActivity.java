@@ -1,8 +1,8 @@
 package com.lesgood.app.ui.main;
 
 import android.Manifest.permission;
-import android.accessibilityservice.GestureDescription.StrokeDescription;
 import android.annotation.SuppressLint;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,12 +17,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.os.ResultReceiver;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
 
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -36,10 +36,7 @@ import com.lesgood.app.data.remote.LocationService;
 import com.lesgood.app.ui.home.HomeFragment;
 import com.lesgood.app.ui.order.OrderFragment;
 import com.lesgood.app.ui.profile.ProfileFragment;
-import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.Utils;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -121,6 +118,12 @@ public class MainActivity extends BaseActivity {
         BaseApplication.get(activity).createUserComponent(user);
         activity.startActivity(intent);
     }
+
+    public static void openFragment(Fragment f, FragmentManager fm){
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.content_frame, f);
+        ft.commit();
+    }
     public static String KEY_PARAM_MSG = "msg";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,17 +145,21 @@ public class MainActivity extends BaseActivity {
         mResultReceiver = new AddressResultReceiver(new Handler());
         setSupportActionBar(toolbar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        Fragment fragment = HomeFragment.newInstance();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        ft.commit();
+
         startService();
         String token = FirebaseInstanceId.getInstance().getToken();
         presenter.updateFCMToken(user.getUid(),token);
         Bundle extras = getIntent().getExtras();
         if (extras!=null){
-            String msg = extras.getString(KEY_PARAM_MSG);
+            String order = extras.getString("order");
+            Fragment fragment = OrderFragment.newInstance();
+            openFragment(fragment,getSupportFragmentManager());
+
+        }else {
+            Fragment fragment = HomeFragment.newInstance();
+            openFragment(fragment,getSupportFragmentManager());
         }
+
     }
 
     private void requestPermissionForMvers() {

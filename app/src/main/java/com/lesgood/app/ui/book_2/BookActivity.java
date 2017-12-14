@@ -8,8 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,19 +20,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.OnTextChanged.Callback;
@@ -54,6 +49,7 @@ import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.TimeSchedule;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.main.MainActivity;
+import com.lesgood.app.ui.order.OrderFragment;
 import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.CustomTimeDialog;
 import com.lesgood.app.util.DateFormatter;
@@ -64,7 +60,6 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog.OnTimeSetListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
@@ -217,7 +212,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     } else {
       init();
     }
-
+    successOrdering();
 
   }
 
@@ -722,6 +717,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   private void showAlertDialog(String title, String desc, int icon) {
     final Intent intent = new Intent(this, MainActivity.class);
+    intent.putExtra("order","order");
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     new Builder(this)
         .setTitle(title)
@@ -731,6 +727,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
           // continue with delete
           dialog.dismiss();
           startActivity(intent);
+
         })
         .setIcon(icon)
         .show();

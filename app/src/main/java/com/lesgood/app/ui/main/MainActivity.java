@@ -159,7 +159,6 @@ public class MainActivity extends BaseActivity {
             Fragment fragment = HomeFragment.newInstance();
             openFragment(fragment,getSupportFragmentManager());
         }
-
     }
 
     private void requestPermissionForMvers() {

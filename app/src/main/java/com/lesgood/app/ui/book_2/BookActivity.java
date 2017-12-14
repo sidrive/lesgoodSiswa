@@ -212,8 +212,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     } else {
       init();
     }
-    successOrdering();
-
   }
 
   private void initWithChangeTeacher(String oldOid) {

@@ -462,6 +462,10 @@ public class EditProfileActivity extends BaseActivity implements com.wdullaer.ma
                 focusView = inputPhone;
                 cancel=true;
             }
+        }else {
+            inputPhone.setError(strErrRequired);
+            focusView = inputPhone;
+            cancel = true;
         }
 
         if (cancel){

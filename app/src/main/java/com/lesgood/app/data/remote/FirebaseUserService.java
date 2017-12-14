@@ -117,10 +117,9 @@ public class FirebaseUserService {
             });
         }
     }
-
-
-    public void deleteUser(String uid) {
-
+    public void logingOut(){
+        firebaseAuth.signOut();
+        Auth.GoogleSignInApi.signOut(googleApiClient);
     }
 
 }

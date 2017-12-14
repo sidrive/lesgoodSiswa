@@ -56,8 +56,6 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-
     }
 
     @Override
@@ -86,7 +84,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_login_with_google)
     public void loginwithgoogle(){
-        Log.d("loging","signinwithgoogle");
+
         Intent intent = presenter.loginWithGoogle();
         startActivityForResult(intent, REQUEST_SIGN_GOOGLE);
     }

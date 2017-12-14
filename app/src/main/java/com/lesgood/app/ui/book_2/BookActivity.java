@@ -21,6 +21,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,6 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.OnTextChanged.Callback;
@@ -115,14 +118,11 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   @Bind(R.id.input_tarif_pertemuan)
   EditText inputTarifPertemuan;
 
-  @Bind(R.id.radio_paket)
-  RadioGroup radioPaket;
 
   @Bind(R.id.radio_paket_1)
   RadioButton radioPaket1;
 
-  @Bind(R.id.radio_paket_2)
-  RadioButton radioPaket2;
+
 
   @Bind(R.id.rel_map)
   RelativeLayout relMap;
@@ -303,6 +303,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     txtGuru.setText(guru.getFull_name());
     showLoading(true);
     presenter.getGuruSkill(guru.getUid(), order.getCode());
+
   }
 
   public void initSkill(Skill skill) {
@@ -370,7 +371,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
         "- Sesudah diskon Rp." + paketTarif2after;
 
     radioPaket1.setText(paket1);
-    radioPaket2.setText(paket2);
+
 
   }
 
@@ -456,17 +457,15 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       inputPertemuan.selectAll();
       return;
     }
-
     pertemuan = Integer.valueOf(s.toString());
     if (pertemuan < 3) {
-      inputSiswa.setText("4");
+      inputPertemuan.setText("4");
       pertemuan = 4;
+      radioPaket1.setChecked(false);
       Toast.makeText(this, "Minimal 4 pertemuan", Toast.LENGTH_SHORT).show();
     }else {
       handleTotalPertemuan();
     }
-
-
   }
 
   public void handleTotalPertemuan() {
@@ -658,7 +657,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
   private void saveOrder(Order order) {
-    Log.e("saveOrder", "BookActivity" + oldOid);
+
     if (oldOid != null) {
       presenter.saveOrder(order);
     } else {
@@ -672,7 +671,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     txtMengajar.setText(orderFromData.getTitle());
     txtGuru.setText(guru.getFull_name());
     showLoading(true);
-    radioPaket.setVisibility(View.GONE);
+
     inputDetail.setText(orderFromData.getDetailLocation());
     String pertemuan = String.valueOf(orderFromData.getTotalPertemuan());
     inputPertemuan.setText(pertemuan);
@@ -683,29 +682,33 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
   public void set20Pertemuan(String pertemuan) {
-
     order.setPaket("Paket 20 kali pertemuan");
     inputPertemuan.setText(pertemuan);
-
     discount = amount * 0.05;
   }
-
+  public void setMinPertemuan() {
+    order.setPaket("");
+    inputPertemuan.setText("4");
+    discount = 0;
+  }
   public void set30Pertemuan(String pertemuan) {
 
     order.setPaket("Paket 30 kali pertemuan");
     inputPertemuan.setText(pertemuan);
-
     discount = amount * 0.1;
   }
 
-  @OnClick({R.id.radio_paket_1, R.id.radio_paket_2})
-  public void radioGroupUpdate() {
-    if (radioPaket1.isChecked()) {
-      set20Pertemuan("20");
-    }
+  private boolean isRadioCheked = false;
 
-    if (radioPaket2.isChecked()) {
-      set30Pertemuan("30");
+  @OnClick(R.id.radio_paket_1)void onRadio1Cheked(){
+    if (isRadioCheked == true){
+      isRadioCheked = false;
+      radioPaket1.setChecked(false);
+      setMinPertemuan();
+    }else {
+      isRadioCheked = true;
+      radioPaket1.setChecked(true);
+      set20Pertemuan("20");
     }
   }
 
@@ -825,14 +828,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   public void handleTimeSelected(long statTime , long endTime, String day, long timeSelected){
     if (Utils.getHours(timeSelected)>= Utils.getHours(statTime) && Utils.getHours(timeSelected)<= Utils.getHours(endTime)){
-      /*if (Utils.getHours(timeSelected)== Utils.getHours(endTime)){
-        *//*if ( Utils.getMinute(timeSelected)<= Utils.getMinute(endTime)){
-
-        }else {
-          handleWrongSelectedTime(statTime, endTime, timeSelected,day);
-        }*//*
-
-      }*/
       btnTime.setText(DateFormatter.getDate(timeSelected, "HH:mm"));
       showDialogDatePicker(timeSelected,day);
     }else {
@@ -843,43 +838,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   public void showDialogTimePicker(long startTime, long endTime, String day) {
     CustomTimeDialog dialog = new CustomTimeDialog(startTime,endTime,this,day);
     dialog.show(getFragmentManager(),"timedialog");
-
-    /*Calendar cal = Calendar.getInstance();
-    TimePickerDialog dpd = TimePickerDialog.newInstance(
-        (view, hourOfDay, minute, second) -> {
-          cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
-              hourOfDay, minute, second);
-          if (Utils.getHours(cal.getTimeInMillis())>= Utils.getHours(startTime) && Utils.getHours(cal.getTimeInMillis())<= Utils.getHours(endTime)){
-            Log.e("showDialogTimePicker", "OK HOUR" );
-            if (*//*Utils.getMinute(cal.getTimeInMillis())>= Utils.getMinute(startTime) &&*//* Utils.getMinute(cal.getTimeInMillis())<= Utils.getMinute(endTime)){
-              Log.e("showDialogTimePicker", "OK MINUTE" );
-              btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
-              showDialogDatePicker(startTime,day);
-            }else {
-              Log.e("showDialogTimePicker", "ERROR MINUTE");
-              handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
-            }
-          }else {
-            handleWrongSelectedTime(startTime, endTime, cal.getTimeInMillis(),day);
-          }
-
-          btnTime.setText(DateFormatter.getDate(cal.getTimeInMillis(), "HH:mm"));
-
-        },
-        cal.get(Calendar.HOUR_OF_DAY),
-        cal.get(Calendar.MINUTE),
-        true
-    );
-    Calendar startTimeCal = Calendar.getInstance();
-    startTimeCal.setTimeInMillis(startTime);
-    int sH = startTimeCal.get(Calendar.HOUR);
-    int sM = startTimeCal.get(Calendar.MINUTE);
-    int sS = startTimeCal.get(Calendar.SECOND);
-    dpd.setStartTime(sH, sM, sS);
-    dpd.setTitle("Waktu mulai");
-    dpd.vibrate(true);
-    dpd.dismissOnPause(true);
-    dpd.show(getFragmentManager(), "TImepickerdialog");*/
   }
   private void handleWrongSelectedTime(long startTime, long endTime, long timeInMillis,
       String day) {

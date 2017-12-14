@@ -221,33 +221,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin">
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:id="@+id/radio_paket"
-                    android:layout_height="wrap_content">
-
-                    <RadioButton
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:id="@+id/radio_paket_1"
-                        android:text="Pake 20 kali
+                <RadioButton
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="top"
+                  android:id="@+id/radio_paket_1"
+                  android:text="Pake 20 kali
 diskon 5%
 - Sebelum diskon Rp.200.000
 - Sesudah diskon Rp.160.000"/>
 
-                    <RadioButton
-                      android:visibility="gone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
-                        android:id="@+id/radio_paket_2"
-                        android:layout_marginTop="@dimen/activity_margin"
-                        android:text="Pake 30 kali
-diskon 10%
-- Sebelum diskon Rp.4500.000
-- Sesudah diskon Rp.320.000"/>
-                </RadioGroup>
             </LinearLayout>
         </LinearLayout>
         

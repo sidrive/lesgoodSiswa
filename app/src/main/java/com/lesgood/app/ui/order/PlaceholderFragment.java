@@ -84,9 +84,11 @@ public class PlaceholderFragment extends BaseFragment {
         if (sectionNumber == 1){
             presenter.getOrders("waiting");
         }
-
         if (sectionNumber == 2){
             presenter.getOrders("complete");
+        }
+        if (sectionNumber == 3){
+            presenter.getOrders("Ganti Guru");
         }
     }
 

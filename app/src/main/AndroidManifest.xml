@@ -57,6 +57,9 @@
       android:label="List Guru"
       android:name=".ui.list.ListActivity"/>
     <activity
+      android:label="List Guru"
+      android:name=".ui.list.ListGantiGuruActivity"/>
+    <activity
       android:label="Detail Order"
       android:name=".ui.order_detail.OrderDetailActivity"/>
     <activity

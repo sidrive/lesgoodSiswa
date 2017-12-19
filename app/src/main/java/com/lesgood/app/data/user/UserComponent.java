@@ -13,6 +13,8 @@ import com.lesgood.app.ui.edit_profile.EditProfileActivityComponent;
 import com.lesgood.app.ui.edit_profile.EditProfileActivityModule;
 import com.lesgood.app.ui.list.ListActivityComponent;
 import com.lesgood.app.ui.list.ListActivityModule;
+import com.lesgood.app.ui.list.ListGantiGuruActivityComponent;
+import com.lesgood.app.ui.list.ListGantiGuruActivityModule;
 import com.lesgood.app.ui.main.MainActivityComponent;
 import com.lesgood.app.ui.main.MainActivityModule;
 import com.lesgood.app.ui.pengalaman.PengalamanActivityComponent;
@@ -54,4 +56,6 @@ public interface UserComponent {
         ListActivityComponent plus(ListActivityModule module);
 
         RatingActivityComponent plus(RatingActivityModule module);
+
+        ListGantiGuruActivityComponent plus(ListGantiGuruActivityModule listGantiGuruActivityModule);
 }

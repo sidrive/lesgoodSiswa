@@ -54,23 +54,42 @@ public class PlaceHolderFragmentPresenter implements BasePresenter {
     }
 
     public void getOrders(final String status){
-        orderEventListener = orderService.getOrders().orderByChild("uid").equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
+        orderEventListener = orderService.getOrders().orderByChild("uid")
+            .equalTo(user.getUid()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Order order =dataSnapshot.getValue(Order.class);
+
+
                 if (order != null) {
                     cekAllOrderPayament(order);
-                    if (status.equalsIgnoreCase("waiting")){
-                        if (order.getStatus().equalsIgnoreCase("pending_guru") || order.getStatus().equalsIgnoreCase("pending_murid") || order.getStatus().equalsIgnoreCase("pending")){
-                            fragment.showAddedOrder(order);
+                    if (status.equals("waiting")){
+                        if (order.getStatus()!=null){
+                            if (order.getStatus().equals("pending_guru")
+                                || order.getStatus().equals("pending_murid")
+                                || order.getStatus().equals("pending")){
+                                fragment.showAddedOrder(order);
 
+                            }
                         }
+
                     }
 
-                    if (status.equalsIgnoreCase("complete")){
-                        if (order.getStatus().equalsIgnoreCase("SUCCESS")){
-                            fragment.showAddedOrder(order);
+                    if (status.equals("complete")){
+                        if (order.getStatus()!=null){
+                            if (order.getStatus().equalsIgnoreCase("SUCCESS")){
+                                fragment.showAddedOrder(order);
+                            }
                         }
+
+                    }
+                    if (status.equals("Ganti Guru")){
+                        if (order.getStatusGantiGuru()!=null){
+                            if (order.getStatusGantiGuru().equalsIgnoreCase("request")){
+                                fragment.showAddedOrder(order);
+                            }
+                        }
+
                     }
                 }
             }
@@ -99,7 +118,7 @@ public class PlaceHolderFragmentPresenter implements BasePresenter {
     }
     public  void cekAllOrderPayament(Order order){
         String signature = Utils.md5(BuildConfig.MERCHANT_CODE+order.getOid()+BuildConfig.MERCHANT_KEY);
-        Log.e("cekAllOrderPayament", "PlaceHolderFragmentPresenter" + signature);
+
         cekPayment.setSignature(signature);
         cekPayment.setMerchantCode(BuildConfig.MERCHANT_CODE);
         cekPayment.setMerchantOrderId(order.getOid());

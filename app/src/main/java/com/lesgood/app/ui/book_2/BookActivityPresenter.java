@@ -114,7 +114,7 @@ public class BookActivityPresenter implements BasePresenter {
         });
     }
     public void getOrderById(String oid){
-        orderService.getDetalsOrder(oid).addListenerForSingleValueEvent(new ValueEventListener() {
+        orderService.getDetailsOrder(oid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot!=null){

@@ -4,6 +4,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.lesgood.app.data.model.HistoryOders;
 import com.lesgood.app.data.model.Order;
 
 /**
@@ -21,7 +22,7 @@ public class OrderService {
         return databaseRef.child("orders");
     }
 
-    public DatabaseReference getDetalsOrder(String oid){
+    public DatabaseReference getDetailsOrder(String oid){
         return databaseRef.child("orders").child(oid);
     }
     public DatabaseReference getOrderItems(String oid){
@@ -65,4 +66,16 @@ public class OrderService {
     public Query getPusataka(String code){
         return databaseRef.child("pustaka-pdf").orderByChild("code").equalTo(code);
     }
+
+    //Ganti Pengajar
+    public Task<Void> createChangeTheacher(HistoryOders historyOders){
+        return databaseRef.child("history-orders").child(historyOders.getOid()).setValue(historyOders);
+    }
+    public Task<Void> updateStatusChangeTheacher(String oid,String status){
+        return databaseRef.child("history-orders").child(oid).child("status").setValue(status);
+    }
+    public Task<Void> updateStatusOrderChangeTheacher(String oid,String status){
+        return databaseRef.child("orders").child(oid).child("ganti_guru").setValue(status);
+    }
+
 }

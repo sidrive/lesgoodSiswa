@@ -62,12 +62,14 @@ public class OrderViewHolder extends RecyclerView.ViewHolder {
         txtDay.setText(DateFormatter.getDate(order.getPertemuanTime(), "dd"));
         txtMonth.setText(DateFormatter.getDate(order.getPertemuanTime(), "MMM"));
         txtOrderat.setText("ordered at "+DateFormatter.getDate(order.getOrdertime(), "dd-mm-yy, HH:mm"));
-        if (order.getStatus().equals("pending_guru")){
-            txtStatus.setText("Menunggu Konfirmasi Guru");
-        }else if (order.getStatus().equals("pending_murid")){
-            txtStatus.setText("Menunggu Pembayaran Siswa");
-        }else {
-            txtStatus.setText("SUCCESS");
+        if (order.getStatus()!=null && order.getStatusGantiGuru()!=null){
+            if (order.getStatus().equals("pending_guru")){
+                txtStatus.setText("Menunggu Konfirmasi Guru");
+            }else if (order.getStatus().equals("pending_murid")){
+                txtStatus.setText("Menunggu Pembayaran Siswa");
+            }else {
+                txtStatus.setText("SUCCESS");
+            }
         }
     }
 

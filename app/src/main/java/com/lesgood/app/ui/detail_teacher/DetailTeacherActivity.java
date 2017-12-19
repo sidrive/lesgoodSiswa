@@ -249,9 +249,7 @@ public class DetailTeacherActivity extends BaseActivity {
   }
 
   @OnClick(R.id.lin_skill)
-    /*void showSkills(){
-        startActivityForResult(new Intent(this, SkillActivity.class), REQUEST_CODE_SKIL);
-    }*/
+
   void showSkills() {
     startActivity(new Intent(this, SkillActivity.class));
   }

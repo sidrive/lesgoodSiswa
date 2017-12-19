@@ -74,7 +74,8 @@ public class Order {
     String statusPayment;
     @Nullable
     String guruAddres;
-
+    @Nullable
+    String statusGantiGuru;
 
     @Nullable
     int tarif;
@@ -96,8 +97,8 @@ public class Order {
         double longitude, String detailLocation, String phone, long createdAt, long updatedAt,
         String paket, double discount, String customerName, String customerPhone,
         String customerEmail, String guruEmail, String guruPhone, String guruName,
-        String reference, String paymentUrl, String statusPayment, int tarif,
-        String orderType, String guruAddres) {
+        String reference, String paymentUrl, String statusPayment, String guruAddres,
+        String statusGantiGuru, int tarif, String orderType) {
         this.gid = gid;
         this.uid = uid;
         this.oid = oid;
@@ -129,10 +130,19 @@ public class Order {
         this.reference = reference;
         this.paymentUrl = paymentUrl;
         this.statusPayment = statusPayment;
+        this.guruAddres = guruAddres;
+        this.statusGantiGuru = statusGantiGuru;
         this.tarif = tarif;
         this.orderType = orderType;
-        this.guruAddres = guruAddres;
+    }
 
+    @Nullable
+    public String getStatusGantiGuru() {
+        return statusGantiGuru;
+    }
+
+    public void setStatusGantiGuru(@Nullable String statusGantiGuru) {
+        this.statusGantiGuru = statusGantiGuru;
     }
 
     @Nullable

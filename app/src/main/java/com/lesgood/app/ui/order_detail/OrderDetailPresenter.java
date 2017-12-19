@@ -1,19 +1,13 @@
 package com.lesgood.app.ui.order_detail;
 
 
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.lesgood.app.base.BasePresenter;
-import com.lesgood.app.data.model.Guru;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Pustaka;
 import com.lesgood.app.data.model.Reviews;
@@ -54,7 +48,7 @@ public class OrderDetailPresenter implements BasePresenter {
 
     }
     public void getDetailOrder(String orderId){
-        orderService.getDetalsOrder(orderId).addListenerForSingleValueEvent(
+        orderService.getDetailsOrder(orderId).addListenerForSingleValueEvent(
             new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

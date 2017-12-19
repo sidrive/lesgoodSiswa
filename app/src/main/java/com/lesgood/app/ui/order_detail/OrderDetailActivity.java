@@ -38,6 +38,7 @@ import com.lesgood.app.data.model.Reviews;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.complete_order.CompleteOrderActivity;
 import com.lesgood.app.ui.list.ListActivity;
+import com.lesgood.app.ui.list.ListGantiGuruActivity;
 import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.DateFormatter;
@@ -237,13 +238,17 @@ public class OrderDetailActivity extends BaseActivity {
       lytBtnReview.setVisibility(View.VISIBLE);
       lytBtnGantiPengajar.setVisibility(View.GONE);
     }
-    if (order.getTotalPertemuan() > 0 && order.getStatus().equalsIgnoreCase("success")) {
+    if (order.getTotalPertemuan() > 0 && order.getStatus().equalsIgnoreCase("SUCCESS")) {
       btnAbsent.setVisibility(View.VISIBLE);
       lytBtnGantiPengajar.setVisibility(View.VISIBLE);
     } else {
       btnAbsent.setVisibility(View.GONE);
     }
-
+    if (order.getStatusGantiGuru()!=null){
+      if (!order.getStatusGantiGuru().equalsIgnoreCase("none")){
+        lytBtnGantiPengajar.setVisibility(View.GONE);
+      }
+    }
     String url =
         "http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
             + order.getLatitude() + "," + order.getLongitude() + "+&sensor=false";
@@ -414,7 +419,7 @@ public class OrderDetailActivity extends BaseActivity {
   };
 
   private void openListGuru(String title, String code, String oid) {
-    ListActivity.startFromChangeTeacher(this,code,title,oid);
+    ListGantiGuruActivity.startFromChangeTeacher(this,code,title,oid);
     finish();
   }
 

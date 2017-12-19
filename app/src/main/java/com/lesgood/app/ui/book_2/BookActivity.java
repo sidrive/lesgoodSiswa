@@ -535,7 +535,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       String oid = Integer.toString(rand.nextInt(99999));
       long ordertime = System.currentTimeMillis();
       order.setOid(oid);
-
       order.setAmount(newOrder.getAmount());
       order.setCode(skill.getCode());
       order.setGid(guru.getUid());
@@ -549,7 +548,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setDetailLocation(detilLokasi);
       order.setTotalPertemuan(totalPertemuan);
       order.setTotal(newOrder.getTotal());
-      order.setStatus("change_guru");
+      order.setStatusGantiGuru("request");
       order.setStatusPayment(newOrder.getStatus());
       order.setOrderType(newOrder.getOid());
       order.setDiscount(discount);
@@ -635,6 +634,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setTotalPertemuan(totalPertemuan);
       order.setTotal(total);
       order.setStatus("pending_guru");
+      order.setStatusGantiGuru("none");
       order.setDiscount(discount);
       order.setCustomerPhone(user.getPhone());
       order.setCustomerName(user.getFull_name());
@@ -664,7 +664,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     txtMengajar.setText(orderFromData.getTitle());
     txtGuru.setText(guru.getFull_name());
     showLoading(true);
-
     inputDetail.setText(orderFromData.getDetailLocation());
     String pertemuan = String.valueOf(orderFromData.getTotalPertemuan());
     inputPertemuan.setText(pertemuan);
@@ -684,12 +683,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     inputPertemuan.setText("4");
     discount = 0;
   }
-  public void set30Pertemuan(String pertemuan) {
 
-    order.setPaket("Paket 30 kali pertemuan");
-    inputPertemuan.setText(pertemuan);
-    discount = amount * 0.1;
-  }
 
   private boolean isRadioCheked = false;
 
@@ -753,7 +747,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
       return;
     }
-    //mMap.setMyLocationEnabled(true);
+    mMap.setMyLocationEnabled(true);
   }
 
 

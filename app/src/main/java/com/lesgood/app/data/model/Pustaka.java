@@ -7,21 +7,23 @@ package com.lesgood.app.data.model;
 public class Pustaka {
   String name;
   String url;
+  String cat;
+  String level;
+  String subCat;
+  String code;
   int progress;
+
   public Pustaka(){}
-  public Pustaka(String name, String url, int progress) {
+
+  public Pustaka(String name, String url, String cat, String level, String subCat,
+      String code, int progress) {
     this.name = name;
     this.url = url;
+    this.cat = cat;
+    this.level = level;
+    this.subCat = subCat;
+    this.code = code;
     this.progress = progress;
-  }
-
-  @Override
-  public String toString() {
-    return "Pustaka{" +
-        "name='" + name + '\'' +
-        ", url='" + url + '\'' +
-        ", progress=" + progress +
-        '}';
   }
 
   public String getName() {
@@ -40,11 +42,43 @@ public class Pustaka {
     this.url = url;
   }
 
+  public String getCat() {
+    return cat;
+  }
+
+  public void setCat(String cat) {
+    this.cat = cat;
+  }
+
+  public String getLevel() {
+    return level;
+  }
+
+  public void setLevel(String level) {
+    this.level = level;
+  }
+
+  public String getSubCat() {
+    return subCat;
+  }
+
+  public void setSubCat(String subCat) {
+    this.subCat = subCat;
+  }
+
   public int getProgress() {
     return progress;
   }
 
   public void setProgress(int progress) {
     this.progress = progress;
+  }
+
+  public String getCode() {
+    return code;
+  }
+
+  public void setCode(String code) {
+    this.code = code;
   }
 }

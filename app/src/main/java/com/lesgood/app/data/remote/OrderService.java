@@ -3,6 +3,7 @@ package com.lesgood.app.data.remote;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.lesgood.app.data.model.Order;
 
 /**
@@ -61,7 +62,7 @@ public class OrderService {
         return databaseRef.child("temp-orders").child(temp_oid).removeValue();
     }
     //pustaka
-    public DatabaseReference getPusataka(){
-        return databaseRef.child("pustaka-pdf");
+    public Query getPusataka(String code){
+        return databaseRef.child("pustaka-pdf").orderByChild("code").equalTo(code);
     }
 }

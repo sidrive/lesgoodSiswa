@@ -181,7 +181,7 @@ public class OrderDetailActivity extends BaseActivity {
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     presenter.getDetailOrder(order.getOid());
-    presenter.getPustaka();
+    presenter.getPustaka(order.getCode());
   }
 
   @Override

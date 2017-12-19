@@ -127,15 +127,15 @@ public class OrderDetailPresenter implements BasePresenter {
             activity.showAddReviews();
         }
     }
-    public void getPustaka(){
-        orderService.getPusataka().addChildEventListener(new ChildEventListener() {
+    public void getPustaka(String code){
+        orderService.getPusataka(code).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 if (dataSnapshot!=null){
                     Pustaka pustaka = dataSnapshot.getValue(Pustaka.class);
                     activity.showPustakaLesgood(pustaka);
-                    Log.e("onChildAdded", "OrderDetailPresenter" + dataSnapshot.toString());
+
                 }
             }
 

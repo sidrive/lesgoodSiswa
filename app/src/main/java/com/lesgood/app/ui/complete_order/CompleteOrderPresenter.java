@@ -56,7 +56,7 @@ public class CompleteOrderPresenter implements BasePresenter {
 
 
     protected void sendTransaction(Transaction transaction){
-        order.setCustomerEmail(transaction.getEmail());
+        /*order.setCustomerEmail(transaction.getEmail());*/
         Call<TransactionResponse> call = paymentService.transaction(transaction);
         call.enqueue(transCallback);
     }

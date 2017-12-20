@@ -5,6 +5,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.lesgood.app.data.model.HistoryOders;
+import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 
 /**
@@ -77,5 +78,10 @@ public class OrderService {
     public Task<Void> updateStatusOrderChangeTheacher(String oid,String status){
         return databaseRef.child("orders").child(oid).child("ganti_guru").setValue(status);
     }
-
+    /*=============================================================================================================================
+                                                                INVOICE
+      =============================================================================================================================*/
+    public Task<Void> createInvoice(Invoices invoices){
+        return databaseRef.child("invoices").child(invoices.getIid()).setValue(invoices);
+    }
 }

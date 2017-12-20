@@ -7,11 +7,14 @@ public class Invoices{
 	private String code;
 	private String iid;
 	private int totalSiswa;
-	private int fee;
+	private double fee;
 	private int totalPertemuan;
 	private int discount;
 	private String oid;
 	private String status;
+
+	public Invoices() {
+	}
 
 	public void setAmount(int amount){
 		this.amount = amount;
@@ -61,11 +64,11 @@ public class Invoices{
 		return totalSiswa;
 	}
 
-	public void setFee(int fee){
+	public void setFee(double fee){
 		this.fee = fee;
 	}
 
-	public int getFee(){
+	public double getFee(){
 		return fee;
 	}
 

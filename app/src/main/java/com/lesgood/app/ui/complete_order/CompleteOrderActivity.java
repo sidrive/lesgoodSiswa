@@ -183,7 +183,7 @@ public class CompleteOrderActivity extends BaseActivity {
       transaction.setMerchantOrderId(order.getOid());
       transaction.setMerchantCode(BuildConfig.MERCHANT_CODE);
       transaction.setPaymentAmount(total);
-      transaction.setProductDetails(order.getGuruName() + " - " + order.getTitle());
+      /*transaction.setProductDetails(order.getGuruName() + " - " + order.getTitle());*/
       transaction.setPaymentMethod(metode);
       transaction.setReturnUrl(BuildConfig.PAYMENT_URL + "orders");
       transaction.setSignature(

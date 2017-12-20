@@ -44,6 +44,8 @@ import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.HistoryOders;
+import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.TimeSchedule;
@@ -124,7 +126,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   @Inject
   Order order;
-
   @Inject
   Guru guru;
 
@@ -173,11 +174,10 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   SupportMapFragment mapFragment;
   private static final int RC_LOCATION_PERM = 205;
   Calendar calOrder;
-  public static void startWithData(BaseActivity activity, Order order) {
-    BaseApplication.get(activity).createBookComponent(order);
-  }
 
-  public static void start(Context context) {
+
+
+  public static void start(BaseActivity context) {
     Intent starter = new Intent(context, BookActivity.class);
     context.startActivity(starter);
   }
@@ -543,8 +543,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setPertemuanTime(calOrder.getTimeInMillis());
       order.setFee(fee);
       order.setTotalSiswa(siswa);
-      order.setLatitude(latitude);
-      order.setLongitude(longitude);
+
       order.setDetailLocation(detilLokasi);
       order.setTotalPertemuan(totalPertemuan);
       order.setTotal(newOrder.getTotal());
@@ -553,13 +552,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setStatusPayment(newOrder.getStatus());
       order.setOrderType(newOrder.getOid());
       order.setDiscount(discount);
-      order.setCustomerPhone(user.getPhone());
-      order.setCustomerName(user.getFull_name());
-      order.setCustomerEmail(user.getEmail());
-      order.setGuruEmail(guru.getEmail());
-      order.setGuruPhone(guru.getPhone());
-      order.setGuruName(guru.getFull_name());
-      order.setGuruAddres(guru.getFullAddress());
       saveOrder(order);
     }
   }
@@ -617,8 +609,10 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
       int disc = (int) (discount + 0.5d);
       int total = amount - disc;
+      String iid = oid+""+skill.getCode();
 
       order.setOid(oid);
+      order.setIid(iid);
       order.setCreatedAt(ordertime);
       order.setTarif(base_tarif);
       order.setAmount(cleanAmount);
@@ -629,22 +623,25 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setPertemuanTime(calOrder.getTimeInMillis());
       order.setFee(fee);
       order.setTotalSiswa(siswa);
-      order.setLatitude(latitude);
-      order.setLongitude(longitude);
       order.setDetailLocation(detilLokasi);
       order.setTotalPertemuan(totalPertemuan);
       order.setTotal(total);
       order.setStatus("pending_guru");
       order.setStatusGantiGuru("none");
       order.setDiscount(discount);
-      order.setCustomerPhone(user.getPhone());
-      order.setCustomerName(user.getFull_name());
-      order.setCustomerEmail(user.getEmail());
-      order.setGuruEmail(guru.getEmail());
-      order.setGuruPhone(guru.getPhone());
-      order.setGuruName(guru.getFull_name());
-      order.setGuruAddres(guru.getFullAddress());
-      order.setCustomerPhone(user.getPhone());
+
+      Invoices invoices = new Invoices();
+      invoices.setIid(iid);
+      invoices.setOid(oid);
+      invoices.setAmount(cleanAmount);
+      invoices.setCode(skill.getCode());
+      invoices.setDiscount(disc);
+      invoices.setTotal(total);
+      invoices.setFee(fee);
+      invoices.setStatus("new");
+      invoices.setTotalPertemuan(totalPertemuan);
+      invoices.setTotalSiswa(siswa);
+      presenter.saveInvoice(invoices);
       saveOrder(order);
 
     }

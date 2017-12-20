@@ -17,6 +17,8 @@ import com.lesgood.app.data.firebase.FirebaseModule;
 import com.lesgood.app.data.main.MainComponent;
 import com.lesgood.app.data.main.MainModule;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.HistoryOders;
+import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Reviews;
 import com.lesgood.app.data.model.User;

@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.TimeSchedule;
@@ -128,5 +129,15 @@ public class BookActivityPresenter implements BasePresenter {
                 Log.e("onCancelled", "BookActivityPresenter" + databaseError.getMessage());
             }
         });
+    }
+
+    public void saveInvoice(Invoices invoices) {
+        orderService.createInvoice(invoices)
+            .addOnCompleteListener(task -> {
+                Log.e("saveInvoice", "task.isSuccessful()" + task.isSuccessful());
+            })
+            .addOnFailureListener(e -> {
+                Log.e("saveInvoice", "BookActivityPresenter " + e.getMessage());
+            });
     }
 }

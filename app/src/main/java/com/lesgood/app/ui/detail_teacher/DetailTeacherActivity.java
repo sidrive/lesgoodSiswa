@@ -1,6 +1,7 @@
 package com.lesgood.app.ui.detail_teacher;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
@@ -23,6 +24,8 @@ import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.HistoryOders;
+import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.ui.book_2.BookActivity;
 import com.lesgood.app.ui.pengalaman.PengalamanActivity;
@@ -89,20 +92,23 @@ public class DetailTeacherActivity extends BaseActivity {
   @Bind(R.id.btn_book)
   Button btnBook;
   String oldOrderId;
-  public static void startWithData(BaseActivity activity, Guru user, Order order) {
+  public static void startWithData(BaseActivity activity, Guru user,Order order) {
     BaseApplication.get(activity).createDetailTeacherComponent(user);
     BaseApplication.get(activity).createBookComponent(order);
     Intent intent = new Intent(activity, DetailTeacherActivity.class);
     activity.startActivity(intent);
   }
-  public static void startFromChangeTeacher(BaseActivity activity, Guru user, Order order, String oldOid) {
+  public static void startFromChangeTeacher(BaseActivity activity, Guru user,Order order, String oldOid) {
     BaseApplication.get(activity).createDetailTeacherComponent(user);
     BaseApplication.get(activity).createBookComponent(order);
     Intent intent = new Intent(activity, DetailTeacherActivity.class);
     intent.putExtra("old_oid",oldOid);
     activity.startActivity(intent);
   }
-
+  public static void start(BaseActivity activity) {
+      Intent starter = new Intent(activity, DetailTeacherActivity.class);
+      activity.startActivity(starter);
+  }
   @Override
   protected void setupActivityComponent() {
     BaseApplication.get(this)
@@ -124,8 +130,6 @@ public class DetailTeacherActivity extends BaseActivity {
     }else {
       init();
     }
-    Log.e("onCreate", "DetailTeacherActivity" + oldOrderId);
-
   }
 
   private void iniFromChangeTeacher(String oldOrderId) {

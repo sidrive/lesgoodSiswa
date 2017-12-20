@@ -11,77 +11,64 @@ import java.util.List;
 
 public class Order {
     @NonNull
-    String gid;
+    private String gid;
     @NonNull
-    String uid;
+    private String uid;
     @NonNull
-    String oid;
+    private String oid;
+
+    @NonNull
+    private String iid;
     @Nullable
-    String code;
+    private String code;
     @Nullable
-    String title;
+    private String title;
     @Nullable
-    String status;
+    private String status;
     @Nullable
-    int amount;
+    private int amount;
     @Nullable
-    int totalSiswa;
+    private int totalSiswa;
     @Nullable
-    int totalPertemuan;
+    private int totalPertemuan;
     @Nullable
-    double fee;
+    private double fee;
     @Nullable
-    double total;
+    private double total;
     @Nullable
-    List<Jadwal> pertemuan;
+    private List<Jadwal> pertemuan;
     @Nullable
-    long ordertime;
+    private long ordertime;
     @Nullable
-    long pertemuanTime;
+    private long pertemuanTime;
     @Nullable
-    double latitude;
+    private String detailLocation;
     @Nullable
-    double longitude;
+    private String phone;
     @Nullable
-    String detailLocation;
+    private long createdAt;
     @Nullable
-    String phone;
+    private long updatedAt;
     @Nullable
-    long createdAt;
+    private String paket;
     @Nullable
-    long updatedAt;
+    private double discount;
     @Nullable
-    String paket;
+    private String reference;
     @Nullable
-    double discount;
+    private String paymentUrl;
     @Nullable
-    String customerName;
-    @Nullable
-    String customerPhone;
-    @Nullable
-    String customerEmail;
-    @Nullable
-    String guruEmail;
-    @Nullable
-    String guruPhone;
-    @Nullable
-    String guruName;
-    @Nullable
-    String reference;
-    @Nullable
-    String paymentUrl;
-    @Nullable
-    String statusPayment;
-    @Nullable
-    String guruAddres;
-    @Nullable
-    String statusGantiGuru;
+    private String statusPayment;
 
     @Nullable
-    int tarif;
+    private String statusGantiGuru;
 
     @Nullable
-    String orderType;
+    private int tarif;
+
+    @Nullable
+    private String orderType;
+
 
     public Order(){}
 
@@ -91,17 +78,18 @@ public class Order {
         this.title = title;
     }
 
-    public Order(@NonNull String gid, @NonNull String uid, @NonNull String oid, String code,
-        String title, String status, int amount, int totalSiswa, int totalPertemuan, double fee,
-        double total, List<Jadwal> pertemuan, long ordertime, long pertemuanTime, double latitude,
-        double longitude, String detailLocation, String phone, long createdAt, long updatedAt,
-        String paket, double discount, String customerName, String customerPhone,
-        String customerEmail, String guruEmail, String guruPhone, String guruName,
-        String reference, String paymentUrl, String statusPayment, String guruAddres,
-        String statusGantiGuru, int tarif, String orderType) {
+    public Order(@NonNull String gid, @NonNull String uid, @NonNull String oid,
+        @NonNull String iid, String code, String title, String status, int amount, int totalSiswa,
+        int totalPertemuan, double fee, double total,
+        List<Jadwal> pertemuan, long ordertime, long pertemuanTime, String detailLocation,
+        String phone, long createdAt, long updatedAt, String paket, double discount,
+        String reference, String paymentUrl, String statusPayment, String statusGantiGuru,
+        int tarif,
+        String orderType) {
         this.gid = gid;
         this.uid = uid;
         this.oid = oid;
+        this.iid = iid;
         this.code = code;
         this.title = title;
         this.status = status;
@@ -113,63 +101,18 @@ public class Order {
         this.pertemuan = pertemuan;
         this.ordertime = ordertime;
         this.pertemuanTime = pertemuanTime;
-        this.latitude = latitude;
-        this.longitude = longitude;
         this.detailLocation = detailLocation;
         this.phone = phone;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.paket = paket;
         this.discount = discount;
-        this.customerName = customerName;
-        this.customerPhone = customerPhone;
-        this.customerEmail = customerEmail;
-        this.guruEmail = guruEmail;
-        this.guruPhone = guruPhone;
-        this.guruName = guruName;
         this.reference = reference;
         this.paymentUrl = paymentUrl;
         this.statusPayment = statusPayment;
-        this.guruAddres = guruAddres;
         this.statusGantiGuru = statusGantiGuru;
         this.tarif = tarif;
         this.orderType = orderType;
-    }
-
-    @Nullable
-    public String getStatusGantiGuru() {
-        return statusGantiGuru;
-    }
-
-    public void setStatusGantiGuru(@Nullable String statusGantiGuru) {
-        this.statusGantiGuru = statusGantiGuru;
-    }
-
-    @Nullable
-    public String getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(@Nullable String orderType) {
-        this.orderType = orderType;
-    }
-
-    @Nullable
-    public int getTarif() {
-        return tarif;
-    }
-
-    public void setTarif(@Nullable int tarif) {
-        this.tarif = tarif;
-    }
-
-    @Nullable
-    public String getStatusPayment() {
-        return statusPayment;
-    }
-
-    public void setStatusPayment(@Nullable String statusPayment) {
-        this.statusPayment = statusPayment;
     }
 
     @NonNull
@@ -197,6 +140,24 @@ public class Order {
 
     public void setOid(@NonNull String oid) {
         this.oid = oid;
+    }
+
+    @NonNull
+    public String getIid() {
+        return iid;
+    }
+
+    public void setIid(@NonNull String iid) {
+        this.iid = iid;
+    }
+
+    @Nullable
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(@Nullable String code) {
+        this.code = code;
     }
 
     @Nullable
@@ -227,33 +188,6 @@ public class Order {
     }
 
     @Nullable
-    public double getFee() {
-        return fee;
-    }
-
-    public void setFee(@Nullable double fee) {
-        this.fee = fee;
-    }
-
-    @Nullable
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(@Nullable double total) {
-        this.total = total;
-    }
-
-    @Nullable
-    public long getOrdertime() {
-        return ordertime;
-    }
-
-    public void setOrdertime(@Nullable long ordertime) {
-        this.ordertime = ordertime;
-    }
-
-    @Nullable
     public int getTotalSiswa() {
         return totalSiswa;
     }
@@ -272,6 +206,24 @@ public class Order {
     }
 
     @Nullable
+    public double getFee() {
+        return fee;
+    }
+
+    public void setFee(@Nullable double fee) {
+        this.fee = fee;
+    }
+
+    @Nullable
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(@Nullable double total) {
+        this.total = total;
+    }
+
+    @Nullable
     public List<Jadwal> getPertemuan() {
         return pertemuan;
     }
@@ -281,21 +233,12 @@ public class Order {
     }
 
     @Nullable
-    public String getPhone() {
-        return phone;
+    public long getOrdertime() {
+        return ordertime;
     }
 
-    public void setPhone(@Nullable String phone) {
-        this.phone = phone;
-    }
-
-    @Nullable
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(@Nullable String code) {
-        this.code = code;
+    public void setOrdertime(@Nullable long ordertime) {
+        this.ordertime = ordertime;
     }
 
     @Nullable
@@ -308,24 +251,6 @@ public class Order {
     }
 
     @Nullable
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(@Nullable double latitude) {
-        this.latitude = latitude;
-    }
-
-    @Nullable
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(@Nullable double longitude) {
-        this.longitude = longitude;
-    }
-
-    @Nullable
     public String getDetailLocation() {
         return detailLocation;
     }
@@ -334,6 +259,14 @@ public class Order {
         this.detailLocation = detailLocation;
     }
 
+    @Nullable
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(@Nullable String phone) {
+        this.phone = phone;
+    }
 
     @Nullable
     public long getCreatedAt() {
@@ -372,60 +305,6 @@ public class Order {
     }
 
     @Nullable
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(@Nullable String customerName) {
-        this.customerName = customerName;
-    }
-
-    @Nullable
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
-
-    public void setCustomerPhone(@Nullable String customerPhone) {
-        this.customerPhone = customerPhone;
-    }
-
-    @Nullable
-    public String getGuruEmail() {
-        return guruEmail;
-    }
-
-    public void setGuruEmail(@Nullable String guruEmail) {
-        this.guruEmail = guruEmail;
-    }
-
-    @Nullable
-    public String getGuruPhone() {
-        return guruPhone;
-    }
-
-    public void setGuruPhone(@Nullable String guruPhone) {
-        this.guruPhone = guruPhone;
-    }
-
-    @Nullable
-    public String getGuruName() {
-        return guruName;
-    }
-
-    public void setGuruName(@Nullable String guruName) {
-        this.guruName = guruName;
-    }
-
-    @Nullable
-    public String getCustomerEmail() {
-        return customerEmail;
-    }
-
-    public void setCustomerEmail(@Nullable String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
-
-    @Nullable
     public String getReference() {
         return reference;
     }
@@ -444,11 +323,39 @@ public class Order {
     }
 
     @Nullable
-    public String getGuruAddres() {
-        return guruAddres;
+    public String getStatusPayment() {
+        return statusPayment;
     }
 
-    public void setGuruAddres(@Nullable String guruAddres) {
-        this.guruAddres = guruAddres;
+    public void setStatusPayment(@Nullable String statusPayment) {
+        this.statusPayment = statusPayment;
+    }
+
+
+    @Nullable
+    public String getStatusGantiGuru() {
+        return statusGantiGuru;
+    }
+
+    public void setStatusGantiGuru(@Nullable String statusGantiGuru) {
+        this.statusGantiGuru = statusGantiGuru;
+    }
+
+    @Nullable
+    public int getTarif() {
+        return tarif;
+    }
+
+    public void setTarif(@Nullable int tarif) {
+        this.tarif = tarif;
+    }
+
+    @Nullable
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(@Nullable String orderType) {
+        this.orderType = orderType;
     }
 }

@@ -19,6 +19,8 @@ import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.HistoryOders;
+import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.remote.UserService;
 import com.lesgood.app.ui.detail_teacher.DetailTeacherActivity;
@@ -180,8 +182,9 @@ public class ListGantiGuruActivity extends BaseActivity {
         if (oldOrderId!=null){
             DetailTeacherActivity.startFromChangeTeacher(this,user,order,oldOrderId);
         }else {
-            DetailTeacherActivity.startWithData(this, user, order);
+            DetailTeacherActivity.startWithData(this, user,order);
         }
+
 
     }
 }

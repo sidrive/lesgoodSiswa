@@ -226,7 +226,7 @@ public class OrderDetailActivity extends BaseActivity {
 
   public void init(Order order) {
 
-    txtCustomerName.setText(order.getCustomerName().toUpperCase());
+   /* txtCustomerName.setText(order.getCustomerName().toUpperCase());*/
     txtOrderId.setText("#" + order.getOid());
 
     txtDate.setText(DateFormatter.getDate(order.getPertemuanTime(), "EEE, dd MMM yyyy, HH:mm"));
@@ -249,7 +249,7 @@ public class OrderDetailActivity extends BaseActivity {
         lytBtnGantiPengajar.setVisibility(View.GONE);
       }
     }
-    String url =
+    /*String url =
         "http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
             + order.getLatitude() + "," + order.getLongitude() + "+&sensor=false";
 
@@ -258,7 +258,7 @@ public class OrderDetailActivity extends BaseActivity {
         .placeholder(R.color.colorGrey400)
         .centerCrop()
         .dontAnimate()
-        .into(imgMap);
+        .into(imgMap);*/
 
     int fee = (int) (order.getFee() + 0.5d);
     int disc = (int) (order.getDiscount() + 0.5d);
@@ -269,15 +269,15 @@ public class OrderDetailActivity extends BaseActivity {
     txtTotal.setText("Rp." + toRupiah(total));
 
     handleStatus(order.getStatus());
-
-    txtNamaSiswa.setText(order.getCustomerName());
-    txtGuru.setText(order.getGuruName());
     txtAlamatSiswa.setText(order.getDetailLocation());
+
+    /*txtNamaSiswa.setText(order.getCustomerName());
+    txtGuru.setText(order.getGuruName());
     txtAlamatGuru.setText(order.getGuruAddres());
     txtTelpSiswa.setText(order.getCustomerPhone());
     txtTelpGuru.setText(order.getGuruPhone());
     txtEmailSiswa.setText(order.getCustomerEmail());
-    txtEmailGuru.setText(order.getGuruEmail());
+    txtEmailGuru.setText(order.getGuruEmail());*/
 
   }
 
@@ -382,7 +382,7 @@ public class OrderDetailActivity extends BaseActivity {
     btnPositif.setOnClickListener(v -> {
       final String review = inputReview.getText().toString();
       final float rating = ratingBar.getRating();
-      final String reviewer = order.getCustomerName();
+      /*final String reviewer = order.getCustomerName();
       if (TextUtils.isEmpty(review)) {
         inputReview.setError(errRequired);
         inputReview.requestFocus();
@@ -390,7 +390,7 @@ public class OrderDetailActivity extends BaseActivity {
         showLoading(true);
         Reviews reviews = new Reviews(UUID.randomUUID().toString(), review, rating, reviewer);
         presenter.updateReview(reviews);
-      }
+      }*/
       dialog.dismiss();
     });
 

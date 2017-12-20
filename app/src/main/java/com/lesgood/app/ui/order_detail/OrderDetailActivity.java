@@ -223,13 +223,8 @@ public class OrderDetailActivity extends BaseActivity {
 
 
   public void init(Order order) {
-
-
-    txtOrderId.setText("#" + order.getOid());
     txtDate.setText(DateFormatter.getDate(order.getPertemuanTime(), "EEE, dd MMM yyyy, HH:mm"));
     txtProduct.setText(order.getTitle());
-    txtSiswa.setText(String.valueOf(order.getTotalSiswa()));
-    txtPertemuan.setText(String.valueOf(order.getTotalPertemuan()) + " kali");
     txtDetailLokasi.setText(order.getDetailLocation());
     if (order.getTotalPertemuan() == 0) {
       lytBtnReview.setVisibility(View.VISIBLE);
@@ -256,7 +251,6 @@ public class OrderDetailActivity extends BaseActivity {
       presenter.getDetailInvoice(order.getIid());
     }
 
-
     int fee = (int) (order.getFee() + 0.5d);
     int disc = (int) (order.getDiscount() + 0.5d);
     int total = (int) (order.getTotal() + 0.5d);
@@ -264,12 +258,8 @@ public class OrderDetailActivity extends BaseActivity {
     txtAmount.setText("Rp." + toRupiah(order.getAmount() + fee));
     txtDisc.setText("Rp." + toRupiah(disc));
     txtTotal.setText("Rp." + toRupiah(total));
-
     handleStatus(order.getStatus());
     txtAlamatSiswa.setText(order.getDetailLocation());
-
-
-
   }
 
   private void setLayoutOrderSuccess() {
@@ -476,7 +466,10 @@ public class OrderDetailActivity extends BaseActivity {
   }
 
   public void initDetailInvoice(Invoices invoices) {
+    txtOrderId.setText("#" + invoices.getOid());
 
+    txtSiswa.setText(String.valueOf(invoices.getTotalSiswa()));
+    txtPertemuan.setText(String.valueOf(invoices.getTotalPertemuan()) + " kali");
   }
 
   public void showDialogError(String message) {

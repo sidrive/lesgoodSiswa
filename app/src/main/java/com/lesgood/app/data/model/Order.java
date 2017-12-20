@@ -14,8 +14,12 @@ public class Order {
     private String gid;
     @NonNull
     private String uid;
+
     @NonNull
     private String oid;
+
+    @NonNull
+    private String oldOid;
 
     @NonNull
     private String iid;
@@ -79,8 +83,8 @@ public class Order {
     }
 
     public Order(@NonNull String gid, @NonNull String uid, @NonNull String oid,
-        @NonNull String iid, String code, String title, String status, int amount, int totalSiswa,
-        int totalPertemuan, double fee, double total,
+        @NonNull String oldOid, @NonNull String iid, String code, String title, String status,
+        int amount, int totalSiswa, int totalPertemuan, double fee, double total,
         List<Jadwal> pertemuan, long ordertime, long pertemuanTime, String detailLocation,
         String phone, long createdAt, long updatedAt, String paket, double discount,
         String reference, String paymentUrl, String statusPayment, String statusGantiGuru,
@@ -89,6 +93,7 @@ public class Order {
         this.gid = gid;
         this.uid = uid;
         this.oid = oid;
+        this.oldOid = oldOid;
         this.iid = iid;
         this.code = code;
         this.title = title;
@@ -113,6 +118,15 @@ public class Order {
         this.statusGantiGuru = statusGantiGuru;
         this.tarif = tarif;
         this.orderType = orderType;
+    }
+
+    @NonNull
+    public String getOldOid() {
+        return oldOid;
+    }
+
+    public void setOldOid(@NonNull String oldOid) {
+        this.oldOid = oldOid;
     }
 
     @NonNull

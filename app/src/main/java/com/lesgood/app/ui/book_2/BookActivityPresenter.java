@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.data.model.Guru;
+import com.lesgood.app.data.model.HistoryOders;
 import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Skill;
@@ -138,6 +139,19 @@ public class BookActivityPresenter implements BasePresenter {
             })
             .addOnFailureListener(e -> {
                 Log.e("saveInvoice", "BookActivityPresenter " + e.getMessage());
+            });
+    }
+
+    public void createHistoryOrder(HistoryOders historyOders) {
+        orderService.createHistoryOrder(historyOders.getOid()).setValue(historyOders)
+            .addOnFailureListener(e -> {
+                Log.e("createHistoryOrder", "BookActivityPresenter" + e.getMessage());
+            })
+            .addOnCompleteListener(task -> {
+                Log.e("createHistoryOrder", "BookActivityPresenter" + task.isSuccessful());
+                if (task.isSuccessful()){
+                    activity.successOrdering();
+                }
             });
     }
 }

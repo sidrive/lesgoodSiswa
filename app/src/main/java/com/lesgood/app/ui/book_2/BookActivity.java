@@ -217,6 +217,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   private void initWithChangeTeacher(String oldOid) {
     presenter.getGuruSkill(guru.getUid(), order.getCode());
     presenter.getOrderById(oldOid);
+    radioPaket1.setVisibility(View.GONE);
   }
 
   private void showSchedules() {
@@ -364,8 +365,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
         "- Sesudah diskon Rp." + paketTarif2after;
 
     radioPaket1.setText(paket1);
-
-
   }
 
   @OnClick(R.id.img_map)
@@ -534,25 +533,36 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       Random rand = new Random();
       String oid = Integer.toString(rand.nextInt(99999));
       long ordertime = System.currentTimeMillis();
+      String iid = oid+""+skill.getCode();
       order.setOid(oid);
+      order.setIid(iid);
+      order.setOldOid(oldOid);
       order.setAmount(newOrder.getAmount());
       order.setCode(skill.getCode());
       order.setGid(guru.getUid());
       order.setOrdertime(ordertime);
       order.setUid(user.getUid());
       order.setPertemuanTime(calOrder.getTimeInMillis());
-      order.setFee(fee);
+      order.setFee(newOrder.getFee());
       order.setTotalSiswa(siswa);
-
+      order.setTarif(base_tarif);
       order.setDetailLocation(detilLokasi);
       order.setTotalPertemuan(totalPertemuan);
       order.setTotal(newOrder.getTotal());
-      order.setStatus("change_guru");
+      order.setStatus(newOrder.getStatus());
       order.setStatusGantiGuru("request");
       order.setStatusPayment(newOrder.getStatus());
       order.setOrderType(newOrder.getOid());
       order.setDiscount(discount);
       saveOrder(order);
+      HistoryOders historyOders = new HistoryOders();
+      historyOders.setCreateAt(calOrder.getTimeInMillis());
+      historyOders.setStatus("requset");
+      historyOders.setOid(oid);
+      historyOders.setIid(iid);
+      historyOders.setOldGid(newOrder.getGid());
+      historyOders.setNewGid(user.getUid());
+      presenter.createHistoryOrder(historyOders);
     }
   }
 
@@ -612,6 +622,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       String iid = oid+""+skill.getCode();
 
       order.setOid(oid);
+      order.setOldOid("0");
       order.setIid(iid);
       order.setCreatedAt(ordertime);
       order.setTarif(base_tarif);
@@ -641,6 +652,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       invoices.setStatus("new");
       invoices.setTotalPertemuan(totalPertemuan);
       invoices.setTotalSiswa(siswa);
+      invoices.setTarif(base_tarif);
       presenter.saveInvoice(invoices);
       saveOrder(order);
 

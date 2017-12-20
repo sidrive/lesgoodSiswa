@@ -87,4 +87,10 @@ public class OrderService {
     public DatabaseReference getInvoice(String iid){
         return databaseRef.child("invoices").child(iid);
     }
+    /*=============================================================================================================================
+                                                                HISTORY ORDER
+      =============================================================================================================================*/
+    public DatabaseReference createHistoryOrder(String oid){
+        return databaseRef.child("history-order").child(oid);
+    }
 }

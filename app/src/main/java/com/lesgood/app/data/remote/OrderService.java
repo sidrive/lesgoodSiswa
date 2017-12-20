@@ -84,4 +84,7 @@ public class OrderService {
     public Task<Void> createInvoice(Invoices invoices){
         return databaseRef.child("invoices").child(invoices.getIid()).setValue(invoices);
     }
+    public DatabaseReference getInvoice(String iid){
+        return databaseRef.child("invoices").child(iid);
+    }
 }

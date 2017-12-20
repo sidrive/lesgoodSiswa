@@ -32,6 +32,7 @@ import com.bumptech.glide.Glide;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
+import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Pustaka;
 import com.lesgood.app.data.model.Reviews;
@@ -42,6 +43,7 @@ import com.lesgood.app.ui.list.ListGantiGuruActivity;
 import com.lesgood.app.ui.main.MainActivity;
 import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.DateFormatter;
+import com.lesgood.app.util.Utils;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.UUID;
@@ -131,17 +133,13 @@ public class OrderDetailActivity extends BaseActivity {
   @Bind(R.id.lin_action)
   LinearLayout linAction;
 
-    /*@Bind(R.id.lin_action2)
-    LinearLayout linAction2;*/
+
 
   @Inject
   Order order;
 
   @Inject
   User user;
-
-  /*@Inject
-  Guru guru;*/
 
   @Inject
   OrderDetailPresenter presenter;
@@ -164,7 +162,7 @@ public class OrderDetailActivity extends BaseActivity {
 
   @Bind(R.id.lyt_btn_review)
   LinearLayout lytBtnReview;
-
+  private String reviewer;
 
   public static void startWithOrder(BaseActivity activity, Order order) {
     Intent intent = new Intent(activity, OrderDetailActivity.class);
@@ -226,9 +224,8 @@ public class OrderDetailActivity extends BaseActivity {
 
   public void init(Order order) {
 
-   /* txtCustomerName.setText(order.getCustomerName().toUpperCase());*/
-    txtOrderId.setText("#" + order.getOid());
 
+    txtOrderId.setText("#" + order.getOid());
     txtDate.setText(DateFormatter.getDate(order.getPertemuanTime(), "EEE, dd MMM yyyy, HH:mm"));
     txtProduct.setText(order.getTitle());
     txtSiswa.setText(String.valueOf(order.getTotalSiswa()));
@@ -249,16 +246,16 @@ public class OrderDetailActivity extends BaseActivity {
         lytBtnGantiPengajar.setVisibility(View.GONE);
       }
     }
-    /*String url =
-        "http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
-            + order.getLatitude() + "," + order.getLongitude() + "+&sensor=false";
+    if (order.getUid()!=null){
+      presenter.getDetailSiswa(order.getUid());
+    }
+    if (order.getGid()!=null){
+      presenter.getDetailGuru(order.getGid());
+    }
+    if (order.getIid()!=null){
+      presenter.getDetailInvoice(order.getIid());
+    }
 
-    Glide.with(this)
-        .load(url)
-        .placeholder(R.color.colorGrey400)
-        .centerCrop()
-        .dontAnimate()
-        .into(imgMap);*/
 
     int fee = (int) (order.getFee() + 0.5d);
     int disc = (int) (order.getDiscount() + 0.5d);
@@ -271,13 +268,7 @@ public class OrderDetailActivity extends BaseActivity {
     handleStatus(order.getStatus());
     txtAlamatSiswa.setText(order.getDetailLocation());
 
-    /*txtNamaSiswa.setText(order.getCustomerName());
-    txtGuru.setText(order.getGuruName());
-    txtAlamatGuru.setText(order.getGuruAddres());
-    txtTelpSiswa.setText(order.getCustomerPhone());
-    txtTelpGuru.setText(order.getGuruPhone());
-    txtEmailSiswa.setText(order.getCustomerEmail());
-    txtEmailGuru.setText(order.getGuruEmail());*/
+
 
   }
 
@@ -382,7 +373,7 @@ public class OrderDetailActivity extends BaseActivity {
     btnPositif.setOnClickListener(v -> {
       final String review = inputReview.getText().toString();
       final float rating = ratingBar.getRating();
-      /*final String reviewer = order.getCustomerName();
+
       if (TextUtils.isEmpty(review)) {
         inputReview.setError(errRequired);
         inputReview.requestFocus();
@@ -390,7 +381,7 @@ public class OrderDetailActivity extends BaseActivity {
         showLoading(true);
         Reviews reviews = new Reviews(UUID.randomUUID().toString(), review, rating, reviewer);
         presenter.updateReview(reviews);
-      }*/
+      }
       dialog.dismiss();
     });
 
@@ -456,5 +447,39 @@ public class OrderDetailActivity extends BaseActivity {
 
   public void showOnChangePustakaLesgood(Pustaka pustaka) {
     //pustakaAdapter.onPustakaChanged(pustaka);
+  }
+
+  public void initDetailSiswa(User user) {
+    txtCustomerName.setText(user.getFull_name());
+    txtNamaSiswa.setText(user.getFull_name());
+    txtEmailSiswa.setText(user.getEmail());
+    txtTelpSiswa.setText(user.getPhone());
+    reviewer = user.getFull_name();
+
+  }
+
+  public void initDetailGuru(User user) {
+    txtAlamatGuru.setText(user.getFullAddress());
+    txtTelpGuru.setText(user.getPhone());
+    txtGuru.setText(user.getFull_name());
+    txtEmailGuru.setText(user.getEmail());
+    String url =
+        "http://maps.googleapis.com/maps/api/staticmap?zoom=16&size=800x400&maptype=roadmap%20&markers=color:red%7Clabel:S%7C"
+            + user.getLatitude() + "," + user.getLongitude() + "+&sensor=false";
+
+    Glide.with(this)
+        .load(url)
+        .placeholder(R.color.colorGrey400)
+        .centerCrop()
+        .dontAnimate()
+        .into(imgMap);
+  }
+
+  public void initDetailInvoice(Invoices invoices) {
+
+  }
+
+  public void showDialogError(String message) {
+    Utils.showToas(this,message);
   }
 }

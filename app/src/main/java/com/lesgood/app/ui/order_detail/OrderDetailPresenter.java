@@ -8,6 +8,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.lesgood.app.base.BasePresenter;
+import com.lesgood.app.data.model.Invoices;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.Pustaka;
 import com.lesgood.app.data.model.Reviews;
@@ -158,4 +159,54 @@ public class OrderDetailPresenter implements BasePresenter {
         });
     }
 
+    public void getDetailSiswa(String uid) {
+        userService.getUser(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null){
+                    User user = dataSnapshot.getValue(User.class);
+                    activity.initDetailSiswa(user);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                activity.showDialogError(databaseError.getMessage());
+            }
+        });
+    }
+
+    public void getDetailGuru(String gid) {
+        userService.getUser(gid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null){
+                    User user = dataSnapshot.getValue(User.class);
+                    activity.initDetailGuru(user);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                activity.showDialogError(databaseError.getMessage());
+            }
+        });
+    }
+
+    public void getDetailInvoice(String iid) {
+        orderService.getInvoice(iid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue()!=null){
+                    Invoices invoices = dataSnapshot.getValue(Invoices.class);
+                    activity.initDetailInvoice(invoices);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                activity.showDialogError(databaseError.getMessage());
+            }
+        });
+    }
 }

@@ -90,6 +90,9 @@ public class PlaceholderFragment extends BaseFragment {
         if (sectionNumber == 3){
             presenter.getOrders("Ganti Guru");
         }
+        if (sectionNumber == 4){
+            presenter.getOrders("history");
+        }
     }
 
     @Override

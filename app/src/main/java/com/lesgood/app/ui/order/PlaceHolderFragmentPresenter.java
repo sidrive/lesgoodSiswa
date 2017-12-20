@@ -91,6 +91,14 @@ public class PlaceHolderFragmentPresenter implements BasePresenter {
                         }
 
                     }
+                    if (status.equals("history")){
+                        if (order.getStatusGantiGuru()!=null){
+                            if (!order.getStatusGantiGuru().equalsIgnoreCase("request")){
+                                fragment.showAddedOrder(order);
+                            }
+                        }
+
+                    }
                 }
             }
 

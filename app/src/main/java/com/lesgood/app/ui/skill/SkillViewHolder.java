@@ -36,7 +36,17 @@ public class SkillViewHolder extends RecyclerView.ViewHolder {
     public void bind(Skill item) {
         txtSkill.setText(item.getSkill());
         txtLevel.setText(item.getLevel());
-        txtPrice.setText(Utils.getRupiah(item.getPrice1())+"/100 menit");
+        initPrice(item.getPrice1());
+    }
+
+    public void initPrice(int price) {
+
+        double fee = 0;
+
+        fee = price * 0.3;
+
+        int finaltarif = (int) ((price + fee) + 0.5d);
+        txtPrice.setText("Mulai dari " + Utils.getRupiah(finaltarif) + " /100 menit");
     }
 }
 

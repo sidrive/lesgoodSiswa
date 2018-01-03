@@ -35,6 +35,14 @@ public class Utils {
         return edit.putLong(key, Double.doubleToRawLongBits(value));
     }
 
+    public static boolean getBoolean(final SharedPreferences prefs, final String key, final boolean defaultValue) {
+        return prefs.getBoolean(key, defaultValue);
+    }
+
+    public static SharedPreferences.Editor putBoolean(final SharedPreferences.Editor edit, final String key, final boolean value) {
+        return edit.putBoolean(key,value );
+    }
+
     public static final String md5(final String s) {
         final String MD5 = "MD5";
         try {

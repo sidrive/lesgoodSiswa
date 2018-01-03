@@ -3,6 +3,7 @@ package com.lesgood.app.ui.main;
 import android.Manifest.permission;
 import android.annotation.SuppressLint;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.base.config.DefaultConfig;
 import com.lesgood.app.data.model.User;
+import com.lesgood.app.data.permission.LocationHelper;
 import com.lesgood.app.data.remote.FetchAddressIntentService;
 import com.lesgood.app.data.remote.LocationService;
 import com.lesgood.app.ui.home.HomeFragment;
@@ -57,9 +59,16 @@ public class MainActivity extends BaseActivity {
     @Inject
     User user;
 
+
     BroadcastReceiver broadcastReceiver;
+
+    LocationHelper  helper;
+    Location location;
+
     private AddressResultReceiver mResultReceiver;
+
     private static final int RC_ALL_PERMISSION= 111;
+
     private static final String[] PERMISION =
         {permission.ACCESS_FINE_LOCATION,
             permission.ACCESS_COARSE_LOCATION,
@@ -85,31 +94,31 @@ public class MainActivity extends BaseActivity {
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
+        = item -> {
 
-                Fragment fragment = HomeFragment.newInstance();
+        Fragment fragment = HomeFragment.newInstance();
 
-                switch (item.getItemId()) {
-                    case R.id.navigation_home:
-                        fragment = HomeFragment.newInstance();
-                        break;
-                    case R.id.navigation_order:
-                        fragment = OrderFragment.newInstance();
-                        break;
-                    case R.id.navigation_profile:
-                        fragment = ProfileFragment.newInstance();
-                        break;
-                }
+        switch (item.getItemId()) {
+            case R.id.navigation_home:
+                fragment = HomeFragment.newInstance();
+                break;
+            case R.id.navigation_order:
+                fragment = OrderFragment.newInstance();
+                break;
+            case R.id.navigation_profile:
+                fragment = ProfileFragment.newInstance();
+                break;
+        }
 
-                if (fragment != null) {
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.content_frame, fragment);
-                    ft.commit();
-                    return true;
-                }
+        if (fragment != null) {
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.content_frame, fragment);
+            ft.commit();
+            return true;
+        }
 
-                return false;
-            };
+        return false;
+    };
 
 
 
@@ -130,11 +139,12 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver,
-                new IntentFilter("tokenReceiver"));
+            new IntentFilter("tokenReceiver"));
         ButterKnife.bind(this);
-
+        setSupportActionBar(toolbar);
         if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.M) {
             requestPermissionForMvers();
+            //helper.checkPermission();
         }
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -143,12 +153,18 @@ public class MainActivity extends BaseActivity {
             }
         };
         mResultReceiver = new AddressResultReceiver(new Handler());
-        setSupportActionBar(toolbar);
+
+
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+
         startService();
-        String token = FirebaseInstanceId.getInstance().getToken();
-        presenter.updateFCMToken(user.getUid(),token);
+        if (user != null) {
+            String token = FirebaseInstanceId.getInstance().getToken();
+            presenter.updateFCMToken(user.getUid(),token);
+
+        }
+
         Bundle extras = getIntent().getExtras();
         if (extras!=null){
             String order = extras.getString("order");
@@ -186,29 +202,31 @@ public class MainActivity extends BaseActivity {
         @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RC_ALL_PERMISSION){
+            SharedPreferences sharedPreferences = getSharedPreferences(DefaultConfig.KEY_GRANTED_PERMISSION, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
             boolean allGrant = false;
             for (int i = 0; i < grantResults.length; i++) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     allGrant = true;
+                    editor.putBoolean(DefaultConfig.KEY_GRANTED_PERMISSION,true);
                 } else {
                     allGrant = false;
+                    editor.putBoolean(DefaultConfig.KEY_GRANTED_PERMISSION,false);
                 }
             }
-            if (allGrant) {
-                Log.e("allGrant", "MainActivity" + allGrant);
+            if (allGrant){
                 startService();
-            } else {
+            }else {
                 requestPermissionForMvers();
             }
-
         }
     }
 
 
 
     public void MethodName(Intent intent){
-        final double lat = intent.getDoubleExtra("Latitude", 0.00);
-        final double lng = intent.getDoubleExtra("Longitude", 0.00);
+        final double lat = intent.getDoubleExtra("Latitude", 0);
+        final double lng = intent.getDoubleExtra("Longitude", 0);
         final String provider = intent.getStringExtra("Provider");
 
         Log.d("GETLOCATIONSERVICE", "provider = "+provider);
@@ -217,15 +235,19 @@ public class MainActivity extends BaseActivity {
         Location bestLocation = new Location(provider);
         bestLocation.setLatitude(lat);
         bestLocation.setLongitude(lng);
-
         SharedPreferences sharedPreferences = getSharedPreferences(DefaultConfig.KEY_USER_PREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         Utils.putDouble(editor, DefaultConfig.KEY_USER_LAT, lat);
         Utils.putDouble(editor, DefaultConfig.KEY_USER_LNG, lng);
         editor.apply();
+        if (lat!=0 && lng !=0){
+            startServiceAddress(bestLocation);
+        }else {
 
-        startServiceAddress(bestLocation);
+            requestPermissionForMvers();
+        }
+
     }
 
     BroadcastReceiver tokenReceiver = new BroadcastReceiver() {
@@ -243,9 +265,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void setupActivityComponent() {
         BaseApplication.get(this).getUserComponent()
-                .plus(new MainActivityModule(this))
-                .inject(this);
-
+            .plus(new MainActivityModule(this))
+            .inject(this);
         BaseApplication.get(this).createMainComponent(this);
     }
 

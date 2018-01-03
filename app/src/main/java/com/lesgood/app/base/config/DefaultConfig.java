@@ -54,9 +54,10 @@ public class DefaultConfig {
     public static final String ADMIN_AREA_DATA_EXTRA = PACKAGE_NAME + ".ADMIN_AREA_DATA_EXTRA";
 
     public static final String COUNTRY_CODE_DATA_EXTRA = PACKAGE_NAME + ".COUNTRY_CODE_DATA_EXTRA";
+    public static String KEY_GRANTED_PERMISSION = "GRANTED_PERMISSION";
 
 
-    private final SharedPreferences mSharedPreferences;
+  private final SharedPreferences mSharedPreferences;
     public DefaultConfig(Context context) {
         mSharedPreferences = context.getSharedPreferences("default_config", Context.MODE_PRIVATE);
     }

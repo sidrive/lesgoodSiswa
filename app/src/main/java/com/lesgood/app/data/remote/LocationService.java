@@ -21,6 +21,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.lesgood.app.data.permission.LocationHelper;
 
 
 /**
@@ -34,7 +35,7 @@ public class LocationService extends Service implements
     private static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 401;
     private static int REQUEST_CODE_RECOVER_PLAY_SERVICES = 201;
     public static final String BROADCAST_ACTION = "Hello World";
-    private static final int TWO_MINUTES = 1000 * 60 * 2;
+    private static final int TWO_MINUTES = 1000 * 60 * 1;
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
 
@@ -43,7 +44,7 @@ public class LocationService extends Service implements
     public Location previousBestLocation = null;
     public LocationRequest mLocationRequest;
     public GoogleApiClient mGoogleApiClient;
-
+    LocationHelper helper;
     Intent intent;
     int counter = 0;
 
@@ -53,13 +54,12 @@ public class LocationService extends Service implements
         intent = new Intent(BROADCAST_ACTION);
         if (checkGooglePlayServices()) {
             buildGoogleApiClient();
-
             createLocationRequest();
         }
         listener = new MyLocationListener();
-
         initializeLocationManager();
-        try {
+        helper.buildGoogleApiClient();
+        /*try {
             locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
                     listener);
@@ -76,9 +76,8 @@ public class LocationService extends Service implements
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "gps provider does not exist " + ex.getMessage());
-        }
+        }*/
     }
-
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -91,7 +90,10 @@ public class LocationService extends Service implements
         Log.e(TAG, "initializeLocationManager");
         if (locationManager == null) {
             locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+            helper = new LocationHelper(getApplicationContext(),locationManager);
         }
+
+
     }
 
     @Override
@@ -122,14 +124,14 @@ public class LocationService extends Service implements
         int checkGooglePlayServices = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(getApplicationContext());
         if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
-		/*
-		* Google Play Services is missing or update is required
-		*  return code could be
-		* SUCCESS,
-		* SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
-		* SERVICE_DISABLED, SERVICE_INVALID.
-		*/
-//            listener.onErrorGooglePlayService();
+            /*
+            * Google Play Services is missing or update is required
+            *  return code could be
+            * SUCCESS,
+            * SERVICE_MISSING, SERVICE_VERSION_UPDATE_REQUIRED,
+            * SERVICE_DISABLED, SERVICE_INVALID.
+            */
+        //            listener.onErrorGooglePlayService();
 
             return false;
         }
@@ -225,8 +227,10 @@ public class LocationService extends Service implements
     }
 
     protected void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
+        if (ActivityCompat.checkSelfPermission(
+            this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this,
+            Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(

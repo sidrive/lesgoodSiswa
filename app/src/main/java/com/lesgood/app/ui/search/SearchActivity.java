@@ -85,6 +85,9 @@ public class SearchActivity extends BaseActivity {
     String levelID;
     String seletedID;
 
+    double lat;
+    double lng;
+
     public static void startWithData(BaseActivity activity, String id){
         Intent intent = new Intent(activity, SearchActivity.class);
         if (id != null){
@@ -104,12 +107,17 @@ public class SearchActivity extends BaseActivity {
         if (extras != null){
             seletedID = extras.getString("id");
         }
-
         toolbar.setTitle("Cari Pengajar");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (user!=null){
+            Log.e("onCreate", "e" + user.getLatitude());
+            Log.e("onCreate", "e" + user.getLongitude());
+            if (user.getLongitude() ==0 && user.getLatitude()==0){
 
+            }
+        }
     }
 
     private void init(String id){
@@ -287,7 +295,6 @@ public class SearchActivity extends BaseActivity {
         if (cancel){
 
         }else{
-
             String code = skillID+levelID;
             String pelajaran = txtSkill.getText().toString()+" "+txtLevel.getText().toString();
             ListActivity.startWithData(this, code, pelajaran);

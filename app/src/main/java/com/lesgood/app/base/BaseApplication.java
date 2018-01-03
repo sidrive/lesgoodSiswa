@@ -1,5 +1,6 @@
 package com.lesgood.app.base;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.media.Rating;
@@ -46,12 +47,13 @@ public class BaseApplication extends MultiDexApplication {
     public static DetailTeacherComponent detailTeacherComponent;
     public static BookComponent bookComponent;
     public static RatingComponent ratingComponent;
-
+    public static Activity activity;
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         //FirebaseApp.initializeApp(base);
         defaultConfig = new DefaultConfig(base);
+        activity = new Activity();
         MultiDex.install(getBaseContext());
     }
 
@@ -59,6 +61,9 @@ public class BaseApplication extends MultiDexApplication {
         return (BaseApplication) context.getApplicationContext();
     }
 
+    public static Activity getActivity(){
+        return activity;
+    }
     @Override
     public void onCreate() {
         super.onCreate();

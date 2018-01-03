@@ -38,8 +38,10 @@ import com.lesgood.app.data.remote.LocationService;
 import com.lesgood.app.ui.home.HomeFragment;
 import com.lesgood.app.ui.order.OrderFragment;
 import com.lesgood.app.ui.profile.ProfileFragment;
+import com.lesgood.app.ui.splash.SplashActivity;
 import com.lesgood.app.util.Utils;
 
+import com.lesgood.app.util.preference.UserPreferences;
 import javax.inject.Inject;
 
 import butterknife.Bind;
@@ -59,14 +61,13 @@ public class MainActivity extends BaseActivity {
     @Inject
     User user;
 
-
-    BroadcastReceiver broadcastReceiver;
-
+    private BroadcastReceiver broadcastReceiver;
+    private AddressResultReceiver mResultReceiver;
     LocationHelper  helper;
     Location location;
+    boolean allGrant = false;
 
-    private AddressResultReceiver mResultReceiver;
-
+    private UserPreferences preferences;
     private static final int RC_ALL_PERMISSION= 111;
 
     private static final String[] PERMISION =
@@ -82,7 +83,6 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(this, LocationService.class);
         startService(intent);
         registerReceiver(broadcastReceiver, new IntentFilter(LocationService.BROADCAST_ACTION));
-
     }
 
     protected void startServiceAddress(Location location) {
@@ -142,10 +142,17 @@ public class MainActivity extends BaseActivity {
             new IntentFilter("tokenReceiver"));
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.M) {
-            requestPermissionForMvers();
-            //helper.checkPermission();
-        }
+        preferences = new UserPreferences(this);
+        startService();
+        /*if (allGrant){
+
+        }else {
+            if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.M) {
+                requestPermissionForMvers();
+            }
+        }*/
+
+
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -154,17 +161,12 @@ public class MainActivity extends BaseActivity {
         };
         mResultReceiver = new AddressResultReceiver(new Handler());
 
-
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-
-        startService();
         if (user != null) {
             String token = FirebaseInstanceId.getInstance().getToken();
             presenter.updateFCMToken(user.getUid(),token);
-
         }
-
         Bundle extras = getIntent().getExtras();
         if (extras!=null){
             String order = extras.getString("order");
@@ -202,16 +204,14 @@ public class MainActivity extends BaseActivity {
         @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RC_ALL_PERMISSION){
-            SharedPreferences sharedPreferences = getSharedPreferences(DefaultConfig.KEY_GRANTED_PERMISSION, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            boolean allGrant = false;
+            startService();
+
+
             for (int i = 0; i < grantResults.length; i++) {
                 if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                     allGrant = true;
-                    editor.putBoolean(DefaultConfig.KEY_GRANTED_PERMISSION,true);
                 } else {
                     allGrant = false;
-                    editor.putBoolean(DefaultConfig.KEY_GRANTED_PERMISSION,false);
                 }
             }
             if (allGrant){
@@ -219,9 +219,15 @@ public class MainActivity extends BaseActivity {
             }else {
                 requestPermissionForMvers();
             }
+
         }
     }
 
+    private void reloadActivity() {
+        Intent i = new Intent(this,SplashActivity.class);
+        startActivity(i);
+        finish();
+    }
 
 
     public void MethodName(Intent intent){
@@ -232,6 +238,8 @@ public class MainActivity extends BaseActivity {
         Log.d("GETLOCATIONSERVICE", "provider = "+provider);
         Log.d("GETLOCATIONSERVICE", "Latitude = "+lat);
         Log.d("GETLOCATIONSERVICE", "Longitude = "+lng);
+        preferences.write(DefaultConfig.KEY_USER_LNG,String.valueOf(lng),String.class);
+        preferences.write(DefaultConfig.KEY_USER_LAT,String.valueOf(lat),String.class);
         Location bestLocation = new Location(provider);
         bestLocation.setLatitude(lat);
         bestLocation.setLongitude(lng);
@@ -244,8 +252,7 @@ public class MainActivity extends BaseActivity {
         if (lat!=0 && lng !=0){
             startServiceAddress(bestLocation);
         }else {
-
-            requestPermissionForMvers();
+            startService();
         }
 
     }
@@ -278,23 +285,29 @@ public class MainActivity extends BaseActivity {
 
         @Override
         protected void onReceiveResult(int resultCode, Bundle resultData) {
-
             // Display the address string
             // or an error message sent from the intent service.
-
             // Show a toast message if an address was found.
             if (resultCode == DefaultConfig.SUCCESS_RESULT) {
                 String adminArea = resultData.getString(DefaultConfig.ADMIN_AREA_DATA_EXTRA);
                 String locality = resultData.getString(DefaultConfig.LOCALITY_DATA_EXTRA);
                 String postalCode = resultData.getString(DefaultConfig.POSTAL_CODE_DATA_EXTRA);
                 String countryCode = resultData.getString(DefaultConfig.COUNTRY_CODE_DATA_EXTRA);
-
+                preferences.write(DefaultConfig.KEY_USER_AREA,adminArea,String.class);
                 Log.d("onReceiveResult", "adminArea = "+adminArea);
                 Log.d("onReceiveResult", "locality = "+locality);
                 Log.d("onReceiveResult", "postalCode = "+postalCode);
                 Log.d("onReceiveResult", "countryCode = "+countryCode);
             }
+        }
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, LocationService.class);
+        if (intent!=null){
+            startService();
         }
     }
 

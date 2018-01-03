@@ -45,7 +45,9 @@ public class LocationHelper implements PermissionResultCallback, ConnectionCallb
   private Location mLocation;
   private LocationManager locationManager;
   private GoogleApiClient googleApiClient;
-  private ArrayList<String> permissions = new ArrayList<>();
+  private String [] permissions = new String[]{permission.ACCESS_FINE_LOCATION,
+      permission.ACCESS_COARSE_LOCATION,
+      permission.READ_CONTACTS};
   private PermissionUtils permissionUtils;
   private final static int PLAY_SERVICES_REQUEST = 1000;
   private final static int REQUEST_CHECK_SETTINGS = 2000;
@@ -55,16 +57,13 @@ public class LocationHelper implements PermissionResultCallback, ConnectionCallb
     this.activity = BaseApplication.getActivity();
     this.permissionUtils = new PermissionUtils(context,this);
     this.locationManager = locationManager;
-    permissions.add(permission.ACCESS_FINE_LOCATION);
-    permissions.add(permission.ACCESS_COARSE_LOCATION);
-    permissions.add(permission.CAMERA);
-    permissions.add(permission.READ_EXTERNAL_STORAGE);
-    permissions.add(permission.WRITE_EXTERNAL_STORAGE);
-    permissions.add(permission.READ_CONTACTS);
+
 
   }
 
   public void checkPermission(){
+
+    Log.e("checkPermission", "LocationHelper" + permissions.toString());
     permissionUtils.checkPermission(permissions,"Need GPS permission for getting your location",1);
   }
 

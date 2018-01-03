@@ -1,7 +1,12 @@
 package com.lesgood.app.ui.login;
 
+import android.Manifest.permission;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -47,8 +52,18 @@ public class LoginActivity extends BaseActivity {
     LoginPresenter presenter;
 
     private CallbackManager callbackManager;
-
+    boolean allGrant = false;
     boolean isLoginMode = false;
+    private static final int RC_ALL_PERMISSION= 111;
+    private static final String[] PERMISION =
+        {permission.ACCESS_FINE_LOCATION,
+            permission.ACCESS_COARSE_LOCATION,
+            permission.READ_CONTACTS,
+            permission.READ_EXTERNAL_STORAGE,
+            permission.WRITE_EXTERNAL_STORAGE,
+            permission.CAMERA
+        };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +71,50 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        if (android.os.Build.VERSION.SDK_INT >= VERSION_CODES.M) {
+            requestPermissionForMvers();
+        }
+    }
+
+    private void requestPermissionForMvers() {
+        if (
+            ActivityCompat.checkSelfPermission(this, PERMISION[0]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[1]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[2]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[3]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[4]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, PERMISION[5]) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[0])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[1])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[2])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[3])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[4])
+                || ActivityCompat.shouldShowRequestPermissionRationale(this, PERMISION[5])) {
+            } else {
+                ActivityCompat.requestPermissions(this,PERMISION,RC_ALL_PERMISSION);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+        @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == RC_ALL_PERMISSION){
+            for (int i = 0; i < grantResults.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    allGrant = true;
+                } else {
+                    allGrant = false;
+                }
+            }
+            if (allGrant){
+
+            }else {
+                requestPermissionForMvers();
+            }
+
+        }
     }
 
     @Override

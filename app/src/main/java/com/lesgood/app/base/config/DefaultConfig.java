@@ -33,6 +33,7 @@ public class DefaultConfig {
     private static final String KEY_PASS_KEY = "pass_key";
     public static final String KEY_USER_LAT = "user_lat_ley";
     public static final String KEY_USER_LNG = "user_lng_key";
+    public static final String KEY_USER_AREA = "adminArea";
 
     public static final int SUCCESS_RESULT = 0;
 

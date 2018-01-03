@@ -1,8 +1,17 @@
 package com.lesgood.app.ui.home;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.os.ResultReceiver;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,12 +33,18 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.base.BaseFragment;
+import com.lesgood.app.base.config.DefaultConfig;
 import com.lesgood.app.data.model.Category;
 import com.lesgood.app.data.model.User;
+import com.lesgood.app.data.remote.FetchAddressIntentService;
+import com.lesgood.app.data.remote.LocationService;
 import com.lesgood.app.ui.main.MainActivity;
+
 import com.lesgood.app.ui.search.SearchActivity;
 import com.lesgood.app.util.GridSpacingItemDecoration;
 
+import com.lesgood.app.util.Utils;
+import com.lesgood.app.util.preference.UserPreferences;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -61,6 +76,12 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     @Inject
     CategoryAdapter adapter;
 
+    UserPreferences preferences;
+
+    private BroadcastReceiver broadcastReceiver;
+    private AddressResultReceiver mResultReceiver;
+    String area;
+
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
@@ -78,9 +99,20 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Intent intent = new Intent(getContext(), LocationService.class);
+        if(intent != null) {
+            getActivity().unregisterReceiver(broadcastReceiver);
+            getActivity().stopService(intent);
+        }
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         presenter.subscribe();
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(LocationService.BROADCAST_ACTION));
     }
 
     @Override
@@ -92,6 +124,10 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     public void onStop() {
         super.onStop();
         presenter.unsubscribe();
+        Intent intent = new Intent(getContext(), LocationService.class);
+        if(intent != null) {
+            getActivity().stopService(intent);
+        }
     }
 
     @Override
@@ -107,14 +143,66 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         //change R.layout.yourlayoutfilename for each of your fragments
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
-
-        getActivity().setTitle("Yogyakarta");
+        preferences = new UserPreferences(getContext());
+        area = preferences.read(DefaultConfig.KEY_USER_AREA,String.class);
+        Log.e("onCreateView", "arrea" + area);
+        Log.e("onCreateView", "arrea" + area.length());
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                MethodName(intent);
+            }
+        };
+        mResultReceiver = new AddressResultReceiver(new Handler());
+        if (area==null){
+            getActivity().setTitle("Location not detect");
+        }{
+            getActivity().setTitle(area);
+        }
 
         showItems();
-
         initCateogies();
         initSlider();
         return view;
+    }
+    public void MethodName(Intent intent){
+        final double lat = intent.getDoubleExtra("Latitude", 0);
+        final double lng = intent.getDoubleExtra("Longitude", 0);
+        final String provider = intent.getStringExtra("Provider");
+
+        Log.d("GETLOCATIONSERVICE", "provider = "+provider);
+        Log.d("GETLOCATIONSERVICE", "Latitude = "+lat);
+        Log.d("GETLOCATIONSERVICE", "Longitude = "+lng);
+        Location bestLocation = new Location(provider);
+        bestLocation.setLatitude(lat);
+        bestLocation.setLongitude(lng);
+        if (lat!=0 && lng !=0){
+            startServiceAddress(bestLocation);
+        }else {
+            startService();
+            /*preferences.write(DefaultConfig.KEY_USER_LNG,lng,Double.class);
+            preferences.write(DefaultConfig.KEY_USER_LAT,lat,Double.class);*/
+
+        }
+
+    }
+
+    private void startServiceAddress(Location bestLocation) {
+        Intent intent = new Intent(getContext(), FetchAddressIntentService.class);
+        intent.putExtra(DefaultConfig.RECEIVER, mResultReceiver);
+        intent.putExtra(DefaultConfig.LOCATION_DATA_EXTRA, bestLocation);
+        getActivity().startService(intent);
+    }
+
+    private void startService() {
+        area = preferences.read(DefaultConfig.KEY_USER_AREA,String.class);
+        if (area==null){
+            startService();
+            getActivity().setTitle("Location not detect");
+        }{
+            getActivity().setTitle(area);
+        }
+
     }
 
     public void initSlider(){
@@ -181,7 +269,9 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         int id = item.getItemId();
 
         if (id == R.id.menu_change_location){
-
+            Intent intent = new Intent(getContext(), LocationService.class);
+            getActivity().startService(intent);
+            getActivity().registerReceiver(broadcastReceiver, new IntentFilter(LocationService.BROADCAST_ACTION));
         }
 
         return super.onOptionsItemSelected(item);
@@ -217,6 +307,30 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
+    @SuppressLint("ParcelCreator")
+    class AddressResultReceiver extends ResultReceiver {
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            // Display the address string
+            // or an error message sent from the intent service.
+            // Show a toast message if an address was found.
+            if (resultCode == DefaultConfig.SUCCESS_RESULT) {
+                String adminArea = resultData.getString(DefaultConfig.ADMIN_AREA_DATA_EXTRA);
+                String locality = resultData.getString(DefaultConfig.LOCALITY_DATA_EXTRA);
+                String postalCode = resultData.getString(DefaultConfig.POSTAL_CODE_DATA_EXTRA);
+                String countryCode = resultData.getString(DefaultConfig.COUNTRY_CODE_DATA_EXTRA);
+                preferences.write(DefaultConfig.KEY_USER_AREA,adminArea,String.class);
+                Log.d("onReceiveResult", "adminArea = "+adminArea);
+                Log.d("onReceiveResult", "locality = "+locality);
+                Log.d("onReceiveResult", "postalCode = "+postalCode);
+                Log.d("onReceiveResult", "countryCode = "+countryCode);
+            }
+        }
     }
 
 }

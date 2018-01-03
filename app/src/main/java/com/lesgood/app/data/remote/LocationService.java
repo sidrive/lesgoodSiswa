@@ -1,6 +1,8 @@
 package com.lesgood.app.data.remote;
 
 import android.Manifest;
+import android.Manifest.permission;
+import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -8,34 +10,44 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityCompat.OnRequestPermissionsResultCallback;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.permission.LocationHelper;
+import com.lesgood.app.data.permission.PermissionUtils;
+import com.lesgood.app.data.permission.PermissionUtils.PermissionResultCallback;
+import java.util.ArrayList;
 
 
 /**
  * Created by Agus on 2/7/17.
  */
 public class LocationService extends Service implements
-        GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener {
+    ConnectionCallbacks,
+    OnConnectionFailedListener {
+
 
     private static String TAG = "LocationService";
     private static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 401;
     private static int REQUEST_CODE_RECOVER_PLAY_SERVICES = 201;
     public static final String BROADCAST_ACTION = "Hello World";
-    private static final int TWO_MINUTES = 1000 * 60 * 1;
+    private static final int TWO_MINUTES = 1000 * 60 * (1/4);
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
 
@@ -47,6 +59,9 @@ public class LocationService extends Service implements
     LocationHelper helper;
     Intent intent;
     int counter = 0;
+    PermissionUtils permissionUtils;
+    String[] perm = new String[]{permission.ACCESS_COARSE_LOCATION,
+        permission.ACCESS_FINE_LOCATION};
 
     @Override
     public void onCreate() {
@@ -58,11 +73,10 @@ public class LocationService extends Service implements
         }
         listener = new MyLocationListener();
         initializeLocationManager();
-        helper.buildGoogleApiClient();
-        /*try {
+        try {
             locationManager.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                    listener);
+                LocationManager.NETWORK_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
+                listener);
         } catch (SecurityException ex) {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
@@ -70,27 +84,29 @@ public class LocationService extends Service implements
         }
         try {
             locationManager.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
-                    listener);
+                LocationManager.GPS_PROVIDER, LOCATION_INTERVAL, LOCATION_DISTANCE,
+                listener);
         } catch (SecurityException ex) {
             Log.i(TAG, "fail to request location update, ignore", ex);
         } catch (IllegalArgumentException ex) {
             Log.d(TAG, "gps provider does not exist " + ex.getMessage());
-        }*/
+        }
     }
+
     protected synchronized void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
+            .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .addApi(LocationServices.API)
+            .build();
     }
 
     private void initializeLocationManager() {
         Log.e(TAG, "initializeLocationManager");
         if (locationManager == null) {
-            locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-            helper = new LocationHelper(getApplicationContext(),locationManager);
+            locationManager = (LocationManager) getApplicationContext()
+                .getSystemService(Context.LOCATION_SERVICE);
+
         }
 
 
@@ -103,15 +119,26 @@ public class LocationService extends Service implements
         return START_NOT_STICKY;
     }
 
-    public void handleStart(Intent intent, int startId){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
+    public void handleStart(Intent intent, int startId) {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         listener = new MyLocationListener();
+        if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, listener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
         mGoogleApiClient.connect();
+
     }
 
 
@@ -204,7 +231,10 @@ public class LocationService extends Service implements
     @Override
     public void onDestroy() {
         // handler.removeCallbacks(sendUpdatesToUI);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
             return;
         }
         super.onDestroy();
@@ -231,6 +261,7 @@ public class LocationService extends Service implements
             this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(this,
             Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.e("startLocationUpdates", "LocationService NO GTANT" );
             return;
         }
         LocationServices.FusedLocationApi.requestLocationUpdates(
@@ -240,15 +271,14 @@ public class LocationService extends Service implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-            return;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+            != PackageManager.PERMISSION_GRANTED) {
         }
-
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-
         Toast.makeText( getApplicationContext(), "FusedLocation "+location, Toast.LENGTH_SHORT ).show();
-
         if (location == null) {
             startLocationUpdates();
         }
@@ -257,25 +287,23 @@ public class LocationService extends Service implements
         }
     }
 
+
+
     @Override
     public void onConnectionSuspended(int i) {
-
+        mGoogleApiClient.connect();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.e("onConnectionFailed", "LocationService" + connectionResult.getErrorMessage());
     }
 
 
-
-
-    public class MyLocationListener implements LocationListener
-    {
+    public class MyLocationListener implements LocationListener {
 
         @Override
-        public void onLocationChanged(final Location loc)
-        {
+        public void onLocationChanged(final Location loc) {
             Log.i("******************", "Location changed = "+loc);
             Log.i("******************", "Latitude = "+loc.getLatitude());
             Log.i("******************", "Longitude = "+loc.getLongitude());
@@ -292,24 +320,21 @@ public class LocationService extends Service implements
         }
 
         @Override
-        public void onProviderDisabled(String provider)
-        {
+        public void onProviderDisabled(String provider) {
             Toast.makeText( getApplicationContext(), "Gps Disabled, current location is approximate", Toast.LENGTH_LONG ).show();
             Log.e("onProviderDisabled", "MyLocationListener" + provider);
         }
 
 
         @Override
-        public void onProviderEnabled(String provider)
-        {
+        public void onProviderEnabled(String provider) {
             Toast.makeText( getApplicationContext(), "Gps Enabled", Toast.LENGTH_LONG).show();
             Log.e("onProviderEnabled", "MyLocationListener" + provider);
         }
 
 
         @Override
-        public void onStatusChanged(String provider, int status, Bundle extras)
-        {
+        public void onStatusChanged(String provider, int status, Bundle extras) {
             Log.e(TAG, "onStatusChanged: " + provider);
         }
 

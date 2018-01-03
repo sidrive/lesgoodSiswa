@@ -119,7 +119,7 @@ public class Utils {
         if (day.equals("Sun")){
             dayFormated = "Minggu";
         }else if (day.equals("Mon")){
-            dayFormated = "Senen";
+            dayFormated = "Senin";
         }
         else if (day.equals("Tue")){
             dayFormated = "Selasa";

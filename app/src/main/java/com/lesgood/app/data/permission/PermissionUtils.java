@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Build.VERSION;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 import com.lesgood.app.base.BaseApplication;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class PermissionUtils {
   Context context;
   Activity activity;
   PermissionResultCallback permissionResultCallback;
-  ArrayList<String> permissions;
+  String [] permissions;
   ArrayList<String> permissionsNeed;
   String msg = "";
   int reqCode;
@@ -34,6 +35,7 @@ public class PermissionUtils {
     this.context = context;
     this.activity = BaseApplication.getActivity();
     this.permissionResultCallback = (PermissionResultCallback)context;
+    this.permissionsNeed = new ArrayList<>();
   }
 
   public PermissionUtils(Context context,
@@ -43,7 +45,8 @@ public class PermissionUtils {
     this.permissionResultCallback = permissionResultCallback;
   }
 
-  public void checkPermission(ArrayList<String> permissions, String msg, int reqCode){
+  public void checkPermission(String [] permissions, String msg, int reqCode){
+    Log.e("checkPermission", "PermissionUtils" + permissions);
     this.permissions = permissions;
     this.msg = msg;
     this.reqCode = reqCode;
@@ -56,17 +59,17 @@ public class PermissionUtils {
     }
   }
 
-  public boolean chekAndRequestPermissions(ArrayList<String> permissions, int reqCode){
-    if (permissions.size()>0){
-      this.permissionsNeed = new ArrayList<>();
-      for (int i = 0; i < permissions.size(); i++) {
-        int hasPermission = ContextCompat.checkSelfPermission(activity,permissions.get(i));
-        if (hasPermission != PackageManager.PERMISSION_GRANTED){
-          permissionsNeed.add(permissions.get(i));
-        }
-        if (!permissionsNeed.isEmpty()){
-          ActivityCompat.requestPermissions(activity,permissionsNeed.toArray(new String[permissionsNeed.size()]),reqCode);
-          return false;
+  public boolean chekAndRequestPermissions(String [] permissions, int reqCode){
+
+    if (permissions.length>0){
+      for (int i = 0; i < permissions.length; i++) {
+        if (ActivityCompat.checkSelfPermission(BaseApplication.getActivity().getApplicationContext(), permissions[i])
+            != PackageManager.PERMISSION_GRANTED){
+          if (ActivityCompat.shouldShowRequestPermissionRationale(BaseApplication.getActivity(),permissions[i])){
+
+          }else {
+            ActivityCompat.requestPermissions(BaseApplication.getActivity(),permissions,reqCode);
+          }
         }
       }
     }
@@ -101,7 +104,10 @@ public class PermissionUtils {
               public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                   case DialogInterface.BUTTON_POSITIVE:
-                    checkPermission(penddingPermissions,msg,reqCode);
+                    for (int i = 0; i < penddingPermissions.size(); i++) {
+                      permissions[i] = penddingPermissions.get(i);
+                    }
+                    checkPermission(permissions,msg,reqCode);
                     break;
                   case DialogInterface.BUTTON_NEGATIVE:
                     if (permissions.length == penddingPermissions.size())

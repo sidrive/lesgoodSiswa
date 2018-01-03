@@ -1,7 +1,10 @@
 package com.lesgood.app.ui.search;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -19,12 +22,15 @@ import android.widget.Toast;
 import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
+import com.lesgood.app.base.config.DefaultConfig;
 import com.lesgood.app.data.model.Category;
 import com.lesgood.app.data.model.Order;
 import com.lesgood.app.data.model.User;
+import com.lesgood.app.data.permission.LocationHelper;
 import com.lesgood.app.ui.list.ListActivity;
 import com.lesgood.app.ui.skill.SkillActivityModule;
 
+import com.lesgood.app.util.Utils;
 import java.util.List;
 import java.util.Random;
 
@@ -35,6 +41,7 @@ import butterknife.BindColor;
 import butterknife.BindString;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.internal.Util;
 
 /**
  * Created by Agus on 5/11/17.
@@ -87,7 +94,8 @@ public class SearchActivity extends BaseActivity {
 
     double lat;
     double lng;
-
+    LocationHelper helper;
+    LocationManager locationManager;
     public static void startWithData(BaseActivity activity, String id){
         Intent intent = new Intent(activity, SearchActivity.class);
         if (id != null){
@@ -102,8 +110,9 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
-
         Bundle extras = getIntent().getExtras();
+        locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        helper = new LocationHelper(this,locationManager);
         if (extras != null){
             seletedID = extras.getString("id");
         }
@@ -111,13 +120,7 @@ public class SearchActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if (user!=null){
-            Log.e("onCreate", "e" + user.getLatitude());
-            Log.e("onCreate", "e" + user.getLongitude());
-            if (user.getLongitude() ==0 && user.getLatitude()==0){
 
-            }
-        }
     }
 
     private void init(String id){

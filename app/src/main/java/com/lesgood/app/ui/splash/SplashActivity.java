@@ -10,6 +10,7 @@ import com.lesgood.app.R;
 import com.lesgood.app.base.BaseActivity;
 import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.data.model.User;
+import com.lesgood.app.data.remote.LocationService;
 import com.lesgood.app.ui.edit_profile.EditProfileActivity;
 import com.lesgood.app.ui.login.LoginActivity;
 import com.lesgood.app.ui.main.MainActivity;
@@ -26,6 +27,8 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        /*Intent intent = new Intent(this, LocationService.class);
+        startService(intent);*/
     }
 
     @Override

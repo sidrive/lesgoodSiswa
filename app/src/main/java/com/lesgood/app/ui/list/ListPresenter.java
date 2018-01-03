@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.lesgood.app.base.BaseApplication;
 import com.lesgood.app.base.BasePresenter;
 import com.lesgood.app.base.config.DefaultConfig;
 import com.lesgood.app.data.model.GeoFire;
@@ -21,6 +22,7 @@ import com.lesgood.app.data.model.User;
 
 import com.lesgood.app.data.remote.UserService;
 import com.lesgood.app.util.Utils;
+import com.lesgood.app.util.preference.UserPreferences;
 
 /**
  * Created by Agus on 5/11/17.
@@ -33,12 +35,13 @@ public class ListPresenter implements BasePresenter {
     DatabaseReference databaseRef;
     ChildEventListener childEventListener;
     SharedPreferences preferences;
-
+    UserPreferences userPreferences;
 
     public ListPresenter(ListActivity activity, UserService userService, User user ){
         this.activity = activity;
         this.userService = userService;
         this.user = user;
+        this.userPreferences = new UserPreferences(activity.getApplicationContext());
         this.databaseRef = FirebaseDatabase.getInstance().getReference();
         this.preferences = activity.getSharedPreferences(DefaultConfig.KEY_USER_PREF, Context.MODE_PRIVATE);
 
@@ -49,8 +52,54 @@ public class ListPresenter implements BasePresenter {
     }
 
     private void getGeofireguru(String uid) {
-        Log.e("getGeofireguru", "Running....." );
-           GeoLocation location = new GeoLocation(Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00), Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00));
+        if (userPreferences!=null){
+            Log.e("getGeofireguru", "ListPresenter NOT NULL");
+            String sLat = userPreferences.read(DefaultConfig.KEY_USER_LAT,String.class);
+            String sLng = userPreferences.read(DefaultConfig.KEY_USER_LNG,String.class);
+            GeoLocation location = new GeoLocation(Double.valueOf(sLat),Double.valueOf(sLng));
+            Log.e("getGeofireguru", "ListPresenter" + location);
+            if (location!=null){
+                Log.e("getGeofireguru", "Running....." );
+                GeoQuery geoQuery = userService.getUserGeofire(databaseRef.child("user-geofire"))
+                    .queryAtLocation(location,30);//20km
+                geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+                    @Override
+                    public void onKeyEntered(String s, GeoLocation geoLocation) {
+                        if (s.equals(uid)){
+                            activity.showAddedItem(s);
+                        }
+                    }
+
+                    @Override
+                    public void onKeyExited(String s) {
+
+                    }
+
+                    @Override
+                    public void onKeyMoved(String s, GeoLocation geoLocation) {
+
+                    }
+
+                    @Override
+                    public void onGeoQueryReady() {
+
+                    }
+
+                    @Override
+                    public void onGeoQueryError(DatabaseError databaseError) {
+
+                    }
+                });
+            }else {
+                Toast.makeText( activity.getApplicationContext(), "Gps Disabled, current location is approximate", Toast.LENGTH_LONG ).show();
+            }
+        }else {
+            Log.e("getGeofireguru", "ListPresenter NULL" );
+        }
+
+           /*GeoLocation location = new GeoLocation(
+               Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00),
+               Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00));
         Log.e("getGeofireguru", "ListPresenter" + location);
         if (location!=null){
             GeoQuery geoQuery = userService.getUserGeofire(databaseRef.child("user-geofire"))
@@ -87,7 +136,7 @@ public class ListPresenter implements BasePresenter {
             });
         }else {
             Toast.makeText( activity.getApplicationContext(), "Gps Disabled, current location is approximate", Toast.LENGTH_LONG ).show();
-        }
+        }*/
 
     }
 

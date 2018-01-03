@@ -12,6 +12,14 @@
       android:text="@string/app_name"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Pilih Waktu Mengajar Sesuai Jadwal Guru"
+        android:textSize="18sp"
+        android:textStyle="bold" />
     <TimePicker
       android:id="@+id/time_picker"
       android:timePickerMode="spinner"

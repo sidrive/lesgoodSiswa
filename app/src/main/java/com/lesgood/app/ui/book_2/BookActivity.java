@@ -810,6 +810,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
         calOrder.get(Calendar.MONTH),
         calOrder.get(Calendar.DAY_OF_MONTH));
 
+    dpd.setTitle("Pilih Tanggal Mulai Pertemuan");
     dpd.show(getFragmentManager(), "Datepickerdialog");
   }
 

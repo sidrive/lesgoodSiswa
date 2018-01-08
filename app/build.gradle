@@ -22,6 +22,11 @@ android {
         buildConfigField "String", "MERCHANT_KEY", "\"14346948b6314ab70230639118b2cddd\""
 
     }
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "lesgood-siswa-${variant.buildType.name}-${variant.versionName}.apk"
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

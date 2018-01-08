@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 import butterknife.OnTextChanged.Callback;
 import com.bumptech.glide.Glide;
@@ -65,6 +67,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
+
+import butterknife.OnTouch;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -460,6 +464,8 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     }
   }
 
+
+
   public void handleTotalPertemuan() {
     int tarif = pertemuan * this.tarif;
     this.amount = tarif;
@@ -505,6 +511,32 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       validate();
     }
 
+  }
+
+  @OnClick(R.id.input_plus)
+  void plusPertemuan() {
+    Integer temuplus = Integer.valueOf(inputPertemuan.getText().toString());
+    temuplus++;
+    if(temuplus > 4) {
+      inputPertemuan.setText(temuplus.toString());
+      radioPaket1.setChecked(false);
+    }
+  }
+
+  @OnClick(R.id.input_minus)
+  void minusPertemuan() {
+    Integer temumin = Integer.valueOf(inputPertemuan.getText().toString());
+    temumin--;
+    if(temumin >= 4) {
+//      Toast.makeText(this, ""+temu, Toast.LENGTH_SHORT).show();
+      inputPertemuan.setText(temumin.toString());
+      radioPaket1.setChecked(false);
+    }
+    if (temumin <= 3){
+      inputPertemuan.setText(temumin);
+      Toast.makeText(this, "Minimal 4 Pertemuan", Toast.LENGTH_SHORT).show();
+      radioPaket1.setChecked(false);
+    }
   }
 
   Order newOrder = null;

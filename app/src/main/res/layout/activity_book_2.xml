@@ -39,8 +39,8 @@
                 <com.lesgood.app.util.TypefacedTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:typeface="Roboto-Light.ttf"
-                    android:text="Tenukan lokasi anda"/>
+                    android:text="Tentukan lokasi anda"
+                    app:typeface="Roboto-Light.ttf" />
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -194,13 +194,32 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_half_margin"
                     android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/input_minus"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/plus"
+                        android:textSize="18sp" />
+
+
                     <EditText
                         android:layout_width="30dp"
                         android:gravity="center"
                         android:inputType="number"
                         android:id="@+id/input_pertemuan"
                         android:layout_height="wrap_content"
+                        android:editable="false"
                         android:text="4"/>
+
+                    <TextView
+                        android:id="@+id/input_plus"
+                        android:layout_width="30dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=">"
+                        android:textSize="18sp" />
 
                     <EditText
                         android:layout_width="wrap_content"
@@ -209,7 +228,7 @@
                         android:gravity="left"
                         android:selectAllOnFocus="true"
                         android:id="@+id/input_tarif_pertemuan"
-                        android:editable="false"
+                        android:inputType="none"
                         android:layout_height="wrap_content"
                         android:text="Rp.Tarif"/>
                 </LinearLayout>

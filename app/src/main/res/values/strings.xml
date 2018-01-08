@@ -164,5 +164,6 @@
     <item>Yoga</item>
   </string-array>
   <string name="rationale_location">Membutuhkan ijin mengakses lokasi</string>
+    <string name="plus"><![CDATA[<]]></string>
 
 </resources>

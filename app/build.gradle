@@ -2,14 +2,7 @@ apply plugin: 'com.android.application'
 
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'lesgood'
-            keyPassword '!@#!@#'
-            storeFile file('/Users/sim-x/Documents/lesgood-siswa-keystore')
-            storePassword '!@#!@#'
-        }
-    }
+
     compileSdkVersion 25
     buildToolsVersion '27.0.1'
     defaultConfig {
@@ -33,17 +26,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    /*signingConfigs {
+    signingConfigs {
         release {
             keyAlias 'lesgood'
             keyPassword 'doremi456'
             storeFile file('/Volumes/DATA/Lesgood/Lesgood/Keystore/lesgood-release-key.jks')
             storePassword 'doremi456'
         }
-    }*/
+    }
     buildTypes {
         release {
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             zipAlignEnabled true
             debuggable true
@@ -92,7 +85,6 @@ android {
 }
 
 dependencies {
-    //compile 'com.google.firebase:firebase-auth:10.2.0'
     compile 'com.github.sundeepk:compact-calendar-view:2.0.3-beta'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.supportV7

@@ -196,11 +196,12 @@
                     android:orientation="horizontal">
 
                     <TextView
+                      android:visibility="gone"
                         android:id="@+id/input_minus"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@string/plus"
+                        android:background="@drawable/ic_keyboard_arrow_left_black_24dp"
                         android:textSize="18sp" />
 
 
@@ -210,7 +211,7 @@
                         android:inputType="number"
                         android:id="@+id/input_pertemuan"
                         android:layout_height="wrap_content"
-                        android:editable="false"
+                        android:enabled="false"
                         android:text="4"/>
 
                     <TextView
@@ -218,7 +219,7 @@
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text=">"
+                        android:background="@drawable/ic_keyboard_arrow_right_black_24dp"
                         android:textSize="18sp" />
 
                     <EditText

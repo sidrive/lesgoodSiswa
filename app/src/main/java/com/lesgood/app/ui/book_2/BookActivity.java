@@ -1,15 +1,12 @@
 package com.lesgood.app.ui.book_2;
 
 import android.Manifest.permission;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.renderscript.Sampler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +28,6 @@ import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
 import butterknife.OnTextChanged;
 import butterknife.OnTextChanged.Callback;
 import com.bumptech.glide.Glide;
@@ -53,7 +49,6 @@ import com.lesgood.app.data.model.Skill;
 import com.lesgood.app.data.model.TimeSchedule;
 import com.lesgood.app.data.model.User;
 import com.lesgood.app.ui.main.MainActivity;
-import com.lesgood.app.ui.order.OrderFragment;
 import com.lesgood.app.util.AppUtils;
 import com.lesgood.app.util.CustomTimeDialog;
 import com.lesgood.app.util.DateFormatter;
@@ -67,8 +62,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 import javax.inject.Inject;
-
-import butterknife.OnTouch;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -124,7 +117,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   RadioButton radioPaket1;
 
 
-
   @Bind(R.id.rel_map)
   RelativeLayout relMap;
 
@@ -154,6 +146,10 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   @Bind(R.id.img_marker)
   ImageView imgMarker;
+  @Bind(R.id.input_minus)
+  TextView inputMinus;
+  @Bind(R.id.input_plus)
+  TextView inputPlus;
 
   private GoogleMap mMap;
 
@@ -178,7 +174,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   SupportMapFragment mapFragment;
   private static final int RC_LOCATION_PERM = 205;
   Calendar calOrder;
-
 
 
   public static void start(BaseActivity context) {
@@ -459,12 +454,11 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       inputPertemuan.setText("4");
       pertemuan = 4;
       radioPaket1.setChecked(false);
-      Toast.makeText(this, "Minimal 4 pertemuan", Toast.LENGTH_SHORT).show();
-    }else {
+
+    } else {
       handleTotalPertemuan();
     }
   }
-
 
 
   public void handleTotalPertemuan() {
@@ -475,8 +469,6 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     String tarifStr = "Rp." + tarif;
     inputTarifPertemuan.setText(tarifStr);
   }
-
-
 
 
   public void setEvent(TimeSchedule date) {
@@ -518,9 +510,10 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   void plusPertemuan() {
     Integer temuplus = Integer.valueOf(inputPertemuan.getText().toString());
     temuplus++;
-    if(temuplus > 4) {
+    if (temuplus > 4) {
       inputPertemuan.setText(temuplus.toString());
       radioPaket1.setChecked(false);
+      inputMinus.setVisibility(View.VISIBLE);
     }
   }
 
@@ -528,13 +521,14 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   void minusPertemuan() {
     Integer temumin = Integer.valueOf(inputPertemuan.getText().toString());
     temumin--;
-    if(temumin >= 4) {
-//      Toast.makeText(this, ""+temu, Toast.LENGTH_SHORT).show();
+    if (temumin >= 4) {
       inputPertemuan.setText(temumin.toString());
       radioPaket1.setChecked(false);
+
     }
-    if (temumin <= 4){
+    if (temumin <= 4) {
       inputPertemuan.setText("4");
+      inputMinus.setVisibility(View.GONE);
       Toast.makeText(this, "Minimal 4 Pertemuan", Toast.LENGTH_SHORT).show();
       radioPaket1.setChecked(false);
     }
@@ -566,7 +560,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       Random rand = new Random();
       String oid = Integer.toString(rand.nextInt(99999));
       long ordertime = System.currentTimeMillis();
-      String iid = oid+""+skill.getCode();
+      String iid = oid + "" + skill.getCode();
       order.setOid(oid);
       order.setIid(iid);
       order.setOldOid(oldOid);
@@ -652,7 +646,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
       int disc = (int) (discount + 0.5d);
       int total = amount - disc;
-      String iid = oid+""+skill.getCode();
+      String iid = oid + "" + skill.getCode();
 
       order.setOid(oid);
       order.setOldOid("0");
@@ -722,6 +716,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     inputPertemuan.setText(pertemuan);
     discount = amount * 0.05;
   }
+
   public void setMinPertemuan() {
     order.setPaket("");
     inputPertemuan.setText("4");
@@ -731,12 +726,13 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   private boolean isRadioCheked = false;
 
-  @OnClick(R.id.radio_paket_1)void onRadio1Cheked(){
-    if (isRadioCheked == true){
+  @OnClick(R.id.radio_paket_1)
+  void onRadio1Cheked() {
+    if (isRadioCheked == true) {
       isRadioCheked = false;
       radioPaket1.setChecked(false);
       setMinPertemuan();
-    }else {
+    } else {
       isRadioCheked = true;
       radioPaket1.setChecked(true);
       set20Pertemuan("20");
@@ -753,7 +749,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   private void showAlertDialog(String title, String desc, int icon) {
     final Intent intent = new Intent(this, MainActivity.class);
-    intent.putExtra("order","order");
+    intent.putExtra("order", "order");
     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     new Builder(this)
         .setTitle(title)
@@ -821,7 +817,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   @OnClick(R.id.btn_date)
   public void onBtnDatePicker() {
     //showDialogDatePicker();
-    AppUtils.showToas(this,"Pilih jam sesuai dengan hari yang tersedia terlebih dahulu");
+    AppUtils.showToas(this, "Pilih jam sesuai dengan hari yang tersedia terlebih dahulu");
   }
 
   private void showDialogDatePicker(long timeselected, String scheduleDay) {
@@ -829,15 +825,15 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     int m = Utils.getMinute(timeselected);
     DatePickerDialog dpd = DatePickerDialog.newInstance((view, year, monthOfYear, dayOfMonth) -> {
           /*calOrder.set(year,monthOfYear,dayOfMonth);*/
-          calOrder.set(year,monthOfYear,dayOfMonth,h,m);
+          calOrder.set(year, monthOfYear, dayOfMonth, h, m);
           String selected = Utils.longToDay(calOrder.getTimeInMillis());
           int daySelected = Utils.getNumberDay(calOrder.getTimeInMillis());
           int daySchedule = Utils.converStringDayToInt(scheduleDay);
 
-          if (daySchedule == daySelected){
+          if (daySchedule == daySelected) {
             btnDate.setText(DateFormatter.getDate(calOrder.getTimeInMillis(), "EE dd MMM yyyy"));
-          }else {
-            handleWrongSelectedDay(selected,scheduleDay);
+          } else {
+            handleWrongSelectedDay(selected, scheduleDay);
           }
         },
         calOrder.get(Calendar.YEAR),
@@ -849,24 +845,29 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   }
 
   private void handleWrongSelectedDay(String selected, String scheduleDay) {
-    AppUtils.ShowDialogWithBtn(this,"Salah memilih hari", "Hari pada jadwal yang anda pilih "+Utils.dayFormated(scheduleDay)+" hari pada kalender yang anda pilih "+Utils.dayFormated(selected), (dialog, which) -> {
-      dialog.dismiss();
-    });
+    AppUtils.ShowDialogWithBtn(this, "Salah memilih hari",
+        "Hari pada jadwal yang anda pilih " + Utils.dayFormated(scheduleDay)
+            + " hari pada kalender yang anda pilih " + Utils.dayFormated(selected),
+        (dialog, which) -> {
+          dialog.dismiss();
+        });
   }
 
-  public void handleTimeSelected(long statTime , long endTime, String day, long timeSelected){
-    if (Utils.getHours(timeSelected)>= Utils.getHours(statTime) && Utils.getHours(timeSelected)<= Utils.getHours(endTime)){
+  public void handleTimeSelected(long statTime, long endTime, String day, long timeSelected) {
+    if (Utils.getHours(timeSelected) >= Utils.getHours(statTime)
+        && Utils.getHours(timeSelected) <= Utils.getHours(endTime)) {
       btnTime.setText(DateFormatter.getDate(timeSelected, "HH:mm"));
-      showDialogDatePicker(timeSelected,day);
-    }else {
-      handleWrongSelectedTime(statTime, endTime, timeSelected,day);
+      showDialogDatePicker(timeSelected, day);
+    } else {
+      handleWrongSelectedTime(statTime, endTime, timeSelected, day);
     }
   }
 
   public void showDialogTimePicker(long startTime, long endTime, String day) {
-    CustomTimeDialog dialog = new CustomTimeDialog(startTime,endTime,this,day);
-    dialog.show(getFragmentManager(),"timedialog");
+    CustomTimeDialog dialog = new CustomTimeDialog(startTime, endTime, this, day);
+    dialog.show(getFragmentManager(), "timedialog");
   }
+
   private void handleWrongSelectedTime(long startTime, long endTime, long timeInMillis,
       String day) {
     String selectedTime = Utils.longToString(timeInMillis);

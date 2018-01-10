@@ -72,7 +72,10 @@ public class Order {
 
     @Nullable
     private String orderType;
-
+    @Nullable
+    private Double lng;
+    @Nullable
+    private Double lat;
 
     public Order(){}
 
@@ -89,7 +92,7 @@ public class Order {
         String phone, long createdAt, long updatedAt, String paket, double discount,
         String reference, String paymentUrl, String statusPayment, String statusGantiGuru,
         int tarif,
-        String orderType) {
+        String orderType, Double lng, Double lat) {
         this.gid = gid;
         this.uid = uid;
         this.oid = oid;
@@ -118,6 +121,26 @@ public class Order {
         this.statusGantiGuru = statusGantiGuru;
         this.tarif = tarif;
         this.orderType = orderType;
+        this.lng = lng;
+        this.lat = lat;
+    }
+
+    @Nullable
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(@Nullable Double lng) {
+        this.lng = lng;
+    }
+
+    @Nullable
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(@Nullable Double lat) {
+        this.lat = lat;
     }
 
     @NonNull

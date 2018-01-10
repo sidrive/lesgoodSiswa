@@ -386,6 +386,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
 
   private void saveMap() {
     LatLng latLng = mMap.getCameraPosition().target;
+    Log.e("saveMap", "BookActivity" + latLng);
     latitude = latLng.latitude;
     longitude = latLng.longitude;
     initMap(latLng);
@@ -672,7 +673,8 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       order.setStatus("pending_guru");
       order.setStatusGantiGuru("none");
       order.setDiscount(discount);
-
+      order.setLat(latitude);
+      order.setLng(longitude);
       Invoices invoices = new Invoices();
       invoices.setIid(iid);
       invoices.setOid(oid);

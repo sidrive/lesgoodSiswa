@@ -532,8 +532,8 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
       inputPertemuan.setText(temumin.toString());
       radioPaket1.setChecked(false);
     }
-    if (temumin <= 3){
-      inputPertemuan.setText(temumin);
+    if (temumin <= 4){
+      inputPertemuan.setText("4");
       Toast.makeText(this, "Minimal 4 Pertemuan", Toast.LENGTH_SHORT).show();
       radioPaket1.setChecked(false);
     }

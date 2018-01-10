@@ -1,6 +1,7 @@
 package com.lesgood.app.ui.list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.lesgood.app.base.config.DefaultConfig;
 import com.lesgood.app.data.model.GeoFire;
 import com.lesgood.app.data.model.User;
 
+import com.lesgood.app.data.remote.LocationService;
 import com.lesgood.app.data.remote.UserService;
 import com.lesgood.app.util.Utils;
 import com.lesgood.app.util.preference.UserPreferences;
@@ -53,90 +55,50 @@ public class ListPresenter implements BasePresenter {
 
     private void getGeofireguru(String uid) {
         if (userPreferences!=null){
-            Log.e("getGeofireguru", "ListPresenter NOT NULL");
             String sLat = userPreferences.read(DefaultConfig.KEY_USER_LAT,String.class);
             String sLng = userPreferences.read(DefaultConfig.KEY_USER_LNG,String.class);
-            GeoLocation location = new GeoLocation(Double.valueOf(sLat),Double.valueOf(sLng));
-            Log.e("getGeofireguru", "ListPresenter" + location);
-            if (location!=null){
-                Log.e("getGeofireguru", "Running....." );
-                GeoQuery geoQuery = userService.getUserGeofire(databaseRef.child("user-geofire"))
-                    .queryAtLocation(location,30);//20km
-                geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-                    @Override
-                    public void onKeyEntered(String s, GeoLocation geoLocation) {
-                        if (s.equals(uid)){
-                            activity.showAddedItem(s);
+            if (!sLat.isEmpty()  && !sLng.isEmpty()){
+                GeoLocation location = new GeoLocation(Double.valueOf(sLat),Double.valueOf(sLng));
+                Log.e("getGeofireguru", "ListPresenter" + location);
+                if (location!=null){
+                    Log.e("getGeofireguru", "Running....." );
+                    GeoQuery geoQuery = userService.getUserGeofire(databaseRef.child("user-geofire"))
+                        .queryAtLocation(location,30);//20km
+                    geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+                        @Override
+                        public void onKeyEntered(String s, GeoLocation geoLocation) {
+                            if (s.equals(uid)){
+                                activity.showAddedItem(s);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onKeyExited(String s) {
+                        @Override
+                        public void onKeyExited(String s) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onKeyMoved(String s, GeoLocation geoLocation) {
+                        @Override
+                        public void onKeyMoved(String s, GeoLocation geoLocation) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onGeoQueryReady() {
+                        @Override
+                        public void onGeoQueryReady() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onGeoQueryError(DatabaseError databaseError) {
+                        @Override
+                        public void onGeoQueryError(DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }else {
+                    Toast.makeText( activity.getApplicationContext(), "Gps Disabled, current location is approximate", Toast.LENGTH_LONG ).show();
+                }
             }else {
-                Toast.makeText( activity.getApplicationContext(), "Gps Disabled, current location is approximate", Toast.LENGTH_LONG ).show();
+                activity.startService(new Intent(activity,LocationService.class));
             }
-        }else {
-            Log.e("getGeofireguru", "ListPresenter NULL" );
-        }
-
-           /*GeoLocation location = new GeoLocation(
-               Utils.getDouble(preferences,DefaultConfig.KEY_USER_LAT,0.00),
-               Utils.getDouble(preferences,DefaultConfig.KEY_USER_LNG,0.00));
-        Log.e("getGeofireguru", "ListPresenter" + location);
-        if (location!=null){
-            GeoQuery geoQuery = userService.getUserGeofire(databaseRef.child("user-geofire"))
-                .queryAtLocation(location,30);//20km
-            geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
-                @Override
-                public void onKeyEntered(String s, GeoLocation geoLocation) {
-                    if (s.equals(uid)){
-                        activity.showAddedItem(s);
-                    }
-
-
-                }
-
-                @Override
-                public void onKeyExited(String s) {
-
-                }
-
-                @Override
-                public void onKeyMoved(String s, GeoLocation geoLocation) {
-
-                }
-
-                @Override
-                public void onGeoQueryReady() {
-
-                }
-
-                @Override
-                public void onGeoQueryError(DatabaseError databaseError) {
-
-                }
-            });
-        }else {
-            Toast.makeText( activity.getApplicationContext(), "Gps Disabled, current location is approximate", Toast.LENGTH_LONG ).show();
-        }*/
+            }
 
     }
 

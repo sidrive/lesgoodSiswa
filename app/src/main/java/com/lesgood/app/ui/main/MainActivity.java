@@ -134,6 +134,9 @@ public class MainActivity extends BaseActivity {
         ft.commit();
     }
     public static String KEY_PARAM_MSG = "msg";
+    private ProgressDialog pd;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +146,10 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         preferences = new UserPreferences(this);
+        pd = new ProgressDialog(this);
+        pd.setTitle("Loading...");
+        pd.setCancelable(false);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         startService();
         /*if (allGrant){
 
@@ -252,6 +259,7 @@ public class MainActivity extends BaseActivity {
         if (lat!=0 && lng !=0){
             startServiceAddress(bestLocation);
         }else {
+            pd.show();
             startService();
         }
 
@@ -289,6 +297,7 @@ public class MainActivity extends BaseActivity {
             // or an error message sent from the intent service.
             // Show a toast message if an address was found.
             if (resultCode == DefaultConfig.SUCCESS_RESULT) {
+                pd.dismiss();
                 String adminArea = resultData.getString(DefaultConfig.ADMIN_AREA_DATA_EXTRA);
                 String locality = resultData.getString(DefaultConfig.LOCALITY_DATA_EXTRA);
                 String postalCode = resultData.getString(DefaultConfig.POSTAL_CODE_DATA_EXTRA);

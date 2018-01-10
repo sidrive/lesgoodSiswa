@@ -1,6 +1,7 @@
 package com.lesgood.app.ui.home;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -135,7 +136,7 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
-
+    private ProgressDialog pd;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -143,10 +144,19 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         //change R.layout.yourlayoutfilename for each of your fragments
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
+        pd = new ProgressDialog(getContext());
+        pd.setTitle("Menunggu");
+        pd.setMessage("Mendapatkan lokasi anda...");
+        pd.setCancelable(false);
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
         preferences = new UserPreferences(getContext());
         area = preferences.read(DefaultConfig.KEY_USER_AREA,String.class);
         Log.e("onCreateView", "arrea" + area);
         Log.e("onCreateView", "arrea" + area.length());
+        if (area.length()==0){
+            pd.show();
+        }
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -169,10 +179,11 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
         final double lat = intent.getDoubleExtra("Latitude", 0);
         final double lng = intent.getDoubleExtra("Longitude", 0);
         final String provider = intent.getStringExtra("Provider");
-
         Log.d("GETLOCATIONSERVICE", "provider = "+provider);
         Log.d("GETLOCATIONSERVICE", "Latitude = "+lat);
         Log.d("GETLOCATIONSERVICE", "Longitude = "+lng);
+        preferences.write(DefaultConfig.KEY_USER_LNG,String.valueOf(lng),String.class);
+        preferences.write(DefaultConfig.KEY_USER_LAT,String.valueOf(lat),String.class);
         Location bestLocation = new Location(provider);
         bestLocation.setLatitude(lat);
         bestLocation.setLongitude(lng);
@@ -320,11 +331,13 @@ public class HomeFragment extends BaseFragment implements BaseSliderView.OnSlide
             // or an error message sent from the intent service.
             // Show a toast message if an address was found.
             if (resultCode == DefaultConfig.SUCCESS_RESULT) {
+                pd.dismiss();
                 String adminArea = resultData.getString(DefaultConfig.ADMIN_AREA_DATA_EXTRA);
                 String locality = resultData.getString(DefaultConfig.LOCALITY_DATA_EXTRA);
                 String postalCode = resultData.getString(DefaultConfig.POSTAL_CODE_DATA_EXTRA);
                 String countryCode = resultData.getString(DefaultConfig.COUNTRY_CODE_DATA_EXTRA);
                 preferences.write(DefaultConfig.KEY_USER_AREA,adminArea,String.class);
+                getActivity().setTitle(adminArea);
                 Log.d("onReceiveResult", "adminArea = "+adminArea);
                 Log.d("onReceiveResult", "locality = "+locality);
                 Log.d("onReceiveResult", "postalCode = "+postalCode);

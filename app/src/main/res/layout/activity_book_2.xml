@@ -39,7 +39,7 @@
                 <com.lesgood.app.util.TypefacedTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tentukan lokasi anda"
+                    android:text="Tentukan lokasi belajar yang anda inginkan"
                     app:typeface="Roboto-Light.ttf" />
 
                 <ImageView
@@ -82,7 +82,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   app:typeface="Roboto-Light.ttf"
-                  android:text="Jadwal Mengajar"/>
+                  android:text="Tentukan pertemuan pertama dengan pengajar"/>
                 <LinearLayout
                   android:layout_width="match_parent"
                   android:orientation="horizontal"

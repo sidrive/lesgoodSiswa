@@ -33,7 +33,7 @@ public class BookActivityPresenter implements BasePresenter {
     List<Event> eventList;
     @Override
     public void subscribe() {
-        getSchedule();
+
     }
 
     @Override
@@ -73,9 +73,9 @@ public class BookActivityPresenter implements BasePresenter {
             Toast.makeText(activity, "Gagal memproses pesanan", Toast.LENGTH_SHORT).show();
         });
     }
-    public void getSchedule(){
+    public void getSchedule(String uid){
 
-        userService.getUserSchedule(user.getUid()).addChildEventListener(new ChildEventListener() {
+        userService.getUserSchedule(uid).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getValue()!=null){

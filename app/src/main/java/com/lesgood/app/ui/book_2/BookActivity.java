@@ -296,7 +296,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
     txtGuru.setText(guru.getFull_name());
     showLoading(true);
     presenter.getGuruSkill(guru.getUid(), order.getCode());
-
+    presenter.getSchedule(guru.getUid());
   }
 
   public void initSkill(Skill skill) {

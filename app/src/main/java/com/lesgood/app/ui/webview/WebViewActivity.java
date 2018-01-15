@@ -1,5 +1,6 @@
 package com.lesgood.app.ui.webview;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +11,11 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import com.lesgood.app.R;
+import com.lesgood.app.util.Utils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -88,20 +91,29 @@ public class WebViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+//        super.onBackPressed();
+        Utils.showDialog(this,"Silahkan melakukan pembayaran, jika telah membayar pengajar akan menghubungi anda untuk mulai les",listener);
+//        finish();
     }
 
 
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == android.R.id.home){
-            finish();
-        }
+        Utils.showDialog(this,"Silahkan melakukan pembayaran, jika telah membayar pengajar akan menghubungi anda untuk mulai les",listener);
 
+//        int id = item.getItemId();
+//        if (id == android.R.id.home){
+//            finish();
+//        }
+//
         return super.onOptionsItemSelected(item);
     }
+
+    public DialogInterface.OnClickListener listener = (dialog, which) -> {
+        dialog.dismiss();
+        super.onBackPressed();
+//        openVerification();
+    };
 
 }

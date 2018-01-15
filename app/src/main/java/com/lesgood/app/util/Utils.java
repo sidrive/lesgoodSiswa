@@ -1,6 +1,8 @@
 package com.lesgood.app.util;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 
 import android.widget.ImageView;
@@ -161,5 +163,16 @@ public class Utils {
             daySelected = 7;
         }
         return  daySelected;
+    }
+
+    public static  void  showDialog(Context context,String msg, DialogInterface.OnClickListener listener){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(msg);
+        /*builder.setNegativeButton("TIDAK", (dialog, which) -> {
+            dialog.dismiss();
+        });*/
+        builder.setPositiveButton("OK", listener);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

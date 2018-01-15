@@ -15,10 +15,122 @@
       },
       "oauth_client": [
         {
+          "client_id": "587589507868-frrhg9r3dql455msrdp8tl2v139qi2o0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lesgood.app",
+            "certificate_hash": "95cb0efa1b968154e719ed89351fad90fc6cc0a7"
+          }
+        },
+        {
+          "client_id": "587589507868-268uq3hjicppseufidl6q1ioaojq1fcd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lesgood.app",
+            "certificate_hash": "67fff2efbf9f5cbdef6575a16e8890926cbe50ee"
+          }
+        },
+        {
           "client_id": "587589507868-vsuk254otq90acqvm2go3nufncn0cl81.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.lesgood.app",
+            "certificate_hash": "02e257cc0c6e204b7d35ee381336edfd1b59988c"
+          }
+        },
+        {
+          "client_id": "587589507868-tqr11g4ra4co34s7qcbqknmvvv0abi9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_0xJa6SbHd0hVwGD-UY52odbN5UmUFw8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587589507868-tqr11g4ra4co34s7qcbqknmvvv0abi9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587589507868:android:8eb56107a8b42a9d",
+        "android_client_info": {
+          "package_name": "com.lesgood.guru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587589507868-l2h8bkuntfhs3bqrci4ihh697khddofv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lesgood.guru",
+            "certificate_hash": "67fff2efbf9f5cbdef6575a16e8890926cbe50ee"
+          }
+        },
+        {
+          "client_id": "587589507868-lt2iiskb5a48k0e8ii5215lerhdgm4mn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lesgood.guru",
+            "certificate_hash": "02e257cc0c6e204b7d35ee381336edfd1b59988c"
+          }
+        },
+        {
+          "client_id": "587589507868-tqr11g4ra4co34s7qcbqknmvvv0abi9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_0xJa6SbHd0hVwGD-UY52odbN5UmUFw8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587589507868-tqr11g4ra4co34s7qcbqknmvvv0abi9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587589507868:android:68818ceb7c761231",
+        "android_client_info": {
+          "package_name": "com.lesgood.siswa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587589507868-mpn07bhtagvam2895b510nvr1difc1e6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lesgood.siswa",
             "certificate_hash": "02e257cc0c6e204b7d35ee381336edfd1b59988c"
           }
         },

@@ -179,6 +179,10 @@ public class OrderDetailActivity extends BaseActivity {
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    Log.e("DetailOrder","oldID "+order.getOldOid());
+    if(Integer.valueOf(order.getOldOid()) > 0){
+      presenter.getDetailOrderWithOldOid(order.getOid());
+    }
     presenter.getDetailOrder(order.getOid());
     presenter.getPustaka(order.getCode());
   }
@@ -254,6 +258,49 @@ public class OrderDetailActivity extends BaseActivity {
     int fee = (int) (order.getFee() + 0.5d);
     int disc = (int) (order.getDiscount() + 0.5d);
     int total = (int) (order.getTotal() + 0.5d);
+
+    txtAmount.setText("Rp." + toRupiah(order.getAmount() + fee));
+    txtDisc.setText("Rp." + toRupiah(disc));
+    txtTotal.setText("Rp." + toRupiah(total));
+    handleStatus(order.getStatus());
+    txtAlamatSiswa.setText(order.getDetailLocation());
+  }
+
+  public void initwitholdid(Order order) {
+    txtDate.setText(DateFormatter.getDate(order.getPertemuanTime(), "EEE, dd MMM yyyy, HH:mm"));
+    txtProduct.setText(order.getTitle());
+    txtDetailLokasi.setText(order.getDetailLocation());
+    if (order.getTotalPertemuan() == 0) {
+      lytBtnReview.setVisibility(View.VISIBLE);
+      lytBtnGantiPengajar.setVisibility(View.GONE);
+    }
+    if (order.getTotalPertemuan() > 0 && order.getStatus().equalsIgnoreCase("SUCCESS")) {
+      btnAbsent.setVisibility(View.VISIBLE);
+      lytBtnGantiPengajar.setVisibility(View.VISIBLE);
+    } else {
+      btnAbsent.setVisibility(View.GONE);
+    }
+    if (order.getStatusGantiGuru()!=null){
+      if (!order.getStatusGantiGuru().equalsIgnoreCase("none")){
+        lytBtnGantiPengajar.setVisibility(View.GONE);
+      }
+    }
+    if (order.getUid()!=null){
+      presenter.getDetailSiswa(order.getUid());
+    }
+    if (order.getGid()!=null){
+      presenter.getDetailGuru(order.getGid());
+    }
+
+
+    int fee = (int) (order.getFee() + 0.5d);
+    int disc = (int) (order.getDiscount() + 0.5d);
+    int total = (int) (order.getTotal() + 0.5d);
+
+    txtOrderId.setText("#" + order.getOid());
+
+    txtSiswa.setText(String.valueOf(order.getTotalSiswa()));
+    txtPertemuan.setText(String.valueOf(order.getTotalPertemuan()) + " kali");
 
     txtAmount.setText("Rp." + toRupiah(order.getAmount() + fee));
     txtDisc.setText("Rp." + toRupiah(disc));

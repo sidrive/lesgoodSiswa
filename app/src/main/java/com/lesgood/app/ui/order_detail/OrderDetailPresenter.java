@@ -65,6 +65,26 @@ public class OrderDetailPresenter implements BasePresenter {
                 }
             });
     }
+
+    public void getDetailOrderWithOldOid(String orderId){
+        orderService.getDetailsOrder(orderId).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        order = dataSnapshot.getValue(Order.class);
+                        if (dataSnapshot!=null){
+                            activity.initwitholdid(order);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+    }
+
+
     public void updateSaldoGuru(String uid, int saldo){
         userService.getUser(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -57,6 +57,9 @@ public class ListPresenter implements BasePresenter {
         if (userPreferences!=null){
             String sLat = userPreferences.read(DefaultConfig.KEY_USER_LAT,String.class);
             String sLng = userPreferences.read(DefaultConfig.KEY_USER_LNG,String.class);
+
+            Log.e("geofire","sLat"+sLat);
+            Log.e("geofire","sLng"+sLng);
             if (!sLat.isEmpty()  && !sLng.isEmpty()){
                 GeoLocation location = new GeoLocation(Double.valueOf(sLat),Double.valueOf(sLng));
                 Log.e("getGeofireguru", "ListPresenter" + location);
@@ -108,6 +111,7 @@ public class ListPresenter implements BasePresenter {
     }
 
     public void getGurus(String code){
+        Log.e("getGuru","code "+code);
         childEventListener = userService.getGurus(code).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

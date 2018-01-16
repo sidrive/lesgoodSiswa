@@ -216,6 +216,7 @@ public class BookActivity extends BaseActivity implements OnMapReadyCallback,
   private void initWithChangeTeacher(String oldOid) {
     presenter.getGuruSkill(guru.getUid(), order.getCode());
     presenter.getOrderById(oldOid);
+    presenter.getSchedule(guru.getUid());
     radioPaket1.setVisibility(View.GONE);
   }
 

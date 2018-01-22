@@ -82,6 +82,7 @@ dependencies {
     implementation rootProject.ext.okhttp
     implementation rootProject.ext.adapterrx
     implementation rootProject.ext.rxandroid
+
     // Data dependencies
     implementation rootProject.ext.fbuistorage
     // gms dependencies

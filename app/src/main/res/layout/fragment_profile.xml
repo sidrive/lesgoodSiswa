@@ -41,7 +41,7 @@
                         android:id="@+id/img_avatar"
                         android:src="@color/colorWhite"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"

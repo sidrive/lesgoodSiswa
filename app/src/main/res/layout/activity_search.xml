@@ -36,7 +36,7 @@
                         android:padding="5dp"
                         android:scaleType="centerInside"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:text="Pilih Kategori"
                         app:typeface="Roboto-Regular.ttf"
@@ -69,7 +69,7 @@
                         android:padding="5dp"
                         android:scaleType="centerInside"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:text="Pilih Materi"
                         app:typeface="Roboto-Regular.ttf"
@@ -102,7 +102,7 @@
                         android:padding="5dp"
                         android:scaleType="centerInside"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:text="Pilih Tingkat"
                         android:id="@+id/txt_level"

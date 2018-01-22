@@ -11,7 +11,7 @@
 
 
 
-    <com.lesgood.app.util.TypefacedTextView
+    <com.lesgood.siswa.util.TypefacedTextView
         android:id="@+id/txt_nama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,14 +32,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nama :"
                 android:textSize="12sp"
                 app:typeface="Roboto-Light.ttf" />
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:id="@+id/txt_nama_guru"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -62,14 +62,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Alamat :"
                 android:textSize="12sp"
                 app:typeface="Roboto-Light.ttf" />
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:id="@+id/txt_alamat_guru"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,14 +93,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="No. Telp/HP :"
                 android:textSize="12sp"
                 app:typeface="Roboto-Light.ttf" />
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:id="@+id/txt_telp_guru"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -122,14 +122,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email :"
                 android:textSize="12sp"
                 app:typeface="Roboto-Light.ttf" />
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:id="@+id/txt_email_guru"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -10,7 +10,7 @@
         android:background="@drawable/gradient_bg">
 
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
             android:layout_width="wrap_content"
             android:gravity="center"
             app:typeface="Roboto-Regular.ttf"

@@ -10,7 +10,7 @@
         android:background="@drawable/gradient_bg">
 
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
             android:layout_width="wrap_content"
             android:gravity="center"
             app:typeface="Roboto-Regular.ttf"
@@ -42,7 +42,7 @@
                 android:src="@color/colorGrey400"
                 android:id="@+id/img_avatar"/>
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"

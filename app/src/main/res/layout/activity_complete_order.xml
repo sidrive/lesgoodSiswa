@@ -24,7 +24,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="@dimen/activity_margin">
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:typeface="Roboto-Regular.ttf"
@@ -38,7 +38,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/activity_margin">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -47,7 +47,7 @@
                             android:textSize="16sp"
                             android:id="@+id/txt_pertemuan" />
 
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/activity_margin">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -69,7 +69,7 @@
                             android:text="Discount"
                             android:textSize="16sp" />
 
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
@@ -84,7 +84,7 @@
                         android:orientation="horizontal"
                         android:visibility="visible"
                         android:layout_marginTop="@dimen/activity_margin">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -92,7 +92,7 @@
                             android:text="Service Fee"
                             android:textSize="16sp" />
 
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="@dimen/activity_margin">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -114,7 +114,7 @@
                             android:text="Total Dibayarkan"
                             android:textSize="16sp" />
 
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
@@ -148,7 +148,7 @@
                 android:padding="@dimen/activity_margin">
 
 
-                <com.lesgood.app.util.TypefacedTextView
+                <com.lesgood.siswa.util.TypefacedTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:typeface="Roboto-Light.ttf"
@@ -169,7 +169,7 @@
                         android:layout_height="50dp"
                         android:src="@drawable/atm"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:text="ATM Bersama"
                         app:typeface="Roboto-Light.ttf"
@@ -202,7 +202,7 @@
                         android:layout_height="50dp"
                         android:src="@drawable/cc"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:text="Kartu Kredit"
                         app:typeface="Roboto-Light.ttf"
@@ -236,7 +236,7 @@
                         android:layout_height="50dp"
                         android:src="@drawable/bca"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         app:typeface="Roboto-Light.ttf"
                         android:text="Bca Klikpay"
@@ -270,7 +270,7 @@
                         android:layout_height="50dp"
                         android:src="@drawable/mandiri"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:text="Mandiri Clickpay"
                         app:typeface="Roboto-Light.ttf"
@@ -304,7 +304,7 @@
                         android:layout_height="50dp"
                         android:src="@drawable/cimb"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:text="CIMB Clicks"
                         app:typeface="Roboto-Light.ttf"
@@ -337,7 +337,7 @@
                       android:layout_height="50dp"
                       android:src="@drawable/circle"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                       android:layout_width="wrap_content"
                       android:text="RITEL"
                       app:typeface="Roboto-Light.ttf"

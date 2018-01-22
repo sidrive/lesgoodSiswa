@@ -68,7 +68,7 @@ ext {
     final GLIDE_VERSION = '3.7.0'
     final RETROFIT_VERSION = '2.3.0'
     final LOGGING_VERSION = '3.4.1'
-    final FIREBASE_VERSION = '10.2.0'
+    final FIREBASE_VERSION = '11.8.0'
     final FIREBASE_UI_VERSION = '1.2.0'
     final MAP_UTILS_VERSION = '0.5+'
 

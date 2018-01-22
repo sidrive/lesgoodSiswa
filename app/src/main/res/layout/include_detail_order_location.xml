@@ -10,14 +10,14 @@
   android:visibility="visible">
 
 
-    <com.lesgood.app.util.TypefacedTextView
+    <com.lesgood.siswa.util.TypefacedTextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginBottom="10dp"
       android:text="Detail Lokasi"
       app:typeface="Roboto-Medium.ttf" />
 
-    <com.lesgood.app.util.TypefacedTextView
+    <com.lesgood.siswa.util.TypefacedTextView
       android:visibility="gone"
       android:id="@+id/txt_distance"
       android:layout_width="match_parent"
@@ -34,7 +34,7 @@
       android:scaleType="centerCrop"
       android:src="@color/colorGrey400" />
 
-    <com.lesgood.app.util.TypefacedTextView
+    <com.lesgood.siswa.util.TypefacedTextView
       android:id="@+id/txt_detail_lokasi"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Matematika"
@@ -35,7 +35,7 @@
                 android:textSize="16sp"
                 />
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SMP"
@@ -45,7 +45,7 @@
                 />
 
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp.60.000/100 menit"

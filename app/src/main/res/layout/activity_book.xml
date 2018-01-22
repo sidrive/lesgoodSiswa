@@ -26,7 +26,7 @@
                     android:src="@color/colorGrey400"
                     android:id="@+id/img_avatar"/>
 
-                <com.lesgood.app.util.TypefacedTextView
+                <com.lesgood.siswa.util.TypefacedTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingLeft="5dp"

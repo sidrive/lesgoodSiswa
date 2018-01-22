@@ -10,7 +10,7 @@
 
 
 
-    <com.lesgood.app.util.TypefacedTextView
+    <com.lesgood.siswa.util.TypefacedTextView
       android:id="@+id/txt_customer_name"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
@@ -31,14 +31,14 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Pelajaran"
           android:textSize="12sp"
           app:typeface="Roboto-Light.ttf" />
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:id="@+id/txt_product"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -60,13 +60,13 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           android:orientation="vertical">
-          <com.lesgood.app.util.TypefacedTextView
+          <com.lesgood.siswa.util.TypefacedTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Pertemuan"
             android:textSize="12sp"
             app:typeface="Roboto-Light.ttf" />
-          <com.lesgood.app.util.TypefacedTextView
+          <com.lesgood.siswa.util.TypefacedTextView
             android:id="@+id/txt_pertemuan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,14 +102,14 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Order"
           android:textSize="12sp"
           app:typeface="Roboto-Light.ttf" />
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:id="@+id/txt_order_id"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -125,14 +125,14 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Jumlah Murid"
           android:textSize="12sp"
           app:typeface="Roboto-Light.ttf" />
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:id="@+id/txt_tota_person"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -155,14 +155,14 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Date"
           android:textSize="12sp"
           app:typeface="Roboto-Light.ttf" />
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:id="@+id/txt_date"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -178,14 +178,14 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:text="Payment"
           android:textSize="12sp"
           app:typeface="Roboto-Light.ttf" />
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
           android:id="@+id/txt_status"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -201,7 +201,7 @@
       android:layout_marginTop="@dimen/activity_half_margin"
       android:orientation="horizontal">
 
-      <com.lesgood.app.util.TypefacedTextView
+      <com.lesgood.siswa.util.TypefacedTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -209,7 +209,7 @@
         android:textSize="16sp"
         app:typeface="Roboto-Regular.ttf" />
 
-      <com.lesgood.app.util.TypefacedTextView
+      <com.lesgood.siswa.util.TypefacedTextView
         android:id="@+id/txt_amount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -225,7 +225,7 @@
       android:layout_marginTop="@dimen/activity_half_margin"
       android:orientation="horizontal">
 
-      <com.lesgood.app.util.TypefacedTextView
+      <com.lesgood.siswa.util.TypefacedTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -233,7 +233,7 @@
         android:textSize="16sp"
         app:typeface="Roboto-Regular.ttf" />
 
-      <com.lesgood.app.util.TypefacedTextView
+      <com.lesgood.siswa.util.TypefacedTextView
         android:id="@+id/txt_disc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -249,7 +249,7 @@
       android:layout_marginTop="@dimen/activity_half_margin"
       android:orientation="horizontal">
 
-      <com.lesgood.app.util.TypefacedTextView
+      <com.lesgood.siswa.util.TypefacedTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -257,7 +257,7 @@
         android:textSize="16sp"
         app:typeface="Roboto-Regular.ttf" />
 
-      <com.lesgood.app.util.TypefacedTextView
+      <com.lesgood.siswa.util.TypefacedTextView
         android:id="@+id/txt_total"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

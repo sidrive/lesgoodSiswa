@@ -89,7 +89,7 @@
                         android:id="@+id/input_gender"/>
                 </android.support.design.widget.TextInputLayout>
 
-                <com.lesgood.app.util.TypefacedTextView
+                <com.lesgood.siswa.util.TypefacedTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:typeface="Roboto-Regular.ttf"

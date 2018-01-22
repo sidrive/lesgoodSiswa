@@ -15,7 +15,7 @@
             android:orientation="vertical"
             android:padding="@dimen/activity_margin">
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:id="@+id/txt_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
                 android:textStyle="bold"
                 app:typeface="Roboto-Regular.ttf" />
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:id="@+id/txt_isi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
                 android:id="@+id/lin_review"
                 android:gravity="center"
                 android:orientation="horizontal">
-                <com.lesgood.app.util.TypefacedTextView
+                <com.lesgood.siswa.util.TypefacedTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -52,7 +52,7 @@
                     android:id="@+id/txtpenilaian"
                     android:drawableLeft="@drawable/star"
                     app:typeface="Roboto-Regular.ttf"/>
-                <com.lesgood.app.util.TypefacedTextView
+                <com.lesgood.siswa.util.TypefacedTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"

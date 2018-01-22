@@ -18,7 +18,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:padding="@dimen/activity_margin">
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -31,7 +31,7 @@
                 android:src="@color/colorGrey400"
                 android:layout_height="80dp" />
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -40,14 +40,14 @@
                 app:typeface="Roboto-Regular.ttf"
                 android:text="Agus Setiawan"/>
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/activity_half_margin"
                 app:typeface="Roboto-Light.ttf"
                 android:text="Universitas Gadjah Mada"/>
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -68,7 +68,7 @@
                 android:layout_marginTop="@dimen/activity_margin"
                 android:background="@color/colorGrey400"></View>
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -76,7 +76,7 @@
                 app:typeface="Roboto-Light.ttf"
                 android:textSize="18sp"
                 android:text="Silahkan laukan pembayaran"/>
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

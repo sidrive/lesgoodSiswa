@@ -10,7 +10,7 @@
         android:background="@drawable/gradient_bg">
 
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
             android:layout_width="wrap_content"
             android:gravity="center"
             app:typeface="Roboto-Regular.ttf"
@@ -32,7 +32,7 @@
         android:padding="@dimen/activity_horizontal_margin"
         >
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Tanggal"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
-                <com.lesgood.app.util.TypefacedTextView
+                <com.lesgood.siswa.util.TypefacedTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Waktu mulai"
@@ -75,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
-                <com.lesgood.app.util.TypefacedTextView
+                <com.lesgood.siswa.util.TypefacedTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Waktu selesai"

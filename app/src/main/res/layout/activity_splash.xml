@@ -14,7 +14,7 @@
             android:src="@drawable/logo"
             android:layout_height="100dp" />
 
-        <com.lesgood.app.util.TypefacedTextView
+        <com.lesgood.siswa.util.TypefacedTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"

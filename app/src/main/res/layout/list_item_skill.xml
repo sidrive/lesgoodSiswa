@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/activity_margin">
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:typeface="Roboto-Regular.ttf"
@@ -22,7 +22,7 @@
                 android:textSize="16sp"
                 android:id="@+id/txt_skill"/>
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:typeface="Roboto-Light.ttf"
@@ -31,7 +31,7 @@
                 android:textSize="16sp"
                 android:id="@+id/txt_level"/>
 
-            <com.lesgood.app.util.TypefacedTextView
+            <com.lesgood.siswa.util.TypefacedTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:typeface="Roboto-Regular.ttf"

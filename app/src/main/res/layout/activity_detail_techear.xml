@@ -43,7 +43,7 @@
                         android:id="@+id/img_avatar"
                         android:src="@color/colorWhite"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
@@ -62,7 +62,7 @@
                       android:clickable="false"
                       android:visibility="gone"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:typeface="Roboto-Regular.ttf"
@@ -71,7 +71,7 @@
                         android:textColor="@color/colorWhite"
                         android:layout_marginTop="10dp"/>
 
-                    <com.lesgood.app.util.TypefacedTextView
+                    <com.lesgood.siswa.util.TypefacedTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:typeface="Roboto-Regular.ttf"
@@ -109,7 +109,7 @@
                         android:id="@+id/lin_review"
                         android:gravity="center"
                         android:orientation="horizontal">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -119,7 +119,7 @@
                             android:id="@+id/txt_review"
                             android:drawableLeft="@drawable/star"
                             app:typeface="Roboto-Regular.ttf"/>
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
@@ -153,13 +153,13 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:orientation="vertical">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Tentang"
                             app:typeface="Roboto-Regular.ttf"/>
 
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -196,7 +196,7 @@
                         android:id="@+id/lin_skill"
                         android:gravity="center"
                         android:orientation="vertical">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="0 Keahliann Mengajar"
@@ -225,7 +225,7 @@
                         android:id="@+id/lin_prestasi"
                         android:gravity="center"
                         android:orientation="vertical">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Prestasi"
@@ -254,7 +254,7 @@
                         android:id="@+id/lin_pengalaman"
                         android:gravity="center"
                         android:orientation="vertical">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Pengalaman"
@@ -283,7 +283,7 @@
                         android:id="@+id/lin_verified"
                         android:gravity="center"
                         android:orientation="vertical">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Status : Belum Terverifikasi"
@@ -313,7 +313,7 @@
                         android:id="@+id/lin_location"
                         android:gravity="center"
                         android:orientation="vertical">
-                        <com.lesgood.app.util.TypefacedTextView
+                        <com.lesgood.siswa.util.TypefacedTextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Location"
